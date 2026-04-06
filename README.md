@@ -89,4 +89,4 @@ print('Done! Accuracy:', metrics['accuracy'], '%  F1:', metrics['f1'], '%  AUC:'
 python app.py
 
 **Deployment link:**
-https://predictive-analytics-for-employee.onrender.com
+https://predictive-analytics-for-employee-mszl.onrender.com
