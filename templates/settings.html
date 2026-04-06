@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings | Sentinel</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="/static/css/base.css">
+<style>
+.settings-layout{display:grid;grid-template-columns:1.6fr 1fr;gap:20px}
+.setting-row{display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid var(--border)}
+.setting-row:last-child{border:none}
+.setting-info h4{font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px}
+.setting-info p{font-size:12px;color:var(--muted2)}
+.toggle{width:42px;height:22px;background:var(--surface2);border:1px solid var(--border2);border-radius:20px;padding:2px;cursor:pointer;display:flex;align-items:center;transition:.25s;flex-shrink:0}
+.toggle.on{background:var(--blue);border-color:var(--blue);justify-content:flex-end}
+.toggle-circle{width:16px;height:16px;background:white;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.theme-btns{display:flex;gap:8px}
+.theme-btn{padding:7px 14px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--muted2);font-size:12px;font-family:'Inter',sans-serif;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:.18s}
+.theme-btn.active,.theme-btn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-dim)}
+.log-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12px}
+.log-item:last-child{border:none}
+.log-time{font-family:'DM Mono',monospace;color:var(--blue);min-width:60px;font-size:11px;padding-top:1px}
+.log-text{color:var(--muted2)}
+.log-text strong{color:var(--text)}
+.snackbar{position:fixed;bottom:-80px;left:50%;transform:translateX(-50%);background:var(--surface);border:1px solid var(--border2);padding:14px 24px;border-radius:12px;display:flex;align-items:center;gap:16px;font-size:13px;box-shadow:0 10px 30px rgba(0,0,0,.4);transition:bottom .4s cubic-bezier(.175,.885,.32,1.275);z-index:1000;white-space:nowrap}
+.snackbar.show{bottom:32px}
+.undo-btn{color:var(--blue);font-weight:700;cursor:pointer;font-size:12px;font-family:'DM Mono',monospace}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+    <div><div class="brand-name">SENTINEL</div><div class="brand-tag">HR INTELLIGENCE</div></div>
+  </div>
+  <div class="nav-section">ANALYTICS</div>
+  <a href="/dashboard" class="nav-item"><i data-lucide="layout-dashboard" size="15"></i> Dashboard</a>
+  <a href="/insights" class="nav-item"><i data-lucide="bar-chart-3" size="15"></i> Org Insights</a>
+  <div class="nav-section">TOOLS</div>
+  <a href="/predictor" class="nav-item"><i data-lucide="brain-circuit" size="15"></i> Risk Lab</a>
+  <a href="/alerts" class="nav-item"><i data-lucide="bell" size="15"></i> Alerts</a>
+  <div style="margin-top:auto"></div>
+  <a href="/settings" class="nav-item active"><i data-lucide="settings" size="15"></i> Settings</a>
+  <a href="/logout" class="nav-item nav-logout"><i data-lucide="log-out" size="15"></i> Logout</a>
+</aside>
+
+<main class="main">
+  <div class="page-header">
+    <div><h1 class="page-title">Settings & Governance</h1><p class="page-subtitle">Platform preferences, security and audit controls</p></div>
+  </div>
+
+  <div class="settings-layout">
+    <div>
+      <!-- Appearance -->
+      <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--blue);letter-spacing:.1em;margin-bottom:10px">APPEARANCE</div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="setting-row">
+          <div class="setting-info"><h4>Visual Theme</h4><p>Switch between dark and light interface</p></div>
+          <div class="theme-btns">
+            <button class="theme-btn" id="btnDark" onclick="setTheme('dark')"><i data-lucide="moon" size="13"></i> Dark</button>
+            <button class="theme-btn" id="btnLight" onclick="setTheme('light')"><i data-lucide="sun" size="13"></i> Light</button>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><h4>Compact Mode</h4><p>Reduce spacing for denser information display</p></div>
+          <div class="toggle" id="compactToggle" onclick="this.classList.toggle('on')"><div class="toggle-circle"></div></div>
+        </div>
+      </div>
+
+      <!-- Notifications -->
+      <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--blue);letter-spacing:.1em;margin-bottom:10px">NOTIFICATIONS</div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="setting-row">
+          <div class="setting-info"><h4>High-Risk Alerts</h4><p>Get notified when employees exceed 70% risk threshold</p></div>
+          <div class="toggle on" onclick="this.classList.toggle('on')"><div class="toggle-circle"></div></div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><h4>Weekly Digest</h4><p>Summary report of workforce health every Monday</p></div>
+          <div class="toggle on" onclick="this.classList.toggle('on')"><div class="toggle-circle"></div></div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><h4>Model Retraining Alerts</h4><p>Notify when AI model accuracy drops below threshold</p></div>
+          <div class="toggle" onclick="this.classList.toggle('on')"><div class="toggle-circle"></div></div>
+        </div>
+      </div>
+
+      <!-- Security -->
+      <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--blue);letter-spacing:.1em;margin-bottom:10px">SECURITY</div>
+      <div class="card">
+        <div class="setting-row">
+          <div class="setting-info"><h4>Two-Factor Authentication</h4><p>Require 2FA on all admin logins</p></div>
+          <div class="toggle" onclick="this.classList.toggle('on')"><div class="toggle-circle"></div></div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><h4>Session Timeout</h4><p>Auto-logout after 30 minutes of inactivity</p></div>
+          <select class="form-control" style="width:140px">
+            <option>30 minutes</option><option>1 hour</option><option>4 hours</option><option>Never</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><h4>Export Permissions</h4><p>Allow data export by non-admin HR members</p></div>
+          <div class="toggle" onclick="this.classList.toggle('on')"><div class="toggle-circle"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Audit Log -->
+    <div>
+      <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--blue);letter-spacing:.1em;margin-bottom:10px">AUDIT LOG</div>
+      <div class="card" style="margin-bottom:12px">
+        <div id="auditLog" style="min-height:120px;max-height:380px;overflow-y:auto">
+          <div style="color:var(--muted);font-size:12px;text-align:center;padding:30px">Loading activity...</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-ghost" onclick="downloadLogs()" style="flex:2;justify-content:center;font-size:12px">
+          <i data-lucide="download" size="13"></i> Export CSV
+        </button>
+        <button class="btn btn-danger" onclick="clearLogs()" style="flex:1;justify-content:center;font-size:12px">
+          <i data-lucide="trash-2" size="13"></i> Clear
+        </button>
+      </div>
+
+      <!-- Model Info card -->
+      <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--blue);letter-spacing:.1em;margin:16px 0 10px">MODEL STATUS</div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <div class="section-title">Random Forest v1.0</div>
+          <span class="badge badge-green">ACTIVE</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted2);line-height:1.8">
+          <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border)"><span>Training Records</span><span style="color:var(--text);font-weight:600">1,500</span></div>
+          <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border)"><span>Features Used</span><span style="color:var(--text);font-weight:600">5</span></div>
+          <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border)"><span>Estimators</span><span style="color:var(--text);font-weight:600">100</span></div>
+          <div style="display:flex;justify-content:space-between;padding:5px 0"><span>Attrition Rate</span><span style="color:var(--red);font-weight:600">28%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Snackbar -->
+<div class="snackbar" id="snackbar">
+  <span>Audit log cleared.</span>
+  <span class="undo-btn" onclick="undoClear()">UNDO</span>
+</div>
+
+<script>
+lucide.createIcons();
+let logHistory=[], lastDeleted=[], undoTimer=null;
+
+function initTheme(){
+  const t = localStorage.getItem('sentinel-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('btnDark').classList.toggle('active', t==='dark');
+  document.getElementById('btnLight').classList.toggle('active', t==='light');
+}
+
+function setTheme(t){
+  localStorage.setItem('sentinel-theme', t);
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('btnDark').classList.toggle('active', t==='dark');
+  document.getElementById('btnLight').classList.toggle('active', t==='light');
+}
+
+function renderLogs(){
+  const container = document.getElementById('auditLog');
+  if(!logHistory.length){
+    container.innerHTML='<div style="color:var(--muted);font-size:12px;text-align:center;padding:30px">No activity recorded yet.</div>';
+    return;
+  }
+  container.innerHTML = logHistory.map(l=>`
+    <div class="log-item">
+      <span class="log-time">${l.time}</span>
+      <span class="log-text"><strong>${l.entity}</strong>: ${l.activity}</span>
+    </div>`).join('');
+}
+
+function buildLogs(){
+  const start = sessionStorage.getItem('sentinel-session-start');
+  logHistory = start ? [{time:start,entity:'Admin',activity:'Session started'}] : [];
+  const tracked = JSON.parse(localStorage.getItem('sentinel_activity_logs') || '[]');
+  logHistory = [...logHistory, ...tracked, {time:'Now',entity:'Admin',activity:'Accessed Settings'}];
+  renderLogs();
+}
+
+function downloadLogs(){
+  if(!logHistory.length) return;
+  const csv = ['Timestamp,Entity,Activity', ...logHistory.map(l=>`${l.time},${l.entity},"${l.activity}"`)].join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download = `sentinel_audit_${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+}
+
+function clearLogs(){
+  lastDeleted = [...logHistory];
+  logHistory = [];
+  localStorage.removeItem('sentinel_activity_logs');
+  renderLogs();
+  const sb = document.getElementById('snackbar');
+  sb.classList.add('show');
+  if(undoTimer) clearTimeout(undoTimer);
+  undoTimer = setTimeout(()=>{ sb.classList.remove('show'); lastDeleted=[]; }, 5000);
+}
+
+function undoClear(){
+  logHistory = [...lastDeleted];
+  const tracked = logHistory.filter(l=>l.activity!=='Session started'&&l.activity!=='Accessed Settings');
+  localStorage.setItem('sentinel_activity_logs', JSON.stringify(tracked));
+  renderLogs();
+  document.getElementById('snackbar').classList.remove('show');
+  clearTimeout(undoTimer); lastDeleted=[];
+}
+
+// Session start tracking
+if(!sessionStorage.getItem('sentinel-session-start')){
+  sessionStorage.setItem('sentinel-session-start', new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',hour12:true}));
+}
+
+initTheme();
+buildLogs();
+</script>
+</body>
+</html>

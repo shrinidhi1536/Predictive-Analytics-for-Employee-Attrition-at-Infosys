@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+(function(){
+  var t=localStorage.getItem('sentinel-theme')||'dark';
+  document.documentElement.setAttribute('data-theme',t);
+  document.documentElement.style.backgroundColor=(t==='dark')?'#080c14':'#f1f5f9';
+})();
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Messages | Sentinel</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="/static/css/base.css">
+<style>
+/* ── Inbox layout ── */
+.inbox-wrap {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 16px;
+  height: calc(100vh - 130px);
+}
+/* ── Message list pane ── */
+.msg-list-pane {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.msg-list-header {
+  padding: 16px 18px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.msg-list-title {
+  font-size: 13px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: .06em;
+  color: var(--muted);
+}
+.msg-items {
+  overflow-y: auto;
+  flex: 1;
+}
+.msg-item {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background .15s;
+  position: relative;
+}
+.msg-item:hover { background: var(--surface2); }
+.msg-item.active { background: var(--blue-dim); border-left: 3px solid var(--blue); }
+.msg-item.unread .msg-item-subject {
+  font-weight: 700;
+  color: var(--text);
+}
+.msg-item-subject {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 36px;
+}
+.msg-item-preview {
+  font-size: 11.5px;
+  color: var(--muted2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.msg-item-time {
+  font-size: 10px;
+  font-family: 'DM Mono', monospace;
+  color: var(--muted);
+  position: absolute;
+  top: 14px; right: 14px;
+}
+.unread-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--blue);
+  position: absolute;
+  bottom: 14px; right: 16px;
+  box-shadow: 0 0 6px var(--blue-glow);
+}
+/* ── Detail pane ── */
+.msg-detail-pane {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.msg-detail-header {
+  padding: 20px 24px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.msg-detail-subject {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.msg-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.msg-from-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--blue-dim);
+  border: 1px solid rgba(59,127,245,0.2);
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 12px;
+  color: var(--blue);
+  font-weight: 600;
+}
+.msg-from-avatar {
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  display: grid; place-items: center;
+  font-size: 10px; font-weight: 800; color: white;
+}
+.msg-timestamp {
+  font-size: 11px;
+  font-family: 'DM Mono', monospace;
+  color: var(--muted);
+}
+.priority-tag {
+  font-size: 10px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: .08em;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.priority-urgent  { background: rgba(239,68,68,0.12);  color: #ef4444; border: 1px solid rgba(239,68,68,0.25); }
+.priority-high    { background: rgba(245,158,11,0.12); color: #f59e0b; border: 1px solid rgba(245,158,11,0.25); }
+.priority-normal  { background: var(--surface2);       color: var(--muted2); border: 1px solid var(--border); }
+
+.msg-body {
+  padding: 26px 28px;
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: var(--text);
+  flex: 1;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+/* ── Status change card ── */
+.status-change-card {
+  margin: 0 28px 20px;
+  background: rgba(245,158,11,0.07);
+  border: 1px solid rgba(245,158,11,0.25);
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.status-change-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: rgba(245,158,11,0.15);
+  display: grid; place-items: center;
+  color: #f59e0b;
+  flex-shrink: 0;
+}
+/* ── Empty state ── */
+.empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  gap: 12px;
+}
+.empty-icon {
+  width: 60px; height: 60px;
+  border-radius: 16px;
+  background: var(--surface2);
+  display: grid; place-items: center;
+  margin-bottom: 4px;
+}
+/* ── Mark all read btn ── */
+.mark-read-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-family: 'DM Mono', monospace;
+  color: var(--muted2);
+  cursor: pointer;
+  transition: all .15s;
+}
+.mark-read-btn:hover { border-color: var(--blue); color: var(--blue); }
+
+/* ── Action items section ── */
+.action-items-section {
+  margin: 0 28px 20px;
+  background: rgba(59,127,245,0.06);
+  border: 1px solid rgba(59,127,245,0.2);
+  border-radius: 10px;
+  padding: 14px 18px;
+}
+.action-item-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(59,127,245,0.1);
+  font-size: 13px;
+}
+.action-item-row:last-child { border-bottom: none; }
+.action-checkbox {
+  width: 16px; height: 16px;
+  border-radius: 4px;
+  border: 1.5px solid rgba(59,127,245,0.5);
+  background: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: grid; place-items: center;
+  transition: all .15s;
+}
+.action-checkbox.checked {
+  background: var(--blue);
+  border-color: var(--blue);
+}
+
+/* ── Scrollbar ── */
+.msg-items::-webkit-scrollbar,
+.msg-body::-webkit-scrollbar { width: 4px; }
+.msg-items::-webkit-scrollbar-track,
+.msg-body::-webkit-scrollbar-track { background: transparent; }
+.msg-items::-webkit-scrollbar-thumb,
+.msg-body::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+/* ── No messages ── */
+#noMessages { display: none; }
+#emptyDetail { display: flex; }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    </div>
+    <div><div class="brand-name">MY PORTAL</div><div class="brand-tag">ASSOCIATE ACCESS</div></div>
+  </div>
+  <div class="nav-section">MENU</div>
+  <a href="/user_dashboard"   class="nav-item"><i data-lucide="layout-dashboard" size="15"></i> Dashboard</a>
+  <a href="/user_performance" class="nav-item"><i data-lucide="trending-up" size="15"></i> Performance</a>
+  <a href="/user_learning"    class="nav-item"><i data-lucide="graduation-cap" size="15"></i> Learning Hub</a>
+  <a href="/user_messages"    class="nav-item active">
+    <i data-lucide="inbox" size="15"></i> Messages
+    <span class="nav-badge" id="sidebarUnread" style="display:none">0</span>
+  </a>
+  <div style="margin-top:auto"></div>
+  <a href="/user_settings"    class="nav-item"><i data-lucide="settings" size="15"></i> Settings</a>
+  <a href="/logout"           class="nav-item nav-logout"><i data-lucide="log-out" size="15"></i> Logout</a>
+</aside>
+
+<main class="main">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">HR Messages</h1>
+      <p class="page-subtitle" id="dateStr"></p>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span id="unreadChip" style="display:none" class="badge badge-red">0 UNREAD</span>
+      <div class="status-chip"><div class="status-dot"></div>ACTIVE EMPLOYEE</div>
+    </div>
+  </div>
+
+  <div class="inbox-wrap">
+    <!-- Left: message list -->
+    <div class="msg-list-pane">
+      <div class="msg-list-header">
+        <span class="msg-list-title">INBOX</span>
+        <button class="mark-read-btn" onclick="markAllRead()">Mark all read</button>
+      </div>
+      <div class="msg-items" id="msgList">
+        <!-- injected by JS -->
+      </div>
+      <div id="noMessages" style="padding:40px 20px;text-align:center;color:var(--muted);font-size:13px">
+        <i data-lucide="inbox" size="32" style="margin-bottom:10px;opacity:.4"></i>
+        <div>No messages yet</div>
+      </div>
+    </div>
+
+    <!-- Right: detail pane -->
+    <div class="msg-detail-pane" id="detailPane">
+      <!-- Empty state -->
+      <div class="empty-state" id="emptyDetail">
+        <div class="empty-icon"><i data-lucide="mail" size="26" style="color:var(--muted)"></i></div>
+        <div style="font-size:14px;font-weight:600;color:var(--muted2)">Select a message</div>
+        <div style="font-size:12px">Click any message on the left to read it</div>
+      </div>
+
+      <!-- Message content (hidden until selected) -->
+      <div id="msgContent" style="display:none;flex-direction:column;height:100%">
+        <div class="msg-detail-header">
+          <div class="msg-detail-subject" id="detSubject">—</div>
+          <div class="msg-meta-row">
+            <div class="msg-from-badge">
+              <div class="msg-from-avatar">HR</div>
+              <span id="detFrom">HR Team</span>
+            </div>
+            <span class="msg-timestamp" id="detTime">—</span>
+            <span class="priority-tag" id="detPriority">NORMAL</span>
+          </div>
+        </div>
+
+        <!-- Status change banner (shown if message has status_change) -->
+        <div class="status-change-card" id="statusBanner" style="display:none;margin-top:16px">
+          <div class="status-change-icon"><i data-lucide="alert-triangle" size="18"></i></div>
+          <div>
+            <div style="font-size:12px;font-family:'DM Mono',monospace;color:#f59e0b;letter-spacing:.05em;margin-bottom:3px">STATUS UPDATE</div>
+            <div style="font-size:13px;color:var(--text)" id="statusBannerText">Your risk status has been updated by HR.</div>
+          </div>
+        </div>
+
+        <!-- Action items (shown if message has action_items) -->
+        <div class="action-items-section" id="actionItemsSection" style="display:none;margin-top:16px">
+          <div style="font-size:11px;font-family:'DM Mono',monospace;color:var(--blue);letter-spacing:.06em;margin-bottom:10px">ACTION ITEMS FROM HR</div>
+          <div id="actionItemsList"></div>
+        </div>
+
+        <div class="msg-body" id="detBody">—</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+lucide.createIcons();
+document.getElementById('dateStr').textContent = new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+let allMessages = [];
+let activeId = null;
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function timeAgo(ts) {
+  const d = new Date(ts), now = new Date();
+  const diff = Math.floor((now - d) / 1000);
+  if (diff < 60) return 'Just now';
+  if (diff < 3600) return Math.floor(diff/60) + 'm ago';
+  if (diff < 86400) return Math.floor(diff/3600) + 'h ago';
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+}
+
+function priorityLabel(p) {
+  if (p === 'urgent') return 'URGENT';
+  if (p === 'high')   return 'HIGH';
+  return 'NORMAL';
+}
+function priorityClass(p) {
+  if (p === 'urgent') return 'priority-urgent';
+  if (p === 'high')   return 'priority-high';
+  return 'priority-normal';
+}
+
+// ── Render list ───────────────────────────────────────────────────────────────
+function renderList(msgs) {
+  const list = document.getElementById('msgList');
+  const noMsg = document.getElementById('noMessages');
+  list.innerHTML = '';
+
+  if (!msgs.length) {
+    noMsg.style.display = 'block';
+    lucide.createIcons();
+    return;
+  }
+  noMsg.style.display = 'none';
+
+  msgs.forEach(m => {
+    const el = document.createElement('div');
+    el.className = `msg-item${m.read ? '' : ' unread'}${m.id === activeId ? ' active' : ''}`;
+    el.dataset.id = m.id;
+    el.innerHTML = `
+      <div class="msg-item-time">${timeAgo(m.timestamp)}</div>
+      <div class="msg-item-subject">${m.subject || 'Message from HR'}</div>
+      <div class="msg-item-preview">${(m.body||'').substring(0, 65)}…</div>
+      ${!m.read ? '<div class="unread-dot"></div>' : ''}
+    `;
+    el.addEventListener('click', () => openMessage(m));
+    list.appendChild(el);
+  });
+  lucide.createIcons();
+}
+
+// ── Open message ──────────────────────────────────────────────────────────────
+function openMessage(m) {
+  activeId = m.id;
+  document.getElementById('emptyDetail').style.display = 'none';
+  const content = document.getElementById('msgContent');
+  content.style.display = 'flex';
+
+  document.getElementById('detSubject').textContent = m.subject || 'Message from HR';
+  document.getElementById('detFrom').textContent = m.from || 'HR Team';
+  document.getElementById('detTime').textContent = m.timestamp;
+  const pt = document.getElementById('detPriority');
+  pt.textContent = priorityLabel(m.priority);
+  pt.className = 'priority-tag ' + priorityClass(m.priority);
+  document.getElementById('detBody').textContent = m.body || '';
+
+  // Status change banner
+  const sb = document.getElementById('statusBanner');
+  if (m.status_change) {
+    sb.style.display = 'flex';
+    document.getElementById('statusBannerText').textContent = m.status_change;
+  } else {
+    sb.style.display = 'none';
+  }
+
+  // Action items
+  const ai = document.getElementById('actionItemsSection');
+  const ail = document.getElementById('actionItemsList');
+  if (m.action_items && m.action_items.length) {
+    ai.style.display = 'block';
+    ail.innerHTML = m.action_items.map((item, i) => `
+      <div class="action-item-row">
+        <div class="action-checkbox" id="cb_${i}" onclick="toggleCheck(this)">
+          <i data-lucide="check" size="10" style="display:none;color:white"></i>
+        </div>
+        <span>${item}</span>
+      </div>
+    `).join('');
+    lucide.createIcons();
+  } else {
+    ai.style.display = 'none';
+  }
+
+  // Mark as read
+  if (!m.read) {
+    fetch('/api/mark_read', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ message_id: m.id })
+    }).then(() => {
+      m.read = true;
+      renderList(allMessages);
+      updateUnreadBadge();
+    });
+  } else {
+    renderList(allMessages);
+  }
+}
+
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+  const icon = el.querySelector('[data-lucide="check"]');
+  icon.style.display = el.classList.contains('checked') ? 'block' : 'none';
+}
+
+// ── Mark all read ─────────────────────────────────────────────────────────────
+function markAllRead() {
+  fetch('/api/mark_read', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ message_id: 'all' })
+  }).then(() => {
+    allMessages.forEach(m => m.read = true);
+    renderList(allMessages);
+    updateUnreadBadge();
+  });
+}
+
+// ── Unread badge ──────────────────────────────────────────────────────────────
+function updateUnreadBadge() {
+  const count = allMessages.filter(m => !m.read).length;
+  const chip = document.getElementById('unreadChip');
+  const sidebar = document.getElementById('sidebarUnread');
+  if (count > 0) {
+    chip.textContent = count + ' UNREAD';
+    chip.style.display = 'inline-flex';
+    sidebar.textContent = count;
+    sidebar.style.display = 'inline-flex';
+  } else {
+    chip.style.display = 'none';
+    sidebar.style.display = 'none';
+  }
+}
+
+// ── Load messages ─────────────────────────────────────────────────────────────
+async function loadMessages() {
+  try {
+    const res = await fetch('/api/get_messages');
+    const data = await res.json();
+    if (data.success) {
+      allMessages = data.messages;
+      renderList(allMessages);
+      updateUnreadBadge();
+    }
+  } catch(e) {
+    console.error('Failed to load messages:', e);
+  }
+}
+
+// Poll every 15 seconds for new messages
+loadMessages();
+setInterval(loadMessages, 15000);
+</script>
+</body>
+</html>

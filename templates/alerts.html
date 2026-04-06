@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+(function(){
+  var t=localStorage.getItem('sentinel-theme')||'dark';
+  document.documentElement.setAttribute('data-theme',t);
+  document.documentElement.style.backgroundColor=(t==='dark')?'#080c14':'#f1f5f9';
+})();
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alerts | Sentinel</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="/static/css/base.css">
+<style>
+.alert-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 22px;display:grid;grid-template-columns:1fr auto auto auto;gap:16px;align-items:center;margin-bottom:10px;transition:.2s;position:relative;overflow:hidden}
+.alert-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px}
+.alert-critical::before{background:var(--red)}
+.alert-elevated::before{background:var(--amber)}
+.alert-reviewed::before{background:var(--green);opacity:.6}
+.alert-card:hover{border-color:var(--border2);transform:translateX(2px)}
+.detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
+.detail-item{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px}
+.detail-item .lbl{font-size:9px;font-family:'DM Mono',monospace;letter-spacing:.08em;color:var(--muted);margin-bottom:4px}
+.detail-item .val{font-size:13px;font-weight:600;color:var(--text)}
+.sat-bar{height:5px;background:var(--surface2);border-radius:10px;overflow:hidden;margin-top:6px}
+.sat-fill{height:100%;border-radius:10px;background:var(--blue);transition:width 1s ease}
+.strategy-tag{background:var(--green-dim);border:1px solid rgba(16,185,129,0.2);border-radius:8px;padding:6px 12px;font-size:11px;color:var(--green);margin-top:6px;display:inline-block}
+.filter-row{display:flex;gap:10px;margin-bottom:20px;align-items:center}
+
+/* ── Enhanced Send Message Modal ── */
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.pri-btn, .type-btn {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 6px 14px;
+  font-size: 12px;
+  color: var(--muted2);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all .15s;
+}
+.pri-btn:hover, .type-btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+.pri-btn.active, .type-btn.active {
+  background: var(--blue-dim);
+  border-color: var(--blue);
+  color: var(--blue);
+  font-weight: 600;
+}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+    <div><div class="brand-name">SENTINEL</div><div class="brand-tag">HR INTELLIGENCE</div></div>
+  </div>
+  <div class="nav-section">ANALYTICS</div>
+  <a href="/dashboard" class="nav-item"><i data-lucide="layout-dashboard" size="15"></i> Dashboard</a>
+  <a href="/insights" class="nav-item"><i data-lucide="bar-chart-3" size="15"></i> Org Insights</a>
+  <div class="nav-section">TOOLS</div>
+  <a href="/predictor" class="nav-item"><i data-lucide="brain-circuit" size="15"></i> Risk Lab</a>
+  <a href="/alerts" class="nav-item active"><i data-lucide="bell" size="15"></i> Alerts <span class="nav-badge" id="alertCount">--</span></a>
+  <div style="margin-top:auto"></div>
+  <a href="/settings" class="nav-item"><i data-lucide="settings" size="15"></i> Settings</a>
+  <a href="/logout" class="nav-item nav-logout"><i data-lucide="log-out" size="15"></i> Logout</a>
+</aside>
+
+<main class="main">
+  <div class="page-header">
+    <div><h1 class="page-title">Retention Alerts</h1><p class="page-subtitle">AI-flagged employees with attrition probability above 55%</p></div>
+    <button class="btn btn-ghost" onclick="loadAlerts()"><i data-lucide="refresh-cw" size="14"></i> Refresh</button>
+  </div>
+
+  <div class="filter-row">
+    <select id="filterDept" class="form-control" style="width:160px" onchange="filterAlerts()">
+      <option value="">All Departments</option>
+      <option>Sales</option><option>R&D</option><option>Human Resources</option>
+    </select>
+    <select id="filterRisk" class="form-control" style="width:160px" onchange="filterAlerts()">
+      <option value="">All Risk Levels</option>
+      <option value="critical">Critical (80%+)</option>
+      <option value="elevated">Elevated (60-80%)</option>
+    </select>
+    <span id="alertSummary" style="font-size:12px;color:var(--muted);margin-left:8px"></span>
+  </div>
+
+  <div id="alertList"><div style="text-align:center;padding:60px;color:var(--muted)"><i data-lucide="loader-2" size="24" style="animation:spin 1s linear infinite"></i><p style="margin-top:12px">Loading alerts...</p></div></div>
+</main>
+
+<!-- ══════════════════════════════════════════════════════
+     Intervention Modal
+══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box" style="width:560px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
+      <div>
+        <h3 style="font-family:'Inter',sans-serif;font-weight:800;font-size:18px" id="m-title">Intervention Profile</h3>
+        <p style="color:var(--muted2);font-size:13px;margin-top:3px" id="m-sub"></p>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <span class="badge" id="m-risk"></span>
+        <button onclick="closeModal()" style="background:none;border:none;color:var(--muted);cursor:pointer"><i data-lucide="x" size="18"></i></button>
+      </div>
+    </div>
+
+    <div class="detail-grid">
+      <div class="detail-item"><div class="lbl">EMPLOYEE ID</div><div class="val" id="m-id"></div></div>
+      <div class="detail-item"><div class="lbl">MONTHLY INCOME</div><div class="val" id="m-income"></div></div>
+      <div class="detail-item"><div class="lbl">TENURE</div><div class="val" id="m-years"></div></div>
+      <div class="detail-item"><div class="lbl">COMMUTE</div><div class="val" id="m-dist"></div></div>
+      <div class="detail-item"><div class="lbl">OVERTIME</div><div class="val" id="m-ot"></div></div>
+      <div class="detail-item"><div class="lbl">WORK-LIFE BALANCE</div><div class="val" id="m-balance"></div></div>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:6px">
+        <span>JOB SATISFACTION</span><span id="m-sat-text" style="color:var(--blue)"></span>
+      </div>
+      <div class="sat-bar"><div class="sat-fill" id="m-sat-bar"></div></div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">INTERVENTION STRATEGY / NOTES</label>
+      <textarea id="m-notes" class="form-control" rows="3" placeholder="e.g. Schedule 1-on-1, review compensation, offer flexible hours..." style="resize:none;font-family:'Inter',sans-serif"></textarea>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:4px">
+      <button class="btn btn-ghost" onclick="closeModal()" style="flex:1;justify-content:center">Close</button>
+      <button class="btn btn-primary" id="deployBtn" onclick="deployProtocol()" style="flex:2;justify-content:center;background:var(--red);box-shadow:0 0 20px rgba(239,68,68,0.2)">
+        <i data-lucide="send" size="14"></i> DEPLOY PROTOCOL
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     Enhanced Send HR Message Modal
+══════════════════════════════════════════════════════ -->
+<div id="msgModalBackdrop" style="
+  display:none; position:fixed; inset:0; background:rgba(0,0,0,.55);
+  backdrop-filter:blur(4px); z-index:1000; align-items:center; justify-content:center;">
+
+  <div style="
+    background:var(--surface); border:1px solid var(--border2);
+    border-radius:16px; width:520px; max-width:95vw;
+    box-shadow:0 24px 64px rgba(0,0,0,.5); overflow:hidden;
+    animation:slideUp .22s ease">
+
+    <!-- Modal header -->
+    <div style="
+      padding:20px 24px 18px; border-bottom:1px solid var(--border);
+      display:flex; align-items:center; justify-content:space-between">
+      <div>
+        <div style="font-size:15px;font-weight:700;color:var(--text)">Send HR Message</div>
+        <div style="font-size:12px;color:var(--muted2);margin-top:3px">
+          To: <span id="modalEmpId" style="color:var(--blue);font-family:'DM Mono',monospace">—</span>
+        </div>
+      </div>
+      <button onclick="closeMsgModal()" style="
+        background:none; border:1px solid var(--border); border-radius:8px;
+        width:32px; height:32px; cursor:pointer; color:var(--muted2);
+        display:grid; place-items:center; transition:.15s"
+        onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--red)'"
+        onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted2)'">
+        <i data-lucide="x" size="14"></i>
+      </button>
+    </div>
+
+    <!-- Modal body -->
+    <div style="padding:20px 24px">
+
+      <!-- Priority selector -->
+      <div style="margin-bottom:16px">
+        <label style="font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);
+                      letter-spacing:.06em;display:block;margin-bottom:8px">PRIORITY</label>
+        <div style="display:flex;gap:8px">
+          <button class="pri-btn active" data-val="normal"  onclick="setPriority(this,'normal')">Normal</button>
+          <button class="pri-btn"        data-val="high"    onclick="setPriority(this,'high')">High</button>
+          <button class="pri-btn"        data-val="urgent"  onclick="setPriority(this,'urgent')">⚡ Urgent</button>
+        </div>
+      </div>
+
+      <!-- Subject -->
+      <div style="margin-bottom:14px">
+        <label style="font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);
+                      letter-spacing:.06em;display:block;margin-bottom:8px">SUBJECT</label>
+        <input id="msgSubject" type="text" placeholder="e.g. Check-in scheduled for Friday"
+          style="width:100%;background:var(--surface2);border:1px solid var(--border);
+                 border-radius:9px;padding:10px 14px;font-size:13px;color:var(--text);
+                 font-family:inherit;outline:none;box-sizing:border-box;transition:.15s"
+          onfocus="this.style.borderColor='var(--blue)'"
+          onblur="this.style.borderColor='var(--border)'">
+      </div>
+
+      <!-- Message type pills -->
+      <div style="margin-bottom:14px">
+        <label style="font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);
+                      letter-spacing:.06em;display:block;margin-bottom:8px">MESSAGE TYPE</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="type-btn active" onclick="setTemplate(this,'custom')">Custom</button>
+          <button class="type-btn" onclick="setTemplate(this,'checkin')">Check-in Request</button>
+          <button class="type-btn" onclick="setTemplate(this,'wellness')">Wellness Support</button>
+          <button class="type-btn" onclick="setTemplate(this,'career')">Career Discussion</button>
+          <button class="type-btn" onclick="setTemplate(this,'compensation')">Compensation Review</button>
+          <button class="type-btn" onclick="setTemplate(this,'recognition')">Recognition</button>
+          <button class="type-btn" onclick="setTemplate(this,'concern')">Concern Notice</button>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div style="margin-bottom:16px">
+        <label style="font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);
+                      letter-spacing:.06em;display:block;margin-bottom:8px">MESSAGE</label>
+        <textarea id="msgBody" rows="5" placeholder="Type your message here…"
+          style="width:100%;background:var(--surface2);border:1px solid var(--border);
+                 border-radius:9px;padding:12px 14px;font-size:13px;color:var(--text);
+                 font-family:inherit;outline:none;resize:vertical;box-sizing:border-box;
+                 line-height:1.6;transition:.15s"
+          onfocus="this.style.borderColor='var(--blue)'"
+          onblur="this.style.borderColor='var(--border)'"></textarea>
+      </div>
+
+      <!-- Status change toggle -->
+      <div style="
+        background:rgba(245,158,11,0.07); border:1px solid rgba(245,158,11,0.2);
+        border-radius:9px; padding:12px 14px; margin-bottom:16px;
+        display:flex; align-items:center; justify-content:space-between">
+        <div>
+          <div style="font-size:12px;font-weight:600;color:var(--text)">Include status notification</div>
+          <div style="font-size:11px;color:var(--muted2);margin-top:2px">
+            Alerts the employee their risk status was flagged
+          </div>
+        </div>
+        <label style="position:relative;display:inline-block;width:38px;height:22px;cursor:pointer">
+          <input type="checkbox" id="statusToggle" style="opacity:0;width:0;height:0">
+          <span id="toggleVisual" style="
+            position:absolute; inset:0; background:var(--border2); border-radius:11px;
+            transition:.2s; cursor:pointer"
+            onclick="document.getElementById('statusToggle').click();
+                     this.style.background=document.getElementById('statusToggle').checked?'#f59e0b':'var(--border2)'">
+            <span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;
+                         top:3px;left:3px;transition:.2s" id="toggleKnob"></span>
+          </span>
+        </label>
+      </div>
+
+      <!-- Send button -->
+      <button id="sendMsgBtn" onclick="sendMessage()"
+        style="width:100%;background:var(--blue);border:none;border-radius:9px;
+               padding:12px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;
+               font-family:inherit;transition:.18s;display:flex;align-items:center;
+               justify-content:center;gap:8px"
+        onmouseover="this.style.opacity='.88'"
+        onmouseout="this.style.opacity='1'">
+        <i data-lucide="send" size="15"></i> Send Message
+      </button>
+
+      <!-- Result message -->
+      <div id="sendResult" style="
+        display:none; margin-top:12px; padding:10px 14px; border-radius:8px;
+        font-size:13px; font-weight:500; text-align:center"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+lucide.createIcons();
+let allAlerts = [], currentEmp = null;
+const reviewed = JSON.parse(localStorage.getItem('sentinel_reviewed') || '{}');
+
+// ── Alert loading & rendering ────────────────────────────────────────────────
+async function loadAlerts(){
+  try {
+    const res = await fetch('/get_alerts_data');
+    const d = await res.json();
+    if(d.error) throw new Error(d.error);
+    allAlerts = d.employees;
+    document.getElementById('alertCount').textContent = allAlerts.length;
+    filterAlerts();
+  } catch(e){
+    document.getElementById('alertList').innerHTML = `<div style="color:var(--red);padding:20px;text-align:center">Error loading alerts: ${e.message}</div>`;
+  }
+}
+
+function filterAlerts(){
+  const dept = document.getElementById('filterDept').value;
+  const risk = document.getElementById('filterRisk').value;
+  let filtered = allAlerts.filter(e=>{
+    if(dept && e.dept !== dept) return false;
+    if(risk === 'critical' && e.score < 80) return false;
+    if(risk === 'elevated' && (e.score < 60 || e.score >= 80)) return false;
+    return true;
+  });
+  document.getElementById('alertSummary').textContent = `Showing ${filtered.length} of ${allAlerts.length} alerts`;
+  renderAlerts(filtered);
+}
+
+function renderAlerts(employees){
+  const container = document.getElementById('alertList');
+  if(!employees.length){ container.innerHTML='<div style="text-align:center;padding:60px;color:var(--muted)">No alerts match your filters.</div>'; return; }
+  container.innerHTML = employees.map(e=>{
+    const isRev = reviewed[e.id];
+    const cls = isRev ? 'alert-reviewed' : e.score>=80 ? 'alert-critical' : 'alert-elevated';
+    const bc = e.score>=80 ? 'badge-red' : 'badge-amber';
+    return `<div class="alert-card ${cls}">
+      <div>
+        <div style="font-weight:600;color:var(--text);display:flex;align-items:center;gap:10px">
+          ${e.name} ${isRev ? '<span class="badge badge-green">REVIEWED</span>' : ''}
+        </div>
+        <div style="font-size:12px;color:var(--muted2);margin-top:3px">${e.role} • ${e.dept}</div>
+        ${isRev ? `<div class="strategy-tag">${reviewed[e.id]}</div>` : ''}
+      </div>
+      <span class="badge ${bc}" style="font-size:12px;padding:5px 12px">${e.score}% RISK</span>
+      <button class="btn btn-ghost" onclick='openMsgModal(${JSON.stringify(e)})' style="font-size:12px">
+        <i data-lucide="send" size="12"></i> Message
+      </button>
+      <button class="btn ${isRev?'btn-ghost':'btn-primary'}" onclick='openModal(${JSON.stringify(e)})' style="font-size:12px">
+        ${isRev ? 'Edit' : 'Intervene'}
+      </button>
+    </div>`;
+  }).join('');
+  lucide.createIcons();
+}
+
+// ── Intervention Modal ───────────────────────────────────────────────────────
+function openModal(emp){
+  currentEmp = emp;
+  document.getElementById('m-title').textContent = emp.name;
+  document.getElementById('m-sub').textContent = emp.role + ' | ' + emp.dept;
+  document.getElementById('m-id').textContent = emp.id;
+  document.getElementById('m-income').textContent = '$'+emp.income.toLocaleString();
+  document.getElementById('m-years').textContent = emp.years+'y tenure';
+  document.getElementById('m-dist').textContent = emp.dist+' km';
+  document.getElementById('m-ot').textContent = emp.overtime;
+  document.getElementById('m-balance').textContent = emp.balance+' / 4';
+  const satPct = (emp.satisfaction/4)*100;
+  document.getElementById('m-sat-bar').style.width = satPct+'%';
+  document.getElementById('m-sat-text').textContent = emp.satisfaction+' / 4';
+  const riskEl = document.getElementById('m-risk');
+  riskEl.textContent = emp.score+'% RISK';
+  riskEl.className = 'badge ' + (emp.score>=80 ? 'badge-red' : 'badge-amber');
+  document.getElementById('m-notes').value = reviewed[emp.id] || '';
+  document.getElementById('deployBtn').innerHTML = '<i data-lucide="send" size="14"></i> DEPLOY PROTOCOL';
+  document.getElementById('deployBtn').style.background = 'var(--red)';
+  document.getElementById('modalOverlay').classList.add('open');
+  lucide.createIcons();
+  setTimeout(()=>{ document.querySelector('.sat-fill').style.width = satPct+'%'; }, 50);
+}
+
+function closeModal(){ document.getElementById('modalOverlay').classList.remove('open'); }
+
+function deployProtocol(){
+  const notes = document.getElementById('m-notes').value.trim();
+  if(!notes){ alert('Please enter an intervention strategy.'); return; }
+  reviewed[currentEmp.id] = notes;
+  localStorage.setItem('sentinel_reviewed', JSON.stringify(reviewed));
+  const btn = document.getElementById('deployBtn');
+  btn.innerHTML = '<i data-lucide="check" size="14"></i> DEPLOYED';
+  btn.style.background = 'var(--green)';
+  lucide.createIcons();
+  setTimeout(()=>{ closeModal(); filterAlerts(); }, 900);
+}
+
+loadAlerts();
+
+// ── Enhanced Send Message Modal ──────────────────────────────────────────────
+let currentEmployeeId = '';
+let currentPriority = 'normal';
+
+const MSG_TEMPLATES = {
+  custom: { subject: '', body: '' },
+  checkin: {
+    subject: 'Scheduling a 1:1 Check-in',
+    body: `Hi,\n\nI'd like to schedule a quick 1:1 check-in with you to see how things are going and understand if there's anything I can support you with.\n\nPlease let me know your availability this week.\n\nBest regards,\nHR Team`
+  },
+  wellness: {
+    subject: 'Employee Wellness Support',
+    body: `Hi,\n\nWe care about your well-being and want to make sure you have the support you need. Our Employee Assistance Program (EAP) offers confidential counseling and wellness resources.\n\nPlease don't hesitate to reach out if you need anything.\n\nWarm regards,\nHR Team`
+  },
+  career: {
+    subject: 'Career Development Discussion',
+    body: `Hi,\n\nWe'd love to have a conversation about your career goals and how we can support your growth within the organization.\n\nCould you share your availability for a 30-minute career discussion this week?\n\nBest regards,\nHR Team`
+  },
+  compensation: {
+    subject: 'Compensation Review Meeting',
+    body: `Hi,\n\nWe'd like to schedule a compensation review discussion to ensure your remuneration reflects your contributions and market standards.\n\nPlease confirm a suitable time for a confidential meeting.\n\nBest regards,\nHR Team`
+  },
+  recognition: {
+    subject: 'Recognition — Outstanding Contribution',
+    body: `Dear Team Member,\n\nWe want to take a moment to recognize your outstanding contributions to your team this quarter. Your dedication and performance have not gone unnoticed.\n\nThank you for your continued excellence.\n\nHR Team`
+  },
+  concern: {
+    subject: 'Important: HR Notice',
+    body: `Dear Team Member,\n\nOur systems have flagged some areas of concern regarding your current engagement and wellbeing at work. We are here to support you.\n\nPlease connect with your HR representative at your earliest convenience for a confidential discussion.\n\nHR Team`
+  }
+};
+
+function openMsgModal(emp) {
+  currentEmployeeId = emp.id;
+  document.getElementById('modalEmpId').textContent = `${emp.name} (${emp.id}) · ${emp.dept}`;
+  document.getElementById('msgSubject').value = '';
+  document.getElementById('msgBody').value = '';
+  document.getElementById('sendResult').style.display = 'none';
+  document.getElementById('statusToggle').checked = false;
+  document.getElementById('toggleKnob').style.left = '3px';
+  document.getElementById('toggleVisual').style.background = 'var(--border2)';
+  // Reset pill buttons
+  document.querySelectorAll('.pri-btn').forEach(b => b.classList.toggle('active', b.dataset.val === 'normal'));
+  document.querySelectorAll('.type-btn').forEach((b,i) => b.classList.toggle('active', i === 0));
+  currentPriority = 'normal';
+  const backdrop = document.getElementById('msgModalBackdrop');
+  backdrop.style.display = 'flex';
+  lucide.createIcons();
+}
+
+function closeMsgModal() {
+  document.getElementById('msgModalBackdrop').style.display = 'none';
+  currentEmployeeId = '';
+}
+
+function setPriority(btn, val) {
+  currentPriority = val;
+  document.querySelectorAll('.pri-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function setTemplate(btn, key) {
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const t = MSG_TEMPLATES[key];
+  if (t.subject) document.getElementById('msgSubject').value = t.subject;
+  if (t.body)    document.getElementById('msgBody').value    = t.body;
+}
+
+document.getElementById('statusToggle').addEventListener('change', function(){
+  document.getElementById('toggleKnob').style.left = this.checked ? '19px' : '3px';
+});
+
+// Close on backdrop click
+document.getElementById('msgModalBackdrop').addEventListener('click', function(e){
+  if (e.target === this) closeMsgModal();
+});
+
+async function sendMessage() {
+  const subject    = document.getElementById('msgSubject').value.trim();
+  const body       = document.getElementById('msgBody').value.trim();
+  const withStatus = document.getElementById('statusToggle').checked;
+  const result     = document.getElementById('sendResult');
+  const btn        = document.getElementById('sendMsgBtn');
+
+  if (!body) {
+    result.style.display = 'block';
+    result.style.background = 'rgba(239,68,68,0.1)';
+    result.style.color = '#ef4444';
+    result.textContent = 'Please enter a message body.';
+    return;
+  }
+
+  btn.innerHTML = 'Sending…';
+  btn.disabled = true;
+
+  const payload = {
+    employee_id: currentEmployeeId,
+    subject,
+    body,
+    priority: currentPriority,
+  };
+  if (withStatus) {
+    payload.status_change = `Your risk profile was reviewed by HR on ${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}. Please check your messages for further details.`;
+  }
+
+  try {
+    const res  = await fetch('/api/send_message', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (data.success) {
+      result.style.display = 'block';
+      result.style.background = 'rgba(16,185,129,0.1)';
+      result.style.color = '#10b981';
+      result.innerHTML = '✓ Message sent to ' + currentEmployeeId;
+      btn.innerHTML = '<i data-lucide="check" size="15"></i> Sent!';
+      lucide.createIcons();
+      setTimeout(() => {
+        closeMsgModal();
+        btn.innerHTML = '<i data-lucide="send" size="15"></i> Send Message';
+        btn.disabled = false;
+        lucide.createIcons();
+      }, 1600);
+    } else {
+      throw new Error(data.message || 'Failed');
+    }
+  } catch(e) {
+    result.style.display = 'block';
+    result.style.background = 'rgba(239,68,68,0.1)';
+    result.style.color = '#ef4444';
+    result.textContent = 'Error: ' + e.message;
+    btn.innerHTML = '<i data-lucide="send" size="15"></i> Send Message';
+    btn.disabled = false;
+    lucide.createIcons();
+  }
+}
+</script>
+
+</body>
+</html>

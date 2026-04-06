@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+(function(){
+  var t=localStorage.getItem('sentinel-theme')||'dark';
+  document.documentElement.setAttribute('data-theme',t);
+  document.documentElement.style.backgroundColor=(t==='dark')?'#080c14':'#f1f5f9';
+})();
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Risk Lab | Sentinel</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+<link rel="stylesheet" href="/static/css/base.css">
+<style>
+.predictor-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:20px}
+.result-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:14px;gap:12px;min-height:400px}
+.risk-score{font-family:'Inter',sans-serif;font-size:52px;font-weight:800;text-align:center;margin-top:-20px}
+.risk-level{display:inline-block;font-size:11px;font-family:'DM Mono',monospace;font-weight:700;letter-spacing:.1em;padding:5px 16px;border-radius:20px;text-align:center}
+.factor-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--muted2);padding:8px 0;border-bottom:1px solid var(--border)}
+.factor-item:last-child{border:none}
+.factor-dot{width:6px;height:6px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.gauge-wrap{height:200px;width:100%}
+.rec-box{background:var(--surface2);border:1px solid var(--border2);border-radius:12px;padding:16px;margin-top:14px}
+.loading-spin{animation:spin 1s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+    <div><div class="brand-name">SENTINEL</div><div class="brand-tag">HR INTELLIGENCE</div></div>
+  </div>
+  <div class="nav-section">ANALYTICS</div>
+  <a href="/dashboard" class="nav-item"><i data-lucide="layout-dashboard" size="15"></i> Dashboard</a>
+  <a href="/insights" class="nav-item"><i data-lucide="bar-chart-3" size="15"></i> Org Insights</a>
+  <div class="nav-section">TOOLS</div>
+  <a href="/predictor" class="nav-item active"><i data-lucide="brain-circuit" size="15"></i> Risk Lab</a>
+  <a href="/alerts" class="nav-item"><i data-lucide="bell" size="15"></i> Alerts</a>
+  <div style="margin-top:auto"></div>
+  <a href="/settings" class="nav-item"><i data-lucide="settings" size="15"></i> Settings</a>
+  <a href="/logout" class="nav-item nav-logout"><i data-lucide="log-out" size="15"></i> Logout</a>
+</aside>
+
+<main class="main">
+  <div class="page-header">
+    <div><h1 class="page-title">AI Risk Lab</h1><p class="page-subtitle">Individual attrition probability powered by Random Forest model</p></div>
+    <span class="badge badge-blue" style="font-size:11px;padding:6px 14px">MODEL ACTIVE</span>
+  </div>
+
+  <div class="predictor-grid">
+    <!-- Input Card -->
+    <div class="card">
+      <div class="section-title" style="margin-bottom:4px">Employee Parameters</div>
+      <p class="card-muted" style="margin-bottom:20px">Enter employee attributes to compute risk</p>
+
+      <div class="form-group">
+        <label class="form-label">OVERTIME REQUIREMENT</label>
+        <select id="overtime" class="form-control">
+          <option value="">Select...</option>
+          <option value="Yes">Yes — works overtime</option>
+          <option value="No">No — standard hours</option>
+        </select>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="form-group">
+          <label class="form-label">JOB SATISFACTION (1-4)</label>
+          <input type="number" id="satisfaction" class="form-control" min="1" max="4" placeholder="1 = Low, 4 = High">
+        </div>
+        <div class="form-group">
+          <label class="form-label">MONTHLY INCOME ($)</label>
+          <input type="number" id="income" class="form-control" placeholder="e.g. 5000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">YEARS AT COMPANY</label>
+          <input type="number" id="years" class="form-control" placeholder="e.g. 3">
+        </div>
+        <div class="form-group">
+          <label class="form-label">DISTANCE FROM HOME (km)</label>
+          <input type="number" id="distance" class="form-control" placeholder="e.g. 10">
+        </div>
+      </div>
+
+      <button class="btn btn-primary" id="predictBtn" onclick="runPrediction()" style="width:100%;justify-content:center;padding:13px;margin-top:4px">
+        <i data-lucide="zap" size="15"></i> RUN AI ANALYSIS
+      </button>
+
+      <!-- Info box -->
+      <div style="margin-top:16px;background:var(--blue-dim);border:1px solid rgba(59,127,245,0.2);border-radius:10px;padding:14px">
+        <div style="font-size:11px;font-family:'DM Mono',monospace;color:var(--blue);margin-bottom:6px">MODEL INFO</div>
+        <p style="font-size:12px;color:var(--muted2);line-height:1.6">Random Forest Classifier trained on 1,500 employee records with 5 key features. Outputs probability of attrition within next cycle.</p>
+      </div>
+    </div>
+
+    <!-- Result Card -->
+    <div class="card" id="resultCard">
+      <div id="resultEmpty" class="result-empty">
+        <i data-lucide="brain-circuit" size="40" style="opacity:0.3"></i>
+        <p>Input employee data to generate risk analysis</p>
+      </div>
+
+      <div id="resultContent" style="display:none">
+        <div class="gauge-wrap" id="gaugeChart"></div>
+        <div class="risk-score" id="riskScore">0%</div>
+        <div style="text-align:center;margin:8px 0 16px">
+          <span class="risk-level" id="riskLevel">—</span>
+        </div>
+
+        <div style="margin-bottom:12px">
+          <div style="font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:10px">AI RISK FACTORS</div>
+          <div id="factorList"></div>
+        </div>
+
+        <div class="rec-box">
+          <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--blue);margin-bottom:6px">RECOMMENDATION</div>
+          <p id="recommendation" style="font-size:13px;color:var(--muted2);line-height:1.6"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Error Modal -->
+<div class="modal-overlay" id="errModal">
+  <div class="modal-box" style="width:360px;text-align:center">
+    <i data-lucide="alert-circle" size="40" style="color:var(--red);margin-bottom:12px"></i>
+    <h3 style="font-family:'Inter',sans-serif;font-weight:800;margin-bottom:8px">Missing Data</h3>
+    <p id="errMsg" style="color:var(--muted2);font-size:13px;margin-bottom:20px">Please fill in all fields.</p>
+    <button class="btn btn-primary" onclick="document.getElementById('errModal').classList.remove('open')" style="width:100%;justify-content:center">Got it</button>
+  </div>
+</div>
+
+<script>
+lucide.createIcons();
+
+function showError(msg){
+  document.getElementById('errMsg').textContent = msg;
+  document.getElementById('errModal').classList.add('open');
+}
+
+function renderGauge(val, color){
+  Plotly.newPlot('gaugeChart',[{
+    type:'indicator', mode:'gauge', value:val,
+    gauge:{axis:{range:[0,100],tickcolor:'#64748b',tickfont:{color:'#64748b',family:'DM Mono'}},bar:{color},bgcolor:'transparent',borderwidth:0,
+      steps:[{range:[0,30],color:'rgba(16,185,129,0.08)'},{range:[30,60],color:'rgba(245,158,11,0.08)'},{range:[60,100],color:'rgba(239,68,68,0.08)'}]}
+  }],{
+    margin:{t:20,b:0,l:30,r:30},paper_bgcolor:'transparent',
+    font:{color:'#64748b',family:'Inter'}
+  },{responsive:true});
+}
+
+async function runPrediction(){
+  const btn = document.getElementById('predictBtn');
+  const fields = {overtime:document.getElementById('overtime').value, satisfaction:document.getElementById('satisfaction').value,
+    income:document.getElementById('income').value, years:document.getElementById('years').value, distance:document.getElementById('distance').value};
+
+  for(const [k,v] of Object.entries(fields)){
+    if(!v){ showError('Please fill in all employee parameters before running analysis.'); return; }
+  }
+  if(parseInt(fields.satisfaction)<1||parseInt(fields.satisfaction)>4){
+    showError('Job satisfaction must be between 1 and 4.'); return;
+  }
+
+  btn.disabled=true;
+  btn.innerHTML='<span class="loading-spin"><i data-lucide="loader-2" size="15"></i></span> ANALYZING...';
+  lucide.createIcons();
+
+  try {
+    const res = await fetch('/predict',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(fields)});
+    const d = await res.json();
+    if(d.error){ showError(d.error); return; }
+
+    document.getElementById('resultEmpty').style.display='none';
+    document.getElementById('resultContent').style.display='block';
+
+    document.getElementById('riskScore').textContent = d.risk+'%';
+    document.getElementById('riskScore').style.color = d.color;
+
+    const lvl = document.getElementById('riskLevel');
+    lvl.textContent = d.level+' RISK';
+    lvl.style.cssText = `background:${d.color}20;color:${d.color};border:1px solid ${d.color}40`;
+
+    document.getElementById('factorList').innerHTML = d.factors.map(f=>`
+      <div class="factor-item"><div class="factor-dot" style="background:${d.color}"></div>${f}</div>`).join('');
+
+    document.getElementById('recommendation').textContent = d.recommendation;
+
+    renderGauge(d.risk, d.color);
+  } catch(e){ showError('Prediction failed. Please check your input.'); }
+  finally {
+    btn.disabled=false;
+    btn.innerHTML='<i data-lucide="zap" size="15"></i> RUN AI ANALYSIS';
+    lucide.createIcons();
+  }
+}
+
+renderGauge(0,'#64748b');
+</script>
+</body>
+</html>

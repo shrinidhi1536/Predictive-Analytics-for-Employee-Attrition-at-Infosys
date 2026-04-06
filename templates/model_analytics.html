@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+(function(){
+  var t=localStorage.getItem('sentinel-theme')||'dark';
+  document.documentElement.setAttribute('data-theme',t);
+  document.documentElement.style.backgroundColor=(t==='dark')?'#080c14':'#f1f5f9';
+})();
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Model Analytics | Sentinel</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="/static/css/base.css">
+<style>
+.metric-highlight {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: .2s;
+}
+.metric-highlight:hover { transform: translateY(-2px); border-color: var(--border2); }
+.metric-highlight::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+}
+.mh-blue::before  { background: var(--blue); }
+.mh-green::before { background: var(--green); }
+.mh-amber::before { background: var(--amber); }
+.mh-cyan::before  { background: var(--cyan); }
+.mh-red::before   { background: var(--red); }
+
+.metric-big {
+  font-family:'Inter',sans-serif;
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1;
+  margin: 8px 0 4px;
+}
+.metric-label {
+  font-size: 10px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: .08em;
+  color: var(--muted);
+}
+
+/* Confusion Matrix */
+.cm-grid {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr;
+  gap: 6px;
+  align-items: center;
+  justify-items: center;
+  max-width: 340px;
+}
+.cm-cell {
+  width: 110px; height: 90px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family:'Inter',sans-serif;
+}
+.cm-val { font-size: 30px; font-weight: 800; }
+.cm-sub { font-size: 10px; font-family: 'DM Mono', monospace; margin-top: 4px; opacity: .7; }
+.cm-tp { background: rgba(16,185,129,.15); color: var(--green); border: 1px solid rgba(16,185,129,.3); }
+.cm-tn { background: rgba(16,185,129,.12); color: var(--green); border: 1px solid rgba(16,185,129,.25); }
+.cm-fp { background: rgba(239,68,68,.12); color: var(--red); border: 1px solid rgba(239,68,68,.2); }
+.cm-fn { background: rgba(245,158,11,.12); color: var(--amber); border: 1px solid rgba(245,158,11,.2); }
+.cm-axis {
+  font-size: 10px; font-family: 'DM Mono', monospace;
+  color: var(--muted); letter-spacing: .06em;
+}
+
+/* SHAP waterfall */
+.shap-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.shap-label { font-size: 12px; color: var(--muted2); width: 160px; flex-shrink: 0; text-align: right; }
+.shap-track { flex: 1; height: 24px; background: var(--surface2); border-radius: 6px; overflow: hidden; position: relative; }
+.shap-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; padding: 0 8px; font-size: 11px; font-family: 'DM Mono', monospace; font-weight: 600; transition: width 1s ease; }
+.shap-pos { background: rgba(239,68,68,.7); color: white; justify-content: flex-end; }
+.shap-neg { background: rgba(59,127,245,.7); color: white; justify-content: flex-start; }
+
+.class-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+.class-row:last-child { border: none; }
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+    <div><div class="brand-name">SENTINEL</div><div class="brand-tag">HR INTELLIGENCE</div></div>
+  </div>
+  <div class="nav-section">ANALYTICS</div>
+  <a href="/dashboard" class="nav-item"><i data-lucide="layout-dashboard" size="15"></i> Dashboard</a>
+  <a href="/insights" class="nav-item"><i data-lucide="bar-chart-3" size="15"></i> Org Insights</a>
+  <div class="nav-section">TOOLS</div>
+  <a href="/predictor" class="nav-item"><i data-lucide="brain-circuit" size="15"></i> Risk Lab</a>
+  <a href="/alerts" class="nav-item"><i data-lucide="bell" size="15"></i> Alerts</a>
+  <a href="/bulk_predict" class="nav-item"><i data-lucide="table-2" size="15"></i> Bulk Predict</a>
+  <a href="/model_analytics" class="nav-item active"><i data-lucide="flask-conical" size="15"></i> Model Analytics</a>
+  <div style="margin-top:auto"></div>
+  <a href="/settings" class="nav-item"><i data-lucide="settings" size="15"></i> Settings</a>
+  <a href="/logout" class="nav-item nav-logout"><i data-lucide="log-out" size="15"></i> Logout</a>
+</aside>
+
+<main class="main">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Model Analytics</h1>
+      <p class="page-subtitle">Random Forest · 100 estimators · trained on 1,200 records · evaluated on 300</p>
+    </div>
+    <span class="badge badge-green" style="font-size:11px;padding:6px 14px">MODEL VALIDATED</span>
+  </div>
+
+  <!-- Key Metric Cards -->
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:22px">
+    <div class="metric-highlight mh-blue">
+      <div class="metric-label">ACCURACY</div>
+      <div class="metric-big" id="m-acc" style="color:var(--blue)">—</div>
+      <div style="font-size:11px;color:var(--muted)">Overall correct</div>
+    </div>
+    <div class="metric-highlight mh-green">
+      <div class="metric-label">F1 SCORE</div>
+      <div class="metric-big" id="m-f1" style="color:var(--green)">—</div>
+      <div style="font-size:11px;color:var(--muted)">Harmonic mean</div>
+    </div>
+    <div class="metric-highlight mh-cyan">
+      <div class="metric-label">AUC-ROC</div>
+      <div class="metric-big" id="m-auc" style="color:var(--cyan)">—</div>
+      <div style="font-size:11px;color:var(--muted)">Discrimination</div>
+    </div>
+    <div class="metric-highlight mh-amber">
+      <div class="metric-label">PRECISION</div>
+      <div class="metric-big" id="m-pre" style="color:var(--amber)">—</div>
+      <div style="font-size:11px;color:var(--muted)">Of flagged, true</div>
+    </div>
+    <div class="metric-highlight mh-red">
+      <div class="metric-label">RECALL</div>
+      <div class="metric-big" id="m-rec" style="color:var(--red)">—</div>
+      <div style="font-size:11px;color:var(--muted)">Attrition caught</div>
+    </div>
+  </div>
+
+  <!-- Row: Confusion Matrix + Class Report -->
+  <div class="grid2" style="margin-bottom:16px">
+    <div class="card">
+      <div class="section-header">
+        <div class="section-title">Confusion Matrix</div>
+        <span class="badge badge-blue">TEST SET · 300 RECORDS</span>
+      </div>
+      <div style="display:flex;gap:40px;align-items:flex-start;margin-top:8px">
+        <div>
+          <div class="cm-grid" id="cmGrid">
+            <!-- Populated by JS -->
+          </div>
+          <div style="margin-top:14px;font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);text-align:center">↑ ACTUAL CLASS</div>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);letter-spacing:.08em;margin-bottom:12px">WHAT IT MEANS</div>
+          <div style="font-size:12px;color:var(--muted2);line-height:1.9">
+            <div><span style="color:var(--green);font-weight:700">TP (True Positive)</span> — Correctly predicted attrition</div>
+            <div><span style="color:var(--green);font-weight:700">TN (True Negative)</span> — Correctly predicted retention</div>
+            <div><span style="color:var(--red);font-weight:700">FP (False Positive)</span> — Wrongly flagged as leaving</div>
+            <div><span style="color:var(--amber);font-weight:700">FN (False Negative)</span> — Missed actual leavers</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-header">
+        <div class="section-title">Classification Report</div>
+      </div>
+      <div style="margin-bottom:14px">
+        <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:8px">ATTRITION CLASS (positive)</div>
+        <div id="classAttrition"></div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:8px">RETAINED CLASS (negative)</div>
+        <div id="classRetained"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row: Feature Importance + SHAP -->
+  <div class="grid2" style="margin-bottom:16px">
+    <div class="card">
+      <div class="section-header">
+        <div class="section-title">Feature Importance</div>
+        <span class="badge badge-blue">GINI IMPURITY</span>
+      </div>
+      <div class="chart-wrap" style="height:220px"><canvas id="featChart"></canvas></div>
+    </div>
+
+    <div class="card">
+      <div class="section-header">
+        <div class="section-title">SHAP — Mean Impact on Prediction</div>
+        <span class="badge badge-amber">EXPLAINABILITY</span>
+      </div>
+      <p style="font-size:12px;color:var(--muted2);margin-bottom:14px">Average absolute SHAP value — how much each feature pushes the attrition probability up or down.</p>
+      <div id="shapBars"></div>
+    </div>
+  </div>
+
+  <!-- SHAP Waterfall for single employee -->
+  <div class="card">
+    <div class="section-header">
+      <div>
+        <div class="section-title">SHAP Waterfall — Per-Employee Explainability</div>
+        <div class="card-muted">Enter employee data below to see exactly which factors drive their risk score</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr) auto;gap:12px;margin-top:16px;align-items:flex-end">
+      <div class="form-group" style="margin:0">
+        <label class="form-label">OVERTIME</label>
+        <select id="s-ot" class="form-control">
+          <option value="Yes">Yes</option><option value="No">No</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin:0">
+        <label class="form-label">SATISFACTION (1-4)</label>
+        <input type="number" id="s-sat" class="form-control" value="2" min="1" max="4">
+      </div>
+      <div class="form-group" style="margin:0">
+        <label class="form-label">INCOME ($)</label>
+        <input type="number" id="s-inc" class="form-control" value="4000">
+      </div>
+      <div class="form-group" style="margin:0">
+        <label class="form-label">YEARS</label>
+        <input type="number" id="s-yrs" class="form-control" value="2">
+      </div>
+      <div class="form-group" style="margin:0">
+        <label class="form-label">DISTANCE (km)</label>
+        <input type="number" id="s-dist" class="form-control" value="15">
+      </div>
+      <button class="btn btn-primary" onclick="runShap()" id="shapBtn" style="height:44px;padding:0 18px;white-space:nowrap">
+        <i data-lucide="zap" size="14"></i> Explain
+      </button>
+    </div>
+
+    <div id="waterfallArea" style="margin-top:20px;display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div>
+          <span style="font-size:11px;font-family:'DM Mono',monospace;color:var(--muted)">PREDICTED RISK: </span>
+          <span id="wf-risk" style="font-family:'Inter',sans-serif;font-size:22px;font-weight:800"></span>
+        </div>
+        <span id="wf-level" class="badge" style="font-size:11px"></span>
+      </div>
+      <div id="wfBars"></div>
+      <div style="margin-top:14px;background:var(--surface2);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--muted2);line-height:1.7">
+        <span style="color:var(--red);font-weight:700">Red bars</span> push the score <b>higher</b> (increases attrition risk) &nbsp;·&nbsp;
+        <span style="color:var(--blue);font-weight:700">Blue bars</span> push the score <b>lower</b> (reduces risk) &nbsp;·&nbsp;
+        Bar length = magnitude of impact
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+lucide.createIcons();
+const gc = () => 'rgba(255,255,255,0.05)', tc = () => '#64748b';
+
+async function load() {
+  const d = await (await fetch('/api/model_metrics')).json();
+
+  // Metric cards
+  document.getElementById('m-acc').textContent = d.accuracy + '%';
+  document.getElementById('m-f1').textContent  = d.f1 + '%';
+  document.getElementById('m-auc').textContent = d.auc + '%';
+  document.getElementById('m-pre').textContent = d.precision + '%';
+  document.getElementById('m-rec').textContent = d.recall + '%';
+
+  // Confusion matrix
+  const [tn, fp, fn, tp] = [d.confusion_matrix[0][0], d.confusion_matrix[0][1],
+                             d.confusion_matrix[1][0], d.confusion_matrix[1][1]];
+  document.getElementById('cmGrid').innerHTML = `
+    <div></div>
+    <div class="cm-axis">PRED: NO</div>
+    <div class="cm-axis">PRED: YES</div>
+    <div class="cm-axis" style="writing-mode:vertical-rl;transform:rotate(180deg)">ACTUAL: NO</div>
+    <div class="cm-cell cm-tn"><div class="cm-val">${tn}</div><div class="cm-sub">TN</div></div>
+    <div class="cm-cell cm-fp"><div class="cm-val">${fp}</div><div class="cm-sub">FP</div></div>
+    <div class="cm-axis" style="writing-mode:vertical-rl;transform:rotate(180deg)">ACTUAL: YES</div>
+    <div class="cm-cell cm-fn"><div class="cm-val">${fn}</div><div class="cm-sub">FN</div></div>
+    <div class="cm-cell cm-tp"><div class="cm-val">${tp}</div><div class="cm-sub">TP</div></div>`;
+
+  // Classification report
+  const cr = d.class_report;
+  const classRow = (label, data, col) => `
+    <div class="class-row">
+      <span style="color:${col};font-weight:600">${label}</span>
+      <span style="color:var(--muted2)">Precision: <b style="color:var(--text)">${data.p}%</b></span>
+      <span style="color:var(--muted2)">Recall: <b style="color:var(--text)">${data.r}%</b></span>
+      <span style="color:var(--muted2)">F1: <b style="color:var(--text)">${data.f1}%</b></span>
+      <span class="badge badge-blue">${data.support} samples</span>
+    </div>`;
+  document.getElementById('classAttrition').innerHTML = classRow('Attrition (Yes)', cr.attrition, 'var(--red)');
+  document.getElementById('classRetained').innerHTML  = classRow('Retained (No)',   cr.retained,  'var(--green)');
+
+  // Feature importance chart
+  const fi = d.feature_importance;
+  const fiSorted = Object.entries(fi).sort((a,b) => b[1]-a[1]);
+  new Chart(document.getElementById('featChart'), {
+    type: 'bar',
+    data: {
+      labels: fiSorted.map(e => e[0]),
+      datasets: [{
+        data: fiSorted.map(e => (e[1]*100).toFixed(1)),
+        backgroundColor: ['rgba(59,127,245,0.8)','rgba(239,68,68,0.75)','rgba(6,182,212,0.75)','rgba(245,158,11,0.75)','rgba(16,185,129,0.75)'],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: gc() }, ticks: { color: tc(), callback: v => v + '%' } },
+        y: { grid: { display: false }, ticks: { color: tc() } }
+      }
+    }
+  });
+
+  // SHAP mean bars
+  const shap = d.shap_mean;
+  const shapSorted = Object.entries(shap).sort((a,b) => b[1]-a[1]);
+  const maxShap = shapSorted[0][1];
+  document.getElementById('shapBars').innerHTML = shapSorted.map(([feat, val]) => {
+    const pct = ((val / maxShap) * 100).toFixed(0);
+    return `<div class="shap-bar-row">
+      <div class="shap-label">${feat}</div>
+      <div class="shap-track">
+        <div class="shap-fill shap-pos" style="width:${pct}%">${val.toFixed(3)}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function runShap() {
+  const btn = document.getElementById('shapBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<i data-lucide="loader-2" size="14" style="animation:spin 1s linear infinite"></i> Analyzing...';
+  lucide.createIcons();
+
+  const payload = {
+    overtime: document.getElementById('s-ot').value,
+    satisfaction: document.getElementById('s-sat').value,
+    income: document.getElementById('s-inc').value,
+    years: document.getElementById('s-yrs').value,
+    distance: document.getElementById('s-dist').value
+  };
+
+  try {
+    const res = await fetch('/api/shap_explain', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+    const d = await res.json();
+    if (d.error) { alert('Error: ' + d.error); return; }
+
+    document.getElementById('waterfallArea').style.display = 'block';
+
+    const riskEl = document.getElementById('wf-risk');
+    riskEl.textContent = d.risk + '%';
+    const color = d.risk > 75 ? 'var(--red)' : d.risk > 50 ? 'var(--amber)' : 'var(--green)';
+    riskEl.style.color = color;
+
+    const lvl = d.risk > 75 ? 'CRITICAL' : d.risk > 50 ? 'ELEVATED' : d.risk > 25 ? 'MODERATE' : 'LOW';
+    const lvlEl = document.getElementById('wf-level');
+    lvlEl.textContent = lvl + ' RISK';
+    lvlEl.className = 'badge ' + (d.risk > 75 ? 'badge-red' : d.risk > 50 ? 'badge-amber' : 'badge-green');
+
+    // Build waterfall bars
+    const maxAbs = Math.max(...d.shap_values.map(Math.abs));
+    const pairs = d.features.map((f,i) => ({ feat: f, val: d.shap_values[i], fval: d.feature_values[i] }));
+    pairs.sort((a,b) => Math.abs(b.val) - Math.abs(a.val));
+
+    document.getElementById('wfBars').innerHTML = pairs.map(p => {
+      const isPos = p.val >= 0;
+      const pct = Math.max(4, (Math.abs(p.val) / maxAbs * 100)).toFixed(0);
+      const col = isPos ? 'var(--red)' : 'var(--blue)';
+      const dir = isPos ? '▲ raises risk' : '▼ lowers risk';
+      return `<div class="shap-bar-row">
+        <div class="shap-label">${p.feat} = <b style="color:var(--text)">${p.fval}</b></div>
+        <div class="shap-track">
+          <div class="shap-fill ${isPos ? 'shap-pos' : 'shap-neg'}" style="width:${pct}%">
+            ${isPos ? '+' : ''}${p.val.toFixed(3)}
+          </div>
+        </div>
+        <span style="font-size:10px;font-family:'DM Mono',monospace;color:${col};width:90px;flex-shrink:0">${dir}</span>
+      </div>`;
+    }).join('');
+
+  } catch(e) { alert('Failed: ' + e.message); }
+  finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i data-lucide="zap" size="14"></i> Explain';
+    lucide.createIcons();
+  }
+}
+
+const style = document.createElement('style');
+style.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
+document.head.appendChild(style);
+
+load();
+</script>
+</body>
+</html>

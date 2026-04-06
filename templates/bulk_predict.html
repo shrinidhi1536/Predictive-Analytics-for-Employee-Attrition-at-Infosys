@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+(function(){
+  var t=localStorage.getItem('sentinel-theme')||'dark';
+  document.documentElement.setAttribute('data-theme',t);
+  document.documentElement.style.backgroundColor=(t==='dark')?'#080c14':'#f1f5f9';
+})();
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bulk Predict | Sentinel</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="/static/css/base.css">
+<style>
+.filter-bar { display:flex; gap:10px; align-items:flex-end; margin-bottom:20px; flex-wrap:wrap; }
+.risk-cell { font-family:'DM Mono',monospace; font-size:12px; font-weight:700; }
+.risk-bar-mini { width:80px; height:5px; background:var(--surface2); border-radius:10px; overflow:hidden; display:inline-block; vertical-align:middle; margin-left:6px; }
+.risk-fill-mini { height:100%; border-radius:10px; }
+.summary-box { background:var(--surface2); border-radius:10px; padding:14px 18px; font-size:13px; display:flex; gap:24px; align-items:center; flex-wrap:wrap; margin-bottom:16px; }
+.summary-item { display:flex; flex-direction:column; gap:2px; }
+.summary-val { font-family:'Inter',sans-serif; font-weight:800; font-size:22px; }
+.export-btn { margin-left:auto; }
+.pagination { display:flex; gap:6px; align-items:center; margin-top:14px; justify-content:flex-end; }
+.page-btn { padding:6px 12px; border-radius:7px; border:1px solid var(--border2); background:var(--surface2); color:var(--muted2); font-size:12px; cursor:pointer; font-family:'Inter',sans-serif; }
+.page-btn.active { background:var(--blue); color:white; border-color:var(--blue); }
+.page-btn:hover:not(.active) { color:var(--text); }
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+    <div><div class="brand-name">SENTINEL</div><div class="brand-tag">HR INTELLIGENCE</div></div>
+  </div>
+  <div class="nav-section">ANALYTICS</div>
+  <a href="/dashboard" class="nav-item"><i data-lucide="layout-dashboard" size="15"></i> Dashboard</a>
+  <a href="/insights" class="nav-item"><i data-lucide="bar-chart-3" size="15"></i> Org Insights</a>
+  <div class="nav-section">TOOLS</div>
+  <a href="/predictor" class="nav-item"><i data-lucide="brain-circuit" size="15"></i> Risk Lab</a>
+  <a href="/alerts" class="nav-item"><i data-lucide="bell" size="15"></i> Alerts</a>
+  <a href="/bulk_predict" class="nav-item active"><i data-lucide="table-2" size="15"></i> Bulk Predict</a>
+  <a href="/model_analytics" class="nav-item"><i data-lucide="flask-conical" size="15"></i> Model Analytics</a>
+  <div style="margin-top:auto"></div>
+  <a href="/settings" class="nav-item"><i data-lucide="settings" size="15"></i> Settings</a>
+  <a href="/logout" class="nav-item nav-logout"><i data-lucide="log-out" size="15"></i> Logout</a>
+</aside>
+
+<main class="main">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Bulk Prediction</h1>
+      <p class="page-subtitle">AI risk scores across all 1,500 employees — filter, sort and export</p>
+    </div>
+    <button class="btn btn-primary" onclick="exportCSV()"><i data-lucide="download" size="14"></i> Export CSV</button>
+  </div>
+
+  <!-- Filters -->
+  <div class="filter-bar">
+    <div class="form-group" style="margin:0">
+      <label class="form-label">DEPARTMENT</label>
+      <select id="fDept" class="form-control" style="width:160px" onchange="loadBulk()">
+        <option value="">All Departments</option>
+        <option>Sales</option><option>R&D</option><option>Human Resources</option>
+      </select>
+    </div>
+    <div class="form-group" style="margin:0">
+      <label class="form-label">SORT BY</label>
+      <select id="fSort" class="form-control" style="width:160px" onchange="loadBulk()">
+        <option value="risk_desc">Risk: High → Low</option>
+        <option value="risk_asc">Risk: Low → High</option>
+        <option value="income">Income: High → Low</option>
+      </select>
+    </div>
+    <div class="form-group" style="margin:0">
+      <label class="form-label">RISK FILTER</label>
+      <select id="fRisk" class="form-control" style="width:160px" onchange="applyLocalFilter()">
+        <option value="">All Risk Levels</option>
+        <option value="critical">Critical (80%+)</option>
+        <option value="high">High (60–80%)</option>
+        <option value="moderate">Moderate (30–60%)</option>
+        <option value="low">Low (&lt;30%)</option>
+      </select>
+    </div>
+    <div class="form-group" style="margin:0">
+      <label class="form-label">OVERTIME</label>
+      <select id="fOt" class="form-control" style="width:130px" onchange="applyLocalFilter()">
+        <option value="">All</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    </div>
+    <div class="form-group" style="margin:0;margin-left:auto">
+      <label class="form-label">SHOW</label>
+      <select id="fLimit" class="form-control" style="width:100px" onchange="loadBulk()">
+        <option value="50">50 rows</option>
+        <option value="100">100 rows</option>
+        <option value="200">200 rows</option>
+        <option value="500">500 rows</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Summary bar -->
+  <div class="summary-box" id="summaryBox">
+    <div class="summary-item"><div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--muted)">LOADED</div><div class="summary-val" id="s-loaded" style="color:var(--blue)">—</div></div>
+    <div class="summary-item"><div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--muted)">CRITICAL</div><div class="summary-val" id="s-crit" style="color:var(--red)">—</div></div>
+    <div class="summary-item"><div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--muted)">HIGH</div><div class="summary-val" id="s-high" style="color:var(--amber)">—</div></div>
+    <div class="summary-item"><div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--muted)">SAFE</div><div class="summary-val" id="s-safe" style="color:var(--green)">—</div></div>
+    <div class="summary-item"><div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--muted)">AVG RISK</div><div class="summary-val" id="s-avg" style="color:var(--cyan)">—</div></div>
+  </div>
+
+  <!-- Distribution mini chart + table -->
+  <div class="grid2" style="margin-bottom:16px;grid-template-columns:1fr 2fr">
+    <div class="card">
+      <div class="section-title" style="margin-bottom:12px">Risk Distribution</div>
+      <div class="chart-wrap" style="height:180px"><canvas id="distChart"></canvas></div>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th><th>DEPT</th><th>INCOME</th><th>YEARS</th>
+            <th>SAT</th><th>OVERTIME</th><th>AI RISK SCORE</th><th>ACTUAL</th>
+          </tr>
+        </thead>
+        <tbody id="bulkTable" style="display:block;max-height:230px;overflow-y:auto">
+          <tr><td colspan="8" style="text-align:center;color:var(--muted);padding:30px">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Accuracy check section -->
+  <div class="card">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Prediction vs Actual Attrition</div>
+        <div class="card-muted">How accurate was the model on employees where we know the outcome</div>
+      </div>
+    </div>
+    <div class="grid3" style="margin-top:14px">
+      <div style="background:var(--surface2);border-radius:10px;padding:16px">
+        <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:8px">PREDICTED ATTRITION</div>
+        <div id="predYes" style="font-family:'Inter',sans-serif;font-size:28px;font-weight:800;color:var(--red)">—</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">employees flagged by model</div>
+      </div>
+      <div style="background:var(--surface2);border-radius:10px;padding:16px">
+        <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:8px">ACTUAL ATTRITION</div>
+        <div id="actYes" style="font-family:'Inter',sans-serif;font-size:28px;font-weight:800;color:var(--amber)">—</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">employees who actually left</div>
+      </div>
+      <div style="background:var(--surface2);border-radius:10px;padding:16px">
+        <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:8px">MATCH RATE</div>
+        <div id="matchRate" style="font-family:'Inter',sans-serif;font-size:28px;font-weight:800;color:var(--green)">—</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">of predictions were correct</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+lucide.createIcons();
+const gc = () => 'rgba(255,255,255,0.05)', tc = () => '#64748b';
+let allData = [], distChartInst = null;
+
+function riskColor(r) {
+  return r >= 80 ? 'var(--red)' : r >= 60 ? 'var(--amber)' : r >= 30 ? 'var(--blue)' : 'var(--green)';
+}
+function riskBadge(r) {
+  const cls = r >= 80 ? 'badge-red' : r >= 60 ? 'badge-amber' : r >= 30 ? 'badge-blue' : 'badge-green';
+  return `<span class="badge ${cls}">${r}%</span>`;
+}
+
+async function loadBulk() {
+  const dept  = document.getElementById('fDept').value;
+  const sort  = document.getElementById('fSort').value;
+  const limit = document.getElementById('fLimit').value;
+  const tbody = document.getElementById('bulkTable');
+  tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:30px">Loading...</td></tr>';
+
+  const res  = await fetch(`/api/bulk_predictions?dept=${encodeURIComponent(dept)}&sort=${sort}&limit=${limit}`);
+  const data = await res.json();
+  allData = data.employees;
+  applyLocalFilter();
+}
+
+function applyLocalFilter() {
+  const riskF = document.getElementById('fRisk').value;
+  const otF   = document.getElementById('fOt').value;
+
+  let filtered = allData.filter(e => {
+    if (otF && e.overtime !== otF) return false;
+    if (riskF === 'critical' && e.risk < 80) return false;
+    if (riskF === 'high'     && (e.risk < 60 || e.risk >= 80)) return false;
+    if (riskF === 'moderate' && (e.risk < 30 || e.risk >= 60)) return false;
+    if (riskF === 'low'      && e.risk >= 30) return false;
+    return true;
+  });
+
+  renderTable(filtered);
+  renderSummary(filtered);
+  renderDist(filtered);
+  renderAccuracy(filtered);
+}
+
+function renderTable(employees) {
+  const tbody = document.getElementById('bulkTable');
+  if (!employees.length) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:30px">No employees match filters.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = employees.map(e => `
+    <tr>
+      <td><code style="font-family:'DM Mono',monospace;font-size:11px;color:var(--blue)">${e.id}</code></td>
+      <td>${e.dept}</td>
+      <td>$${e.income.toLocaleString()}</td>
+      <td>${e.years}y</td>
+      <td>${e.satisfaction}/4</td>
+      <td>${e.overtime === 'Yes' ? '<span class="badge badge-red">YES</span>' : '<span class="badge badge-green">NO</span>'}</td>
+      <td>
+        ${riskBadge(e.risk)}
+        <div class="risk-bar-mini"><div class="risk-fill-mini" style="width:${e.risk}%;background:${riskColor(e.risk)}"></div></div>
+      </td>
+      <td>${e.actual === 'Yes' ? '<span class="badge badge-red">LEFT</span>' : '<span class="badge badge-green">STAYED</span>'}</td>
+    </tr>`).join('');
+}
+
+function renderSummary(employees) {
+  const crit = employees.filter(e => e.risk >= 80).length;
+  const high = employees.filter(e => e.risk >= 60 && e.risk < 80).length;
+  const safe = employees.filter(e => e.risk < 30).length;
+  const avg  = employees.length ? (employees.reduce((s,e) => s+e.risk, 0)/employees.length).toFixed(1) : 0;
+  document.getElementById('s-loaded').textContent = employees.length;
+  document.getElementById('s-crit').textContent   = crit;
+  document.getElementById('s-high').textContent   = high;
+  document.getElementById('s-safe').textContent   = safe;
+  document.getElementById('s-avg').textContent    = avg + '%';
+}
+
+function renderDist(employees) {
+  const buckets = { '<30':0, '30-60':0, '60-80':0, '80+':0 };
+  employees.forEach(e => {
+    if (e.risk < 30) buckets['<30']++;
+    else if (e.risk < 60) buckets['30-60']++;
+    else if (e.risk < 80) buckets['60-80']++;
+    else buckets['80+']++;
+  });
+  if (distChartInst) distChartInst.destroy();
+  distChartInst = new Chart(document.getElementById('distChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Low (<30%)', 'Moderate (30-60%)', 'High (60-80%)', 'Critical (80%+)'],
+      datasets: [{ data: Object.values(buckets), backgroundColor: ['rgba(16,185,129,0.8)','rgba(59,127,245,0.8)','rgba(245,158,11,0.8)','rgba(239,68,68,0.85)'], borderWidth: 0 }]
+    },
+    options: { responsive:true, maintainAspectRatio:false, cutout:'60%',
+      plugins:{ legend:{ position:'bottom', labels:{ color:tc(), font:{family:'Inter'}, padding:8, boxWidth:10 } } } }
+  });
+}
+
+function renderAccuracy(employees) {
+  const predYes  = employees.filter(e => e.predicted_attrition).length;
+  const actYes   = employees.filter(e => e.actual === 'Yes').length;
+  const correct  = employees.filter(e => (e.predicted_attrition && e.actual==='Yes') || (!e.predicted_attrition && e.actual==='No')).length;
+  const matchPct = employees.length ? ((correct/employees.length)*100).toFixed(1)+'%' : '—';
+  document.getElementById('predYes').textContent  = predYes;
+  document.getElementById('actYes').textContent   = actYes;
+  document.getElementById('matchRate').textContent = matchPct;
+}
+
+function exportCSV() {
+  if (!allData.length) return;
+  const rows = [['ID','Department','Income','Years','Satisfaction','Overtime','AI Risk %','Actual Attrition']];
+  allData.forEach(e => rows.push([e.id, e.dept, e.income, e.years, e.satisfaction, e.overtime, e.risk, e.actual]));
+  const csv = rows.map(r => r.join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv'}));
+  a.download = `sentinel_bulk_predictions_${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+}
+
+loadBulk();
+</script>
+</body>
+</html>

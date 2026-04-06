@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+(function(){
+  var t=localStorage.getItem('sentinel-theme')||'dark';
+  document.documentElement.setAttribute('data-theme',t);
+  document.documentElement.style.backgroundColor=(t==='dark')?'#080c14':'#f1f5f9';
+})();
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings | My Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="/static/css/base.css">
+<style>
+.setting-row { display:flex; justify-content:space-between; align-items:center; padding:18px 0; border-bottom:1px solid var(--border); }
+.setting-row:last-child { border:none; }
+.setting-info h4 { font-size:14px; font-weight:600; margin-bottom:3px; }
+.setting-info p  { font-size:12px; color:var(--muted2); }
+.toggle { width:42px; height:22px; background:var(--surface2); border:1px solid var(--border2); border-radius:20px; padding:2px; cursor:pointer; display:flex; align-items:center; transition:.25s; flex-shrink:0; }
+.toggle.on { background:var(--blue); border-color:var(--blue); justify-content:flex-end; }
+.toggle-circle { width:16px; height:16px; background:white; border-radius:50%; box-shadow:0 1px 3px rgba(0,0,0,.3); }
+.theme-btn { padding:7px 14px; border-radius:8px; border:1px solid var(--border2); background:var(--surface2); color:var(--muted2); font-size:12px; font-family:'Inter',sans-serif; font-weight:600; cursor:pointer; display:inline-flex; align-items:center; gap:6px; transition:.18s; }
+.theme-btn.active, .theme-btn:hover { border-color:var(--blue); color:var(--blue); background:var(--blue-dim); }
+.section-label { font-size:10px; font-family:'DM Mono',monospace; color:var(--blue); letter-spacing:.1em; margin-bottom:10px; }
+.toast { position:fixed; bottom:-70px; left:50%; transform:translateX(-50%); background:var(--surface); border:1px solid var(--border2); padding:12px 24px; border-radius:10px; font-size:13px; font-weight:500; box-shadow:0 10px 30px rgba(0,0,0,.4); transition:bottom .35s cubic-bezier(.175,.885,.32,1.275); z-index:999; white-space:nowrap; display:flex; align-items:center; gap:8px; }
+.toast.show { bottom:32px; }
+.modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(4px); z-index:100; place-items:center; }
+.modal-overlay.open { display:grid; }
+.modal-box { background:var(--surface); border:1px solid var(--border2); border-radius:16px; padding:28px; width:420px; max-width:90vw; }
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+    <div><div class="brand-name">MY PORTAL</div><div class="brand-tag">ASSOCIATE ACCESS</div></div>
+  </div>
+  <div class="nav-section">MENU</div>
+  <a href="/user_dashboard"   class="nav-item"><i data-lucide="layout-dashboard" size="15"></i> Dashboard</a>
+  <a href="/user_performance" class="nav-item"><i data-lucide="trending-up" size="15"></i> Performance</a>
+  <a href="/user_learning"    class="nav-item"><i data-lucide="graduation-cap" size="15"></i> Learning Hub</a>
+  <div style="margin-top:auto"></div>
+  <a href="/user_settings"    class="nav-item active"><i data-lucide="settings" size="15"></i> Settings</a>
+  <a href="/logout"           class="nav-item nav-logout"><i data-lucide="log-out" size="15"></i> Logout</a>
+</aside>
+
+<main class="main">
+  <div class="page-header">
+    <div><h1 class="page-title" style="font-size:22px;font-weight:700">Account Settings</h1>
+    <p class="page-subtitle">Manage your profile and portal preferences</p></div>
+  </div>
+
+  <div style="max-width:680px">
+    <!-- Profile info card -->
+    <div class="section-label">PROFILE</div>
+    <div class="card" style="margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:16px;padding:18px 0;border-bottom:1px solid var(--border)">
+        <div id="settingsAvatar" style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:grid;place-items:center;font-size:20px;font-weight:800;color:white;flex-shrink:0">A</div>
+        <div>
+          <div style="font-weight:600;font-size:15px" id="settingsName">Associate</div>
+          <div style="font-size:12px;color:var(--muted2)" id="settingsEmail">user@infosys.com</div>
+        </div>
+        <button class="btn btn-ghost" style="margin-left:auto;font-size:12px" onclick="openModal('edit')">Edit Profile</button>
+      </div>
+      <div class="setting-row">
+        <div class="setting-info"><h4>Email Address</h4><p id="dispEmail">user@infosys.com</p></div>
+        <button class="btn btn-ghost" style="font-size:12px" onclick="openModal('edit')">Update</button>
+      </div>
+      <!-- ✅ FIX: Change Password now opens modal -->
+      <div class="setting-row">
+        <div class="setting-info"><h4>Password</h4><p id="passLastChanged">Last changed 3 months ago</p></div>
+        <button class="btn btn-ghost" style="font-size:12px" onclick="openModal('password')">Change</button>
+      </div>
+    </div>
+
+    <!-- Preferences -->
+    <div class="section-label">PREFERENCES</div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="setting-row">
+        <div class="setting-info"><h4>Visual Theme</h4><p>Switch between dark and light interface</p></div>
+        <div style="display:flex;gap:8px">
+          <button class="theme-btn" id="btnDark"  onclick="setTheme('dark')"><i data-lucide="moon" size="13"></i> Dark</button>
+          <button class="theme-btn" id="btnLight" onclick="setTheme('light')"><i data-lucide="sun" size="13"></i> Light</button>
+        </div>
+      </div>
+      <!-- ✅ FIX: Toggles now persist state in localStorage -->
+      <div class="setting-row">
+        <div class="setting-info"><h4>Push Notifications</h4><p>Receive HR and training alerts</p></div>
+        <div class="toggle" id="toggle-notifications" onclick="togglePref('notifications', this)"><div class="toggle-circle"></div></div>
+      </div>
+      <div class="setting-row">
+        <div class="setting-info"><h4>Learning Reminders</h4><p>Weekly nudge to complete courses</p></div>
+        <div class="toggle" id="toggle-reminders" onclick="togglePref('reminders', this)"><div class="toggle-circle"></div></div>
+      </div>
+    </div>
+
+    <!-- Danger zone -->
+    <div class="section-label" style="color:var(--red)">ACCOUNT</div>
+    <div class="card" style="border-color:rgba(239,68,68,0.15)">
+      <!-- ✅ FIX: Export now downloads a JSON file -->
+      <div class="setting-row">
+        <div class="setting-info"><h4>Export My Data</h4><p>Download your personal data and history</p></div>
+        <button class="btn btn-ghost" style="font-size:12px" onclick="exportData()">Export</button>
+      </div>
+      <!-- ✅ FIX: Delete now shows confirmation modal -->
+      <div class="setting-row" style="border:none">
+        <div class="setting-info"><h4 style="color:var(--red)">Delete Account</h4><p>Permanently remove portal access</p></div>
+        <button class="btn btn-danger" style="font-size:12px" onclick="openModal('delete')">Delete</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Edit Profile Modal -->
+<div class="modal-overlay" id="modal-edit">
+  <div class="modal-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h3 style="font-size:17px;font-weight:700">Edit Profile</h3>
+      <button onclick="closeModal('edit')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:20px">✕</button>
+    </div>
+    <div class="form-group" style="margin-bottom:14px">
+      <label class="form-label">DISPLAY NAME</label>
+      <input type="text" id="nameInput" class="form-control" placeholder="Your full name">
+    </div>
+    <div style="display:flex;gap:10px;margin-top:4px">
+      <button class="btn btn-ghost" onclick="closeModal('edit')" style="flex:1;justify-content:center">Cancel</button>
+      <button class="btn btn-primary" onclick="saveProfile()" style="flex:1;justify-content:center">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Change Password Modal -->
+<div class="modal-overlay" id="modal-password">
+  <div class="modal-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h3 style="font-size:17px;font-weight:700">Change Password</h3>
+      <button onclick="closeModal('password')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:20px">✕</button>
+    </div>
+    <div class="form-group" style="margin-bottom:14px">
+      <label class="form-label">CURRENT PASSWORD</label>
+      <input type="password" id="currentPass" class="form-control" placeholder="Enter current password">
+    </div>
+    <div class="form-group" style="margin-bottom:14px">
+      <label class="form-label">NEW PASSWORD</label>
+      <input type="password" id="newPass" class="form-control" placeholder="Enter new password">
+    </div>
+    <div class="form-group" style="margin-bottom:18px">
+      <label class="form-label">CONFIRM NEW PASSWORD</label>
+      <input type="password" id="confirmPass" class="form-control" placeholder="Confirm new password">
+    </div>
+    <div id="passError" style="font-size:12px;color:var(--red);margin-bottom:12px;display:none"></div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-ghost" onclick="closeModal('password')" style="flex:1;justify-content:center">Cancel</button>
+      <button class="btn btn-primary" onclick="changePassword()" style="flex:1;justify-content:center">Update Password</button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal-overlay" id="modal-delete">
+  <div class="modal-box" style="border-color:rgba(239,68,68,0.3)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <h3 style="font-size:17px;font-weight:700;color:var(--red)">Delete Account</h3>
+      <button onclick="closeModal('delete')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:20px">✕</button>
+    </div>
+    <p style="font-size:13px;color:var(--muted2);margin-bottom:20px;line-height:1.6">This action is <strong style="color:var(--text)">permanent and irreversible</strong>. All your data, progress, and settings will be deleted. Please contact your HR manager if you need to deactivate access instead.</p>
+    <div class="form-group" style="margin-bottom:18px">
+      <label class="form-label">TYPE "DELETE" TO CONFIRM</label>
+      <input type="text" id="deleteConfirmInput" class="form-control" placeholder="DELETE">
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-ghost" onclick="closeModal('delete')" style="flex:1;justify-content:center">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmDelete()" style="flex:1;justify-content:center">Delete Account</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"><span id="toastMsg" style="color:var(--green)">✓ Saved</span></div>
+
+<script>
+lucide.createIcons();
+
+// ── Init ────────────────────────────────────────────────────────────
+function initPage() {
+  const t = localStorage.getItem('sentinel-theme') || 'dark';
+  document.getElementById('btnDark').classList.toggle('active', t === 'dark');
+  document.getElementById('btnLight').classList.toggle('active', t === 'light');
+
+  const email = localStorage.getItem('logged-in-user') || 'user@infosys.com';
+  const storedName = localStorage.getItem('user-name');
+  const rawName = email.split('@')[0];
+  const name = storedName || (rawName.charAt(0).toUpperCase() + rawName.slice(1));
+
+  document.getElementById('dispEmail').textContent = email;
+  document.getElementById('settingsEmail').textContent = email;
+  document.getElementById('settingsName').textContent = name;
+  document.getElementById('settingsAvatar').textContent = name.charAt(0).toUpperCase();
+  document.getElementById('nameInput').value = name;
+
+  // ✅ FIX: Restore toggle state from localStorage
+  const prefs = JSON.parse(localStorage.getItem('user-prefs') || '{"notifications":true,"reminders":true}');
+  Object.entries(prefs).forEach(([key, val]) => {
+    const el = document.getElementById('toggle-' + key);
+    if (el) el.classList.toggle('on', val);
+  });
+}
+
+// ── Theme ───────────────────────────────────────────────────────────
+function setTheme(t) {
+  localStorage.setItem('sentinel-theme', t);
+  document.documentElement.setAttribute('data-theme', t);
+  document.documentElement.style.backgroundColor = (t === 'dark') ? '#080c14' : '#f1f5f9';
+  document.getElementById('btnDark').classList.toggle('active', t === 'dark');
+  document.getElementById('btnLight').classList.toggle('active', t === 'light');
+  showToast('✓ Theme updated to ' + t + ' mode');
+}
+
+// ── Toggle prefs (persisted) ─────────────────────────────────────────
+function togglePref(key, el) {
+  el.classList.toggle('on');
+  const prefs = JSON.parse(localStorage.getItem('user-prefs') || '{"notifications":true,"reminders":true}');
+  prefs[key] = el.classList.contains('on');
+  localStorage.setItem('user-prefs', JSON.stringify(prefs));
+  showToast((prefs[key] ? '✓ ' : '✗ ') + key.charAt(0).toUpperCase() + key.slice(1) + ' ' + (prefs[key] ? 'enabled' : 'disabled'));
+}
+
+// ── Modals ───────────────────────────────────────────────────────────
+function openModal(id) {
+  document.getElementById('modal-' + id).classList.add('open');
+  if (id === 'delete') document.getElementById('deleteConfirmInput').value = '';
+  if (id === 'password') {
+    document.getElementById('currentPass').value = '';
+    document.getElementById('newPass').value = '';
+    document.getElementById('confirmPass').value = '';
+    document.getElementById('passError').style.display = 'none';
+  }
+}
+function closeModal(id) { document.getElementById('modal-' + id).classList.remove('open'); }
+
+// ── Save profile ─────────────────────────────────────────────────────
+function saveProfile() {
+  const n = document.getElementById('nameInput').value.trim();
+  if (!n) { alert('Please enter a name.'); return; }
+  localStorage.setItem('user-name', n);
+  document.getElementById('settingsName').textContent = n;
+  document.getElementById('settingsAvatar').textContent = n.charAt(0).toUpperCase();
+  closeModal('edit');
+  showToast('✓ Profile updated successfully');
+}
+
+// ── Change password ──────────────────────────────────────────────────
+function changePassword() {
+  const curr = document.getElementById('currentPass').value;
+  const newP = document.getElementById('newPass').value;
+  const conf = document.getElementById('confirmPass').value;
+  const errEl = document.getElementById('passError');
+
+  if (!curr || !newP || !conf) {
+    errEl.textContent = 'All fields are required.'; errEl.style.display = 'block'; return;
+  }
+  if (newP.length < 6) {
+    errEl.textContent = 'Password must be at least 6 characters.'; errEl.style.display = 'block'; return;
+  }
+  if (newP !== conf) {
+    errEl.textContent = 'New passwords do not match.'; errEl.style.display = 'block'; return;
+  }
+
+  // Call Flask reset_password endpoint
+  const email = localStorage.getItem('logged-in-user') || 'user@infosys.com';
+  fetch('/reset_password', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, new_password: newP })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.success) {
+      closeModal('password');
+      const now = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+      document.getElementById('passLastChanged').textContent = 'Last changed ' + now;
+      showToast('✓ Password updated successfully');
+    } else {
+      errEl.textContent = data.message || 'Update failed.'; errEl.style.display = 'block';
+    }
+  })
+  .catch(() => { errEl.textContent = 'Network error. Try again.'; errEl.style.display = 'block'; });
+}
+
+// ── Export data ──────────────────────────────────────────────────────
+function exportData() {
+  const email = localStorage.getItem('logged-in-user') || 'user@infosys.com';
+  const name  = localStorage.getItem('user-name') || email.split('@')[0];
+  const prefs = JSON.parse(localStorage.getItem('user-prefs') || '{}');
+  const learning = JSON.parse(localStorage.getItem('learning-state') || '{}');
+
+  const data = {
+    exported_at: new Date().toISOString(),
+    profile: { name, email },
+    preferences: prefs,
+    learning_progress: learning
+  };
+
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = 'sentinel_my_data.json';
+  a.click(); URL.revokeObjectURL(url);
+  showToast('✓ Data exported successfully');
+}
+
+// ── Delete account ───────────────────────────────────────────────────
+function confirmDelete() {
+  const val = document.getElementById('deleteConfirmInput').value.trim();
+  if (val !== 'DELETE') {
+    showToast('⚠ Type DELETE to confirm');
+    return;
+  }
+  // Clear all local storage and redirect to logout
+  localStorage.clear();
+  closeModal('delete');
+  showToast('Account deleted. Redirecting...');
+  setTimeout(() => { window.location.href = '/logout'; }, 1500);
+}
+
+// ── Toast ────────────────────────────────────────────────────────────
+function showToast(msg) {
+  document.getElementById('toastMsg').textContent = msg;
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+initPage();
+</script>
+</body>
+</html>

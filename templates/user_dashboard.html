@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+(function(){
+  var t=localStorage.getItem('sentinel-theme')||'dark';
+  document.documentElement.setAttribute('data-theme',t);
+  document.documentElement.style.backgroundColor=(t==='dark')?'#080c14':'#f1f5f9';
+})();
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Dashboard | Sentinel</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="/static/css/base.css">
+<style>
+.profile-card {
+  background: linear-gradient(135deg, var(--blue-dim), rgba(6,182,212,0.06));
+  border: 1px solid rgba(59,127,245,0.2);
+  border-radius: var(--radius);
+  padding: 26px 28px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.profile-card::after {
+  content: '';
+  position: absolute;
+  right: -40px; top: -40px;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59,127,245,0.1), transparent);
+  pointer-events: none;
+}
+.avatar {
+  width: 60px; height: 60px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  display: grid; place-items: center;
+  font-size: 22px; font-weight: 800; color: white;
+  flex-shrink: 0;
+  box-shadow: 0 0 20px var(--blue-glow);
+}
+.action-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  padding: 16px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  transition: all .18s;
+  cursor: default;
+}
+.action-card:hover { border-color: var(--border2); transform: translateX(3px); background: var(--surface); }
+.action-icon {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.quick-stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  transition: .18s;
+}
+.quick-stat:hover { border-color: var(--border2); transform: translateY(-2px); }
+.qs-val {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  margin: 8px 0 4px;
+}
+.qs-label {
+  font-size: 10px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: .08em;
+  color: var(--muted);
+}
+.ring-wrap { position: relative; width: 100px; height: 100px; flex-shrink: 0; }
+
+/* ── Notification bell pulse ── */
+@keyframes bellPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+  50%      { box-shadow: 0 0 0 6px rgba(239,68,68,0.25); }
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    </div>
+    <div><div class="brand-name">MY PORTAL</div><div class="brand-tag">ASSOCIATE ACCESS</div></div>
+  </div>
+  <div class="nav-section">MENU</div>
+  <a href="/user_dashboard"   class="nav-item active"><i data-lucide="layout-dashboard" size="15"></i> Dashboard</a>
+  <a href="/user_performance" class="nav-item"><i data-lucide="trending-up" size="15"></i> Performance</a>
+  <a href="/user_learning"    class="nav-item"><i data-lucide="graduation-cap" size="15"></i> Learning Hub</a>
+
+  <!-- ── CHANGE 1: Messages nav link with live unread badge ── -->
+  <a href="/user_messages" class="nav-item" id="navMessages">
+    <i data-lucide="inbox" size="15"></i> Messages
+    <span class="nav-badge" id="sidebarUnreadBell"
+          style="display:none;background:var(--red,#ef4444);color:#fff;
+                 border-radius:9px;padding:1px 7px;font-size:10px;
+                 font-family:'DM Mono',monospace;margin-left:auto">0</span>
+  </a>
+
+  <div style="margin-top:auto"></div>
+  <a href="/user_settings" class="nav-item"><i data-lucide="settings" size="15"></i> Settings</a>
+  <a href="/logout"        class="nav-item nav-logout"><i data-lucide="log-out" size="15"></i> Logout</a>
+</aside>
+
+<main class="main">
+  <!-- Header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title" id="greeting" style="font-size:22px;font-weight:700">Good morning</h1>
+      <p class="page-subtitle" id="dateStr"></p>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <!-- ── CHANGE 2: Notification bell icon ── -->
+      <a href="/user_messages" id="bellBtn"
+         style="position:relative;display:inline-flex;align-items:center;
+                justify-content:center;width:38px;height:38px;border-radius:10px;
+                background:var(--surface2);border:1px solid var(--border);
+                cursor:pointer;text-decoration:none;color:var(--muted2);
+                transition:all .18s"
+         onmouseover="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'"
+         onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted2)'">
+        <i data-lucide="bell" size="16"></i>
+        <span id="bellCount"
+              style="display:none;position:absolute;top:-5px;right:-5px;
+                     background:#ef4444;color:#fff;border-radius:9px;
+                     padding:1px 6px;font-size:9px;font-family:'DM Mono',monospace;
+                     font-weight:700;box-shadow:0 0 8px rgba(239,68,68,.5);
+                     border:2px solid var(--bg,#080c14);min-width:18px;
+                     text-align:center;line-height:15px">0</span>
+      </a>
+      <div class="status-chip"><div class="status-dot"></div>ACTIVE EMPLOYEE</div>
+    </div>
+  </div>
+
+  <!-- Profile banner -->
+  <div class="profile-card">
+    <div class="avatar" id="avatarLetter">A</div>
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+        <span style="font-size:18px;font-weight:700" id="userName">Associate</span>
+        <span class="badge badge-green">ACTIVE</span>
+      </div>
+      <div style="font-size:13px;color:var(--muted2)" id="userEmail">user@infosys.com</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">Systems Engineer &nbsp;·&nbsp; Infosys Ltd.</div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:4px">EMPLOYEE ID</div>
+      <div style="font-weight:700;font-family:'DM Mono',monospace;color:var(--blue);font-size:13px">#INF77291</div>
+      <div style="font-size:10px;color:var(--muted);margin-top:6px">Joined Jan 2022</div>
+    </div>
+  </div>
+
+  <!-- Quick stats -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px">
+    <div class="quick-stat">
+      <div class="qs-label">ENGAGEMENT</div>
+      <div class="qs-val" style="color:var(--blue)">92%</div>
+      <div style="font-size:11px;color:var(--muted)">↑ +4% this quarter</div>
+      <div class="progress-bar" style="margin-top:8px"><div class="progress-fill" style="width:92%;background:var(--blue)"></div></div>
+    </div>
+    <div class="quick-stat">
+      <div class="qs-label">TRAINING CREDITS</div>
+      <div class="qs-val" style="color:var(--green)">450</div>
+      <div style="font-size:11px;color:var(--muted)">of 500 target</div>
+      <div class="progress-bar" style="margin-top:8px"><div class="progress-fill" style="width:90%;background:var(--green)"></div></div>
+    </div>
+    <div class="quick-stat">
+      <div class="qs-label">PEER RATING</div>
+      <div class="qs-val" style="color:var(--amber)">4.6</div>
+      <div style="font-size:11px;color:var(--muted)">Out of 5.0</div>
+      <div class="progress-bar" style="margin-top:8px"><div class="progress-fill" style="width:92%;background:var(--amber)"></div></div>
+    </div>
+    <div class="quick-stat">
+      <div class="qs-label">TASKS DONE</div>
+      <div class="qs-val" style="color:var(--cyan)">147</div>
+      <div style="font-size:11px;color:var(--muted)">Last 6 months</div>
+      <div class="progress-bar" style="margin-top:8px"><div class="progress-fill" style="width:80%;background:var(--cyan)"></div></div>
+    </div>
+  </div>
+
+  <!-- Bottom grid -->
+  <div class="grid2">
+    <!-- Recommended actions -->
+    <div class="card">
+      <div class="section-header" style="margin-bottom:16px">
+        <div class="section-title">Recommended Actions</div>
+        <span class="badge badge-blue">3 ITEMS</span>
+      </div>
+
+      <div class="action-card">
+        <div style="display:flex;align-items:center;gap:14px">
+          <div class="action-icon" style="background:var(--blue-dim);color:var(--blue)"><i data-lucide="graduation-cap" size="16"></i></div>
+          <div>
+            <div style="font-weight:600;font-size:14px">Python for Data Science</div>
+            <div style="font-size:12px;color:var(--muted2);margin-top:2px">Upskilling — recommended for Senior role</div>
+          </div>
+        </div>
+        <a href="/user_learning" class="btn btn-primary" style="font-size:12px;padding:7px 14px">Enroll</a>
+      </div>
+
+      <div class="action-card">
+        <div style="display:flex;align-items:center;gap:14px">
+          <div class="action-icon" style="background:var(--green-dim);color:var(--green)"><i data-lucide="users" size="16"></i></div>
+          <div>
+            <div style="font-weight:600;font-size:14px">Request Mentorship</div>
+            <div style="font-size:12px;color:var(--muted2);margin-top:2px">1-on-1 with a Lead Architect</div>
+          </div>
+        </div>
+        <button class="btn btn-ghost" style="font-size:12px;padding:7px 14px">Request</button>
+      </div>
+
+      <div class="action-card" style="margin-bottom:0">
+        <div style="display:flex;align-items:center;gap:14px">
+          <div class="action-icon" style="background:rgba(245,158,11,0.1);color:var(--amber)"><i data-lucide="clipboard-check" size="16"></i></div>
+          <div>
+            <div style="font-weight:600;font-size:14px">Q3 Performance Review</div>
+            <div style="font-size:12px;color:var(--muted2);margin-top:2px">Quarterly feedback cycle</div>
+          </div>
+        </div>
+        <span class="badge badge-green">REVIEWED</span>
+      </div>
+    </div>
+
+    <!-- Activity + mini chart -->
+    <div class="card">
+      <div class="section-header" style="margin-bottom:16px">
+        <div class="section-title">Engagement Trend</div>
+        <span class="badge badge-green">6 MONTHS</span>
+      </div>
+      <div class="chart-wrap" style="height:160px"><canvas id="engChart"></canvas></div>
+
+      <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:14px">
+        <div style="font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:10px">RECENT ACTIVITY</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px">
+            <div style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></div>
+            <span style="color:var(--muted2)">Completed</span>
+            <span style="color:var(--text);flex:1">Azure Cloud Module — Unit 3</span>
+            <span style="font-size:11px;color:var(--muted)">Today</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px">
+            <div style="width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0"></div>
+            <span style="color:var(--muted2)">Submitted</span>
+            <span style="color:var(--text);flex:1">Q3 Self-Assessment Form</span>
+            <span style="font-size:11px;color:var(--muted)">2 days ago</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px">
+            <div style="width:6px;height:6px;border-radius:50%;background:var(--amber);flex-shrink:0"></div>
+            <span style="color:var(--muted2)">Enrolled</span>
+            <span style="color:var(--text);flex:1">Advanced ML — Module 4</span>
+            <span style="font-size:11px;color:var(--muted)">1 week ago</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+lucide.createIcons();
+
+// Personalize
+const email = localStorage.getItem('logged-in-user') || 'user@infosys.com';
+const rawName = email.split('@')[0];
+const name = rawName.charAt(0).toUpperCase() + rawName.slice(1);
+document.getElementById('userName').textContent = name;
+document.getElementById('userEmail').textContent = email;
+document.getElementById('avatarLetter').textContent = name.charAt(0).toUpperCase();
+const h = new Date().getHours();
+const greet = h < 12 ? 'Good morning, ' : h < 17 ? 'Good afternoon, ' : 'Good evening, ';
+document.getElementById('greeting').textContent = greet + name;
+document.getElementById('dateStr').textContent = new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+// Mini chart
+const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+const gc = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)';
+const tc = isDark ? '#64748b' : '#94a3b8';
+new Chart(document.getElementById('engChart'), {
+  type: 'line',
+  data: {
+    labels: ['Sep','Oct','Nov','Dec','Jan','Feb'],
+    datasets: [{
+      data: [85,88,87,90,91,92],
+      borderColor: '#3b7ff5',
+      backgroundColor: 'rgba(59,127,245,0.08)',
+      tension: .4, fill: true,
+      pointBackgroundColor: '#3b7ff5', pointRadius: 3
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { min:70, grid:{color:gc}, ticks:{color:tc,font:{size:10}} },
+      x: { grid:{display:false}, ticks:{color:tc,font:{size:10}} }
+    }
+  }
+});
+</script>
+
+<!-- ── CHANGE 3: Unread count polling (every 20s) ── -->
+<script>
+(function pollUnread(){
+  async function check(){
+    try {
+      const r = await fetch('/api/unread_count');
+      const d = await r.json();
+      const n = d.count || 0;
+      // Bell badge in header
+      const bell = document.getElementById('bellCount');
+      if (bell) { bell.textContent = n; bell.style.display = n > 0 ? 'inline-block' : 'none'; }
+      // Badge in sidebar nav
+      const side = document.getElementById('sidebarUnreadBell');
+      if (side) { side.textContent = n; side.style.display = n > 0 ? 'inline-flex' : 'none'; }
+      // Pulse animation when there are unread messages
+      if (n > 0) {
+        const btn = document.getElementById('bellBtn');
+        if (btn && !btn.dataset.pulsing) {
+          btn.dataset.pulsing = '1';
+          btn.style.animation = 'bellPulse 1.4s ease infinite';
+        }
+      }
+    } catch(e){}
+  }
+  check();
+  setInterval(check, 20000);
+})();
+</script>
+
+</body>
+</html>

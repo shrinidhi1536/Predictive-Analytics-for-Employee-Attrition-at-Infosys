@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+(function(){
+  var t=localStorage.getItem('sentinel-theme')||'dark';
+  document.documentElement.setAttribute('data-theme',t);
+  document.documentElement.style.backgroundColor=(t==='dark')?'#080c14':'#f1f5f9';
+})();
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard | Sentinel</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="/static/css/base.css">
+</head>
+<body>
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+    <div><div class="brand-name">SENTINEL</div><div class="brand-tag">HR INTELLIGENCE</div></div>
+  </div>
+  <div class="nav-section">ANALYTICS</div>
+  <a href="/dashboard" class="nav-item active"><i data-lucide="layout-dashboard" size="15"></i> Dashboard</a>
+  <a href="/insights" class="nav-item"><i data-lucide="bar-chart-3" size="15"></i> Org Insights</a>
+  <div class="nav-section">TOOLS</div>
+  <a href="/predictor" class="nav-item"><i data-lucide="brain-circuit" size="15"></i> Risk Lab</a>
+  <a href="/alerts" class="nav-item"><i data-lucide="bell" size="15"></i> Alerts <span class="nav-badge" id="alertCount">--</span></a>
+  <div style="margin-top:auto"></div>
+  <a href="/settings" class="nav-item"><i data-lucide="settings" size="15"></i> Settings</a>
+  <a href="/logout" class="nav-item nav-logout"><i data-lucide="log-out" size="15"></i> Logout</a>
+</aside>
+<main class="main">
+  <div class="page-header">
+    <div><h1 class="page-title">Workforce Intelligence</h1><p class="page-subtitle" id="dateStr"></p></div>
+    <div class="status-chip"><div class="status-dot"></div>SYSTEM ACTIVE</div>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card stat-blue">
+      <div class="stat-label"><div class="stat-icon"><i data-lucide="users" size="14"></i></div>TOTAL EMPLOYEES</div>
+      <div class="stat-value" id="s-total">--</div><div class="stat-sub">Full headcount</div>
+    </div>
+    <div class="stat-card stat-green">
+      <div class="stat-label"><div class="stat-icon"><i data-lucide="user-check" size="14"></i></div>ACTIVE STAFF</div>
+      <div class="stat-value" id="s-active">--</div><div class="stat-sub">Currently retained</div>
+    </div>
+    <div class="stat-card stat-red">
+      <div class="stat-label"><div class="stat-icon"><i data-lucide="trending-down" size="14"></i></div>ATTRITION RATE</div>
+      <div class="stat-value" id="s-rate" style="color:var(--red)">--</div>
+      <div class="stat-sub" id="s-attrited">-- employees left</div>
+    </div>
+    <div class="stat-card stat-amber">
+      <div class="stat-label"><div class="stat-icon"><i data-lucide="alert-triangle" size="14"></i></div>HIGH RISK FLAGS</div>
+      <div class="stat-value" id="s-risk" style="color:var(--amber)">--</div><div class="stat-sub">Probability &gt;70%</div>
+    </div>
+  </div>
+  <div class="grid2" style="margin-bottom:16px">
+    <div class="card">
+      <div class="section-header"><div class="section-title">Workforce Stability</div><span class="badge badge-blue">QUARTERLY</span></div>
+      <div class="chart-wrap" style="height:230px"><canvas id="stabilityChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="section-header"><div class="section-title">Dept Attrition %</div><span class="badge badge-red">LIVE DATA</span></div>
+      <div class="chart-wrap" style="height:230px"><canvas id="deptChart"></canvas></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-header">
+      <div><div class="section-title">High-Risk Employee Watch</div><div class="card-muted">Top flagged by AI model</div></div>
+      <a href="/alerts" class="btn btn-ghost" style="font-size:12px">View All &rarr;</a>
+    </div>
+    <table><thead><tr><th>ID</th><th>DEPARTMENT</th><th>ROLE</th><th>INCOME</th><th>OVERTIME</th><th>AI RISK</th><th></th></tr></thead>
+    <tbody id="watchTable"></tbody></table>
+  </div>
+</main>
+<script>
+lucide.createIcons();
+document.getElementById('dateStr').textContent = new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+const gc=()=>'rgba(255,255,255,0.05)',tc=()=>'#64748b';
+async function load(){
+  const d=await(await fetch('/api/dashboard_stats')).json();
+  document.getElementById('s-total').textContent=d.total.toLocaleString();
+  document.getElementById('s-active').textContent=d.active.toLocaleString();
+  document.getElementById('s-rate').textContent=d.attrition_rate+'%';
+  document.getElementById('s-attrited').textContent=d.attrited+' employees left';
+  document.getElementById('s-risk').textContent=d.high_risk;
+  document.getElementById('alertCount').textContent=d.high_risk;
+  new Chart(document.getElementById('stabilityChart'),{type:'line',data:{labels:d.quarters,datasets:[{label:'Active',data:d.active_trend,borderColor:'#3b7ff5',backgroundColor:'rgba(59,127,245,0.1)',tension:.4,fill:true,pointBackgroundColor:'#3b7ff5',pointRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{grid:{color:gc()},ticks:{color:tc()}},x:{grid:{display:false},ticks:{color:tc()}}}}});
+  const depts=Object.keys(d.dept_attrition),vals=Object.values(d.dept_attrition);
+  new Chart(document.getElementById('deptChart'),{type:'bar',data:{labels:depts,datasets:[{data:vals,backgroundColor:vals.map(v=>v>20?'rgba(239,68,68,0.7)':v>15?'rgba(245,158,11,0.7)':'rgba(59,127,245,0.7)'),borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{grid:{color:gc()},ticks:{color:tc(),callback:v=>v+'%'}},y:{grid:{display:false},ticks:{color:tc()}}}}});
+}
+async function loadWatch(){
+  const d=await(await fetch('/get_alerts_data')).json();
+  const tb=document.getElementById('watchTable');
+  if(!d.employees)return;
+  d.employees.slice(0,6).forEach(e=>{
+    const bc=e.score>80?'badge-red':e.score>60?'badge-amber':'badge-blue';
+    tb.innerHTML+=`<tr onclick="location.href='/alerts'"><td><code style="font-family:'DM Mono',monospace;font-size:12px;color:var(--blue)">${e.id}</code></td><td>${e.dept}</td><td>${e.role}</td><td>$${e.income.toLocaleString()}</td><td>${e.overtime==='Yes'?'<span class="badge badge-red">YES</span>':'<span class="badge badge-green">NO</span>'}</td><td><span class="badge ${bc}">${e.score}%</span></td><td><a href="/alerts" class="btn btn-ghost" style="font-size:11px;padding:5px 12px">Review</a></td></tr>`;
+  });
+}
+load();loadWatch();
+</script>
+</body>
+</html>

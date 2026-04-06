@@ -1,0 +1,1501 @@
+Age,Department,DistanceFromHome,JobLevel,JobSatisfaction,MonthlyIncome,OverTime,YearsAtCompany,WorkLifeBalance,Attrition
+50,Sales,29,1,3,10871,No,11,1,Yes
+36,Sales,13,3,3,2731,No,8,3,No
+29,Sales,17,2,2,4417,No,8,2,No
+42,R&D,3,3,3,11034,No,9,3,No
+40,Sales,8,4,4,8418,No,6,1,No
+44,Human Resources,14,1,3,5123,Yes,12,4,No
+32,R&D,3,3,2,11146,No,6,1,No
+32,Human Resources,16,1,4,8901,Yes,2,4,No
+45,Sales,13,1,1,9572,No,3,4,No
+57,Sales,20,2,2,4776,Yes,4,4,No
+45,Sales,24,2,1,9893,No,4,4,No
+24,R&D,17,4,4,11287,No,8,2,No
+43,Human Resources,13,5,2,6374,Yes,14,1,Yes
+23,R&D,29,1,2,7030,Yes,1,3,No
+45,R&D,6,5,4,9664,Yes,10,4,No
+51,Sales,17,4,3,6997,No,14,4,No
+59,R&D,14,1,2,13361,No,4,3,No
+23,R&D,17,1,2,10433,Yes,11,3,Yes
+42,Sales,8,5,1,4635,Yes,12,4,Yes
+54,R&D,11,3,3,9227,No,13,3,No
+33,Sales,20,2,1,14656,Yes,11,3,Yes
+43,Sales,28,3,1,4065,No,11,2,No
+46,Sales,1,5,3,2808,Yes,4,3,Yes
+48,Sales,26,2,3,11034,No,1,1,No
+49,R&D,7,3,4,11127,Yes,3,1,No
+37,Sales,21,2,3,10868,No,5,1,No
+36,Sales,21,1,2,2638,Yes,6,4,Yes
+24,R&D,17,3,3,2693,No,9,1,No
+58,R&D,10,2,4,5757,No,9,2,No
+28,Human Resources,11,2,4,5735,No,9,1,No
+42,R&D,22,2,4,3442,No,11,4,No
+30,R&D,9,3,3,7120,No,1,2,No
+39,Human Resources,9,4,3,14571,No,12,1,No
+25,R&D,24,3,1,8220,No,9,2,Yes
+46,R&D,5,5,1,13805,Yes,13,2,Yes
+35,R&D,17,3,2,13654,No,8,4,No
+30,R&D,9,2,1,8853,No,2,4,No
+47,Human Resources,17,1,2,7457,Yes,13,2,Yes
+23,R&D,24,3,4,11645,Yes,11,1,Yes
+41,R&D,21,3,1,11994,Yes,1,4,Yes
+49,Human Resources,19,2,3,5881,No,1,2,No
+28,Sales,27,1,1,8339,Yes,12,3,Yes
+29,Human Resources,7,1,2,5380,Yes,6,3,Yes
+56,Sales,23,5,1,12879,Yes,9,4,Yes
+35,Human Resources,9,3,4,7387,No,7,1,No
+38,Human Resources,7,1,3,3045,No,5,3,No
+57,R&D,13,1,2,4427,No,11,3,No
+25,Sales,11,4,3,6652,Yes,2,3,No
+23,R&D,14,4,3,2504,Yes,1,1,Yes
+27,Sales,19,1,2,14173,No,2,1,No
+25,Human Resources,11,5,3,8033,No,1,4,No
+50,Human Resources,13,1,3,13945,No,3,4,Yes
+39,Sales,14,2,1,12054,Yes,6,3,Yes
+47,R&D,13,3,3,12512,No,13,1,No
+55,R&D,1,5,3,7878,No,8,2,Yes
+31,R&D,8,2,3,8733,Yes,3,3,No
+57,R&D,12,5,3,5163,Yes,10,4,No
+35,Human Resources,19,2,2,13630,No,9,1,No
+52,Human Resources,12,3,4,11965,No,10,4,No
+36,Human Resources,8,3,1,5826,No,5,4,No
+29,Human Resources,8,4,3,6159,No,7,1,No
+35,Human Resources,29,2,3,13637,No,8,3,Yes
+44,R&D,21,4,2,13710,Yes,3,1,No
+42,R&D,13,2,4,3631,No,2,3,No
+37,R&D,12,4,3,7263,No,2,4,No
+39,R&D,29,3,2,9237,Yes,5,1,Yes
+45,Human Resources,16,5,1,13328,No,1,2,No
+47,Human Resources,1,4,1,13721,Yes,2,3,Yes
+46,Human Resources,13,2,3,13711,No,13,2,No
+50,Sales,26,2,3,7592,No,9,3,No
+36,R&D,7,3,4,8522,No,7,1,No
+22,R&D,28,2,4,5659,No,6,2,No
+46,Human Resources,26,1,3,8659,Yes,9,1,Yes
+28,R&D,5,5,2,9818,No,7,3,No
+30,R&D,8,4,4,10945,No,14,3,No
+45,Human Resources,25,5,3,7807,No,11,3,No
+22,Sales,27,3,4,11020,No,5,3,No
+29,Sales,14,4,3,13283,No,9,4,No
+45,Sales,23,4,1,13522,Yes,6,3,No
+32,Human Resources,13,1,3,5544,No,6,2,No
+38,R&D,15,3,1,12112,Yes,11,3,Yes
+29,Human Resources,23,2,4,8136,Yes,4,1,Yes
+56,Human Resources,17,1,3,14093,No,13,4,No
+56,R&D,15,1,4,5392,No,12,2,No
+54,Sales,20,5,1,7788,Yes,1,4,Yes
+26,Sales,18,5,3,8312,No,5,4,No
+49,Human Resources,18,5,4,3154,Yes,11,4,Yes
+28,Sales,2,1,1,7981,No,9,1,No
+30,Human Resources,4,2,4,3259,No,13,4,No
+29,Human Resources,1,4,2,9282,No,8,4,No
+33,R&D,4,5,1,4298,Yes,8,3,Yes
+55,R&D,18,2,1,7659,No,5,1,No
+54,R&D,5,3,1,13663,No,12,2,No
+44,Human Resources,19,5,3,14118,No,9,2,No
+45,R&D,15,4,3,10946,No,3,2,Yes
+58,Sales,28,3,3,7762,No,3,1,No
+56,Sales,8,3,2,6323,Yes,1,2,No
+43,Human Resources,20,4,2,4376,No,9,1,No
+48,Human Resources,17,5,1,13449,No,6,3,No
+56,R&D,1,1,2,13316,Yes,2,3,No
+22,Human Resources,12,4,4,8654,No,8,1,No
+56,Human Resources,26,4,1,10287,Yes,12,2,Yes
+58,Sales,19,4,1,14813,No,9,1,No
+35,Sales,15,3,4,13696,No,9,1,No
+24,R&D,9,2,1,7016,No,2,4,No
+22,Human Resources,7,1,2,6234,No,2,1,No
+26,Human Resources,2,5,3,11936,Yes,13,4,No
+47,Sales,29,5,4,8472,No,7,3,No
+35,Human Resources,9,2,2,9139,Yes,11,4,Yes
+48,Sales,10,4,4,7856,No,4,1,No
+30,R&D,2,1,4,8880,Yes,13,3,No
+36,Sales,19,5,1,3508,No,1,4,No
+36,Human Resources,11,5,1,6814,No,8,1,No
+47,R&D,13,4,2,12202,No,2,3,No
+34,Sales,10,2,4,12651,No,14,4,No
+53,Sales,14,1,1,5008,No,3,1,No
+53,R&D,18,2,1,7258,No,5,1,No
+25,R&D,19,2,4,5182,Yes,14,2,Yes
+51,Sales,22,1,2,9811,No,3,2,No
+58,Human Resources,9,1,2,3489,Yes,7,4,Yes
+44,Sales,25,5,4,14976,Yes,7,4,Yes
+36,R&D,7,5,2,10946,No,14,4,No
+50,Sales,28,1,1,14855,Yes,2,1,Yes
+57,R&D,3,3,4,7211,Yes,13,4,No
+34,R&D,20,5,1,8979,Yes,13,1,Yes
+53,Human Resources,6,3,3,9464,Yes,7,4,No
+28,R&D,27,1,3,10575,Yes,11,1,Yes
+43,R&D,21,5,2,6952,No,6,1,No
+49,Human Resources,2,2,3,10947,Yes,10,2,No
+23,R&D,29,1,1,3507,No,9,3,Yes
+27,Human Resources,6,4,3,8996,Yes,13,1,No
+49,Human Resources,3,3,1,12447,No,9,4,No
+49,R&D,16,1,2,10188,Yes,2,2,Yes
+41,R&D,8,1,2,13263,No,7,4,No
+51,Sales,2,5,1,6408,No,5,4,No
+32,Human Resources,17,5,3,13689,Yes,13,1,No
+49,Sales,9,5,2,5303,No,6,1,No
+46,R&D,12,4,4,14457,No,1,3,No
+54,Sales,3,5,2,6879,Yes,7,1,No
+22,Human Resources,11,1,3,14075,No,6,1,No
+48,Sales,1,5,4,2598,No,4,3,No
+34,Human Resources,23,2,3,10888,No,1,4,No
+24,R&D,13,5,1,13221,No,9,3,No
+27,R&D,15,4,4,3377,No,4,3,No
+29,Human Resources,26,2,3,4368,No,2,3,No
+48,R&D,5,1,4,5165,No,8,2,Yes
+30,R&D,21,1,3,3888,No,2,4,No
+58,R&D,17,3,4,4915,Yes,5,2,No
+54,R&D,25,2,3,11261,No,11,2,No
+45,Human Resources,23,3,1,5137,Yes,6,1,No
+36,Sales,24,2,4,9742,Yes,11,3,Yes
+53,Sales,25,2,4,11757,No,13,3,No
+53,R&D,6,4,4,11113,No,8,2,No
+45,Sales,28,3,4,5383,Yes,11,1,Yes
+33,Sales,21,4,1,3704,No,1,1,Yes
+23,R&D,22,2,4,3044,No,1,1,No
+24,R&D,11,1,2,14858,No,12,4,No
+58,Sales,18,2,1,14331,No,4,2,No
+38,Human Resources,4,4,2,3723,No,5,4,No
+23,R&D,3,3,4,5672,Yes,13,1,No
+23,Human Resources,13,3,3,11459,Yes,13,1,No
+49,Sales,23,4,2,8950,No,9,1,No
+44,R&D,9,3,4,14349,Yes,11,3,No
+58,Human Resources,21,5,2,9020,No,14,2,No
+53,R&D,6,1,4,3154,No,7,3,No
+54,Sales,26,1,4,9321,No,7,4,No
+22,Human Resources,28,1,4,4946,Yes,8,3,Yes
+40,Sales,12,3,3,8392,No,5,2,No
+23,Sales,2,3,2,10912,No,5,3,No
+47,R&D,3,2,1,6166,No,1,1,No
+53,Human Resources,3,2,1,6777,Yes,14,4,Yes
+27,Sales,28,1,1,6902,No,9,4,No
+53,Sales,12,5,1,5069,No,6,1,No
+25,Human Resources,15,2,4,8015,No,9,1,No
+32,Sales,9,2,2,11705,No,3,1,No
+38,Sales,23,3,2,12743,Yes,5,2,Yes
+59,Human Resources,8,5,3,6485,Yes,2,3,No
+45,Human Resources,11,1,2,10667,No,10,4,No
+26,Human Resources,16,2,2,9948,No,5,3,No
+55,Human Resources,26,5,2,6810,No,13,1,No
+27,R&D,27,5,3,5519,Yes,13,1,Yes
+43,Human Resources,25,1,1,6181,Yes,13,3,Yes
+32,R&D,22,5,2,12135,Yes,14,4,Yes
+37,R&D,4,5,3,6696,Yes,8,2,No
+54,R&D,28,5,3,13702,No,11,3,Yes
+30,Sales,1,2,4,3072,No,2,1,Yes
+27,R&D,24,1,3,12024,Yes,8,1,No
+37,R&D,7,5,1,7253,No,4,2,No
+50,Sales,2,5,2,9582,Yes,10,3,Yes
+24,Sales,24,2,3,6502,No,10,2,No
+41,Sales,28,1,1,8129,Yes,1,2,Yes
+57,Human Resources,5,3,3,13826,No,13,4,No
+40,Sales,7,2,3,14778,No,5,4,No
+47,Sales,4,1,3,10917,No,13,1,Yes
+24,R&D,5,5,3,6700,No,1,3,No
+40,Sales,24,1,3,4497,No,7,4,No
+41,Human Resources,1,1,1,11463,No,8,1,No
+53,Sales,1,1,2,9922,Yes,3,3,Yes
+28,Human Resources,15,3,2,7024,No,3,1,No
+54,Sales,20,1,2,11125,No,7,4,Yes
+39,Sales,19,3,2,13791,Yes,4,1,Yes
+22,Sales,29,5,1,13421,No,3,3,No
+32,Sales,10,3,4,5907,No,8,3,No
+49,Human Resources,28,5,4,9231,No,3,1,No
+46,Human Resources,18,5,1,10295,No,13,3,No
+44,R&D,28,3,1,13832,No,14,1,Yes
+52,Human Resources,3,2,3,11557,No,7,3,No
+51,Sales,11,4,3,5293,No,2,1,No
+56,R&D,15,1,3,9834,No,11,1,No
+28,R&D,27,4,2,5411,No,11,1,No
+37,R&D,11,1,3,10452,No,1,2,Yes
+47,Sales,17,1,4,4915,No,12,3,No
+23,Human Resources,17,5,2,2750,No,6,4,No
+22,Sales,6,1,3,7451,No,8,1,Yes
+33,R&D,5,1,2,10598,No,1,2,No
+26,Sales,8,3,4,14449,No,13,4,No
+58,Sales,2,4,3,7789,No,10,1,No
+53,Human Resources,16,3,4,10602,Yes,12,4,No
+30,Human Resources,20,1,4,9757,No,9,2,No
+56,R&D,24,5,4,8065,No,3,4,No
+40,Sales,12,3,3,8937,Yes,3,1,No
+37,Sales,6,3,1,11610,Yes,4,4,Yes
+24,Human Resources,1,2,3,3673,No,11,4,No
+41,Sales,4,1,4,13895,Yes,1,1,Yes
+45,Sales,17,5,3,11124,No,9,2,No
+54,Sales,13,3,4,3335,No,11,2,Yes
+45,Human Resources,18,3,1,12938,No,3,4,Yes
+32,R&D,5,5,2,4762,No,13,3,No
+29,R&D,24,1,1,11589,No,10,4,Yes
+57,Sales,24,2,1,14324,No,4,3,No
+59,R&D,27,3,2,7067,Yes,1,4,Yes
+41,Human Resources,3,2,3,6315,No,4,2,No
+56,Human Resources,11,4,2,2746,No,13,4,Yes
+46,R&D,13,1,3,4929,No,1,4,Yes
+56,R&D,4,4,3,11682,Yes,5,3,No
+46,Sales,26,4,4,14002,No,5,2,No
+50,R&D,27,4,4,11618,Yes,14,3,Yes
+39,Sales,14,1,2,14130,No,11,4,No
+39,Sales,22,1,1,7787,Yes,7,1,Yes
+23,Human Resources,11,5,2,5107,No,14,4,No
+56,Human Resources,27,2,3,11766,No,8,4,Yes
+37,Human Resources,10,2,4,8430,Yes,4,3,No
+57,Human Resources,19,5,2,6522,No,7,1,No
+54,R&D,18,5,2,14491,No,4,1,No
+25,Human Resources,6,4,4,7284,No,3,3,No
+54,R&D,27,5,4,9117,No,6,2,Yes
+35,Human Resources,29,3,4,5651,No,4,1,No
+42,R&D,15,2,3,14130,No,14,1,No
+41,Sales,21,5,4,8080,No,3,3,No
+29,R&D,10,3,1,9554,No,9,2,Yes
+28,R&D,5,3,2,10206,Yes,5,2,Yes
+24,Human Resources,26,3,4,10119,No,13,4,No
+38,R&D,29,3,4,7073,No,14,4,No
+54,Sales,5,4,3,5991,Yes,7,3,No
+33,Sales,10,3,3,3206,No,12,2,No
+43,Human Resources,28,4,2,9497,No,14,3,No
+43,Sales,5,4,1,7733,No,6,4,No
+51,R&D,3,3,2,13756,Yes,10,3,Yes
+59,Sales,23,2,4,11445,No,5,3,No
+59,Human Resources,6,3,1,8255,No,7,1,No
+29,R&D,4,3,1,9460,No,11,1,No
+48,Human Resources,18,3,1,11279,No,6,1,No
+48,R&D,28,2,1,3834,No,10,4,Yes
+55,Sales,9,1,2,8088,No,2,3,Yes
+42,Human Resources,17,1,3,4347,Yes,13,1,No
+51,Human Resources,29,4,3,9351,No,13,1,Yes
+54,R&D,13,4,4,14626,No,13,1,No
+49,Human Resources,27,2,3,9711,Yes,3,4,Yes
+54,R&D,15,5,3,10365,No,2,4,No
+26,R&D,20,1,3,14618,Yes,12,3,No
+40,R&D,17,4,3,5817,Yes,3,3,No
+25,R&D,13,1,4,14712,No,1,3,No
+56,Sales,16,2,2,13847,No,8,1,No
+38,R&D,22,2,1,14994,No,6,2,No
+49,Human Resources,4,5,3,12890,No,13,4,No
+51,Sales,5,5,2,9311,Yes,2,1,Yes
+50,Human Resources,5,2,3,2664,No,8,1,No
+27,Sales,9,4,3,9560,No,6,3,No
+56,R&D,17,1,1,12690,No,7,3,No
+58,Sales,13,3,1,5557,No,11,1,No
+45,Sales,2,5,1,12776,No,1,4,Yes
+50,Human Resources,13,3,3,6928,No,7,4,No
+52,Human Resources,22,4,3,2902,No,3,1,No
+56,R&D,21,5,3,11105,Yes,11,2,Yes
+54,Sales,27,3,1,10736,No,12,2,No
+42,Sales,23,4,4,8849,Yes,8,4,Yes
+53,Sales,19,1,2,6657,Yes,6,3,Yes
+44,R&D,3,4,4,13159,Yes,4,2,No
+54,R&D,10,5,3,3367,No,11,2,No
+24,R&D,2,2,3,10710,No,8,3,No
+39,R&D,13,1,4,2864,No,9,2,No
+46,R&D,19,3,3,9967,No,10,1,No
+52,Human Resources,26,5,2,14524,No,2,2,No
+24,Sales,17,2,3,9071,No,6,3,No
+45,Sales,21,4,2,3079,Yes,5,1,Yes
+53,Sales,14,2,4,10174,No,5,2,No
+43,Sales,12,5,4,11237,No,10,4,No
+44,Sales,21,5,3,8968,No,11,1,No
+23,Sales,12,2,2,6650,No,3,1,Yes
+48,Sales,11,4,3,5539,Yes,12,4,No
+23,Sales,7,2,1,6637,No,8,4,No
+47,Human Resources,4,5,1,14736,No,14,2,No
+38,Sales,19,5,1,2952,No,8,2,No
+54,Human Resources,1,3,1,14653,Yes,12,3,Yes
+30,R&D,28,3,3,9037,No,5,3,No
+50,Sales,24,1,1,3881,No,8,1,Yes
+47,R&D,29,5,2,10654,Yes,10,4,Yes
+56,R&D,3,3,4,3967,No,8,4,Yes
+46,R&D,13,2,4,5238,No,3,3,No
+45,Human Resources,15,4,1,10072,No,2,1,No
+34,R&D,2,2,1,11908,No,9,1,No
+28,R&D,11,4,1,9247,No,2,3,No
+57,R&D,4,3,3,3380,No,9,3,No
+41,Sales,19,1,4,14506,Yes,4,3,No
+22,Sales,29,2,1,5649,Yes,12,2,No
+29,Human Resources,17,2,2,10776,Yes,13,1,Yes
+37,Human Resources,3,2,1,10392,No,2,1,No
+35,Sales,28,4,4,6644,No,10,1,No
+33,Human Resources,18,3,1,3668,No,1,3,Yes
+44,Sales,8,2,4,14856,No,4,3,No
+36,R&D,22,2,1,5629,No,9,3,No
+49,R&D,25,1,2,6145,No,12,3,Yes
+55,Human Resources,24,1,1,5026,Yes,9,4,No
+23,Sales,26,3,2,13559,No,4,3,No
+53,Sales,19,3,2,6016,No,9,2,No
+44,Human Resources,5,5,1,5867,No,12,4,No
+43,Sales,7,1,2,9838,No,6,4,No
+46,R&D,21,5,3,12886,No,1,3,Yes
+43,Human Resources,8,4,1,6055,Yes,10,1,Yes
+43,Human Resources,28,5,1,7611,No,13,3,No
+27,Sales,5,2,2,9252,No,14,1,Yes
+36,Human Resources,17,5,2,2945,No,6,3,No
+58,Sales,5,3,1,8864,No,9,3,No
+54,Sales,4,4,3,6126,No,13,1,No
+29,Sales,22,2,2,6516,No,2,1,No
+26,Sales,19,5,2,6375,No,6,1,No
+25,Sales,27,4,4,7997,No,2,1,No
+27,Human Resources,21,4,3,14029,No,4,2,No
+53,R&D,2,2,3,8738,No,8,1,No
+51,R&D,11,5,1,2761,No,13,3,No
+56,Human Resources,22,4,3,12540,No,7,3,No
+37,Human Resources,13,4,1,7492,Yes,11,2,Yes
+34,R&D,15,1,4,6525,No,12,1,No
+51,R&D,12,4,3,12958,Yes,13,3,No
+40,R&D,22,1,2,10783,No,9,2,No
+38,R&D,21,5,4,6722,Yes,7,3,Yes
+40,R&D,22,5,1,6675,Yes,1,2,Yes
+49,Sales,11,5,4,14001,Yes,2,2,No
+47,Human Resources,7,3,1,11674,Yes,6,4,Yes
+58,Sales,28,5,4,5943,No,7,4,No
+47,R&D,5,4,1,7511,No,3,1,No
+44,R&D,17,2,3,13225,No,9,4,No
+30,R&D,24,1,2,3193,No,13,2,Yes
+33,Sales,20,3,1,14812,No,7,3,No
+22,Sales,9,5,4,10847,Yes,14,3,No
+22,R&D,14,5,1,14280,No,6,1,Yes
+55,Sales,26,2,1,4312,Yes,13,4,Yes
+53,Sales,12,2,1,8224,No,6,1,No
+46,R&D,6,3,4,14806,No,1,2,No
+22,Sales,17,1,2,3907,Yes,13,4,Yes
+37,Human Resources,19,5,3,10532,No,5,1,Yes
+26,Human Resources,19,3,2,11908,No,10,3,No
+43,Human Resources,26,4,1,3910,No,3,3,Yes
+50,Human Resources,16,4,4,5997,No,7,1,No
+24,R&D,12,3,2,6872,Yes,10,1,Yes
+33,R&D,12,5,1,9894,No,3,1,Yes
+47,R&D,20,3,3,3051,Yes,5,2,Yes
+37,Human Resources,6,5,3,14086,No,7,2,No
+58,Human Resources,23,2,3,11868,Yes,14,3,Yes
+43,Sales,26,3,1,6832,No,3,2,No
+50,Sales,4,5,4,3497,No,13,2,Yes
+35,Human Resources,6,3,2,6576,No,13,4,No
+49,Human Resources,11,3,3,8599,No,10,2,No
+26,Human Resources,1,5,1,8055,No,2,4,No
+51,Human Resources,24,5,1,13423,No,6,2,No
+26,Sales,23,1,2,14629,No,8,3,No
+33,Human Resources,15,3,3,6552,Yes,4,1,No
+37,Sales,27,4,1,7803,No,9,3,No
+47,Human Resources,11,3,2,10618,Yes,12,2,Yes
+47,Human Resources,25,3,4,8602,Yes,12,1,Yes
+42,Human Resources,19,5,4,7990,No,8,1,No
+57,Sales,18,3,4,11064,No,7,1,No
+54,Sales,17,3,3,8116,No,14,4,No
+51,R&D,19,4,2,4748,Yes,7,3,Yes
+58,Human Resources,21,5,2,3348,No,3,4,Yes
+44,R&D,14,3,1,13248,Yes,14,1,Yes
+31,R&D,27,2,1,13014,Yes,6,3,Yes
+26,Sales,18,1,1,8854,Yes,13,3,Yes
+57,Sales,28,4,2,11195,No,13,2,No
+55,R&D,19,3,1,10570,No,5,4,No
+52,Human Resources,15,2,2,13881,Yes,1,4,Yes
+31,Sales,15,3,2,11394,No,11,2,No
+40,Human Resources,4,3,4,6125,Yes,3,4,No
+53,Human Resources,7,5,1,2814,No,13,1,No
+22,R&D,13,5,4,4876,No,12,1,No
+26,R&D,3,5,3,11732,No,1,4,No
+25,R&D,16,2,3,6878,No,4,2,No
+37,R&D,9,3,3,13682,No,10,3,No
+45,Sales,8,1,2,10949,No,3,4,No
+37,Sales,20,4,2,3074,No,11,3,No
+23,R&D,13,5,2,12244,No,4,2,No
+49,Sales,17,5,1,8085,No,9,3,No
+53,R&D,17,3,4,7992,Yes,3,2,No
+48,Human Resources,17,3,2,11449,No,12,2,Yes
+41,Human Resources,1,2,4,5310,No,6,1,No
+45,Human Resources,8,2,4,10634,Yes,6,1,No
+33,R&D,19,5,4,11796,No,7,2,Yes
+56,Human Resources,6,3,1,8170,No,9,4,No
+54,Sales,3,1,1,10215,No,12,1,No
+54,Human Resources,27,4,3,9067,No,7,2,No
+58,Human Resources,5,3,3,5959,No,14,3,No
+33,Human Resources,13,3,4,8617,No,1,3,No
+24,Sales,15,2,3,6492,No,8,4,No
+22,R&D,14,4,4,10337,No,5,3,No
+54,Sales,29,5,1,2703,No,9,3,Yes
+31,R&D,23,3,1,5275,No,10,2,No
+50,R&D,16,5,1,13024,No,13,3,No
+34,Human Resources,18,3,2,4492,No,12,3,Yes
+33,R&D,22,5,4,4743,No,5,3,Yes
+52,Sales,29,4,1,10998,Yes,5,3,Yes
+23,Sales,22,2,4,4187,Yes,12,2,No
+56,R&D,11,4,3,6609,No,12,3,No
+44,Human Resources,3,1,3,4360,No,14,4,No
+38,Human Resources,22,2,1,12653,Yes,2,1,Yes
+47,Sales,10,4,4,7676,Yes,12,4,No
+29,Human Resources,10,1,1,3222,Yes,11,1,Yes
+50,R&D,21,3,3,11471,No,3,4,No
+47,R&D,16,3,1,11220,Yes,10,1,Yes
+31,Sales,12,5,4,7393,No,9,1,No
+47,R&D,2,2,3,2843,No,7,1,No
+55,Sales,9,3,2,14478,No,1,1,No
+28,R&D,24,2,3,14374,No,3,2,No
+25,Sales,3,3,2,7898,Yes,12,4,Yes
+32,Human Resources,24,5,1,10900,No,2,1,No
+50,R&D,25,4,1,7236,No,1,4,No
+57,R&D,15,5,4,5906,No,9,3,No
+46,Sales,3,1,2,12003,No,8,1,No
+42,Sales,19,3,1,12991,No,5,4,No
+57,R&D,18,1,2,14028,Yes,11,2,Yes
+31,Sales,8,1,1,12639,No,12,4,No
+58,R&D,26,2,3,3419,Yes,2,1,Yes
+30,Human Resources,17,3,1,8319,No,1,3,No
+45,Sales,8,1,4,4544,Yes,7,4,No
+56,R&D,7,4,3,2918,No,13,3,No
+56,Human Resources,7,1,4,4249,No,11,2,No
+57,Human Resources,3,4,3,13534,Yes,11,4,No
+39,R&D,1,2,2,9878,No,2,4,No
+53,Sales,4,1,4,3599,Yes,1,2,Yes
+45,R&D,25,5,1,5892,Yes,2,2,Yes
+44,Human Resources,5,2,2,5272,No,7,2,No
+53,R&D,1,4,1,13172,No,7,1,No
+58,Sales,15,2,3,9284,No,10,1,No
+33,Human Resources,5,1,3,4045,Yes,6,4,No
+34,R&D,13,3,1,3570,No,5,4,No
+44,Sales,8,3,1,9022,No,3,4,No
+46,Human Resources,8,4,2,4350,No,14,3,No
+56,Sales,5,4,1,7553,No,12,2,No
+51,Human Resources,28,3,4,14890,No,3,4,No
+38,R&D,9,4,4,5439,No,11,2,No
+41,Sales,1,2,1,12595,No,13,1,No
+46,Human Resources,4,5,4,9694,No,12,2,No
+43,Sales,3,5,1,8351,No,9,3,No
+34,Sales,2,2,2,9173,Yes,4,3,Yes
+40,R&D,8,5,4,3178,No,9,2,Yes
+57,Sales,23,1,4,3488,No,4,3,No
+33,Human Resources,9,2,1,13167,Yes,2,3,Yes
+40,Human Resources,2,4,4,12299,Yes,4,1,No
+33,Human Resources,14,2,3,13561,No,6,4,No
+30,Human Resources,14,3,2,4002,Yes,6,3,No
+28,R&D,4,4,2,4289,No,5,4,No
+49,Sales,6,3,4,7781,No,1,2,No
+35,R&D,11,4,4,7527,No,3,2,No
+52,Sales,3,5,3,3925,Yes,5,3,No
+40,Sales,8,2,3,9154,No,6,2,No
+37,Sales,3,1,4,4940,No,14,1,No
+26,R&D,14,4,4,12734,No,1,3,No
+56,Sales,28,4,3,9356,No,14,3,No
+33,R&D,13,3,1,9867,No,14,3,No
+46,Human Resources,13,5,3,11970,No,9,2,No
+42,Human Resources,2,3,1,5094,No,14,2,No
+57,Sales,13,3,2,7189,No,3,3,No
+44,R&D,29,5,2,4936,No,10,4,No
+37,Human Resources,19,1,3,8017,Yes,13,2,No
+35,R&D,27,3,1,14495,No,3,2,No
+52,R&D,6,3,3,12897,No,11,3,No
+26,Sales,16,4,3,11719,No,2,4,No
+56,Human Resources,2,5,1,8810,No,8,3,Yes
+44,Sales,8,2,3,6039,Yes,13,2,No
+50,Sales,17,1,2,5983,Yes,3,3,Yes
+32,Human Resources,23,1,4,9871,Yes,6,3,Yes
+39,Human Resources,2,5,4,4741,Yes,2,3,No
+33,R&D,10,4,3,8878,No,7,4,No
+30,Human Resources,28,4,1,5265,Yes,13,3,Yes
+31,R&D,16,5,1,11865,Yes,4,2,Yes
+38,R&D,6,4,2,13922,No,9,3,No
+59,R&D,28,1,1,14042,No,14,4,No
+28,Human Resources,2,1,1,7411,No,10,1,No
+34,Sales,2,2,2,2903,No,9,4,No
+30,R&D,26,5,3,13417,No,7,3,No
+48,Sales,13,3,4,5882,Yes,12,1,No
+23,Sales,24,3,2,6663,No,8,3,No
+26,Human Resources,15,2,3,10130,Yes,3,4,No
+50,Sales,28,2,2,2587,No,11,1,Yes
+58,Sales,2,4,3,11850,No,5,1,No
+59,Human Resources,7,2,2,8316,No,2,3,Yes
+40,R&D,3,2,3,7970,No,10,3,No
+29,Sales,8,3,2,8776,No,7,4,No
+22,Human Resources,23,4,3,8239,Yes,13,3,Yes
+43,Sales,14,2,2,6773,No,8,1,No
+38,Sales,24,2,4,13549,No,9,2,Yes
+28,R&D,23,4,4,12073,No,11,2,No
+46,Sales,27,5,1,9023,Yes,11,4,Yes
+25,Human Resources,22,4,3,7503,No,7,3,No
+57,Sales,29,3,2,10538,No,10,4,No
+27,R&D,7,5,3,9106,No,10,2,No
+52,R&D,21,1,4,4564,No,13,2,No
+40,Human Resources,7,4,3,7815,No,8,3,No
+48,R&D,1,3,2,13066,No,12,1,No
+31,Sales,17,5,3,2817,No,9,3,No
+47,R&D,9,4,2,4002,No,6,2,No
+40,Human Resources,21,2,4,8630,No,12,1,No
+24,R&D,13,4,4,9919,No,12,4,No
+34,R&D,21,1,4,4542,Yes,10,2,Yes
+49,R&D,19,4,1,7098,Yes,2,4,Yes
+41,Human Resources,21,5,4,12714,No,2,1,No
+49,R&D,19,5,3,2618,Yes,4,4,Yes
+29,R&D,25,4,1,3209,No,9,2,No
+22,Sales,25,5,4,6057,No,7,3,No
+24,Human Resources,22,2,3,14832,No,2,4,No
+34,R&D,17,4,3,5750,No,8,2,No
+49,Human Resources,23,2,3,10561,No,11,2,No
+46,R&D,23,2,2,11109,Yes,7,1,Yes
+54,R&D,10,3,1,5103,No,9,2,No
+59,R&D,10,4,3,14546,No,8,3,No
+27,Sales,4,5,2,3601,No,3,3,No
+53,Sales,8,2,4,6921,No,1,4,No
+42,Sales,22,3,3,10357,No,2,4,Yes
+37,Human Resources,20,4,2,14120,Yes,14,4,Yes
+42,Human Resources,20,4,3,10677,No,13,4,Yes
+32,Sales,18,1,1,8582,No,2,3,No
+58,Human Resources,14,1,1,9158,Yes,4,1,Yes
+57,R&D,18,2,4,4761,No,6,4,No
+56,R&D,28,1,3,10521,No,4,1,No
+40,R&D,14,2,2,14861,No,9,2,No
+41,Sales,20,5,4,14326,Yes,4,2,No
+39,Human Resources,21,2,3,3008,Yes,6,4,Yes
+35,Sales,24,1,4,4879,No,6,2,No
+36,Human Resources,15,5,2,13856,Yes,10,1,Yes
+52,R&D,22,1,4,11379,No,11,1,No
+22,Sales,4,2,4,7252,No,10,2,No
+24,Human Resources,13,3,4,11984,No,1,4,No
+37,Human Resources,27,4,3,7995,No,8,1,No
+44,R&D,23,1,2,14597,No,12,1,No
+32,Sales,8,2,1,13767,Yes,3,3,Yes
+33,Sales,18,5,3,5709,No,13,4,No
+31,Sales,12,1,1,9898,No,6,3,No
+53,R&D,23,1,1,9243,No,3,2,No
+37,Sales,14,4,3,8148,No,11,2,No
+29,R&D,2,2,3,7671,No,2,3,No
+59,R&D,18,3,2,10390,No,5,4,No
+33,R&D,24,5,2,2824,Yes,14,1,Yes
+45,Human Resources,2,2,4,12685,Yes,1,2,No
+49,Sales,11,5,1,14668,No,9,4,No
+29,Sales,9,1,2,13462,No,11,4,No
+49,R&D,12,4,4,13275,No,7,2,No
+57,R&D,17,4,2,6057,No,3,2,No
+47,Sales,15,3,3,6087,No,4,4,No
+29,R&D,25,4,2,2651,No,13,1,Yes
+49,Sales,17,1,1,3454,No,6,3,No
+49,Human Resources,26,3,2,6854,Yes,3,2,No
+58,R&D,29,2,1,13063,No,12,3,No
+57,Sales,26,4,3,9660,No,7,4,No
+48,R&D,18,3,1,11883,Yes,13,3,Yes
+38,Sales,22,1,2,3187,No,6,1,Yes
+30,Sales,6,5,4,11001,No,9,4,No
+54,R&D,17,5,3,12194,Yes,12,1,No
+41,Human Resources,23,1,2,5627,No,5,4,No
+34,Sales,24,1,3,9263,No,4,1,Yes
+49,Sales,18,5,3,14059,Yes,3,4,Yes
+50,Sales,8,3,2,5895,No,10,1,No
+34,Human Resources,9,5,2,11505,Yes,1,4,No
+56,Human Resources,6,1,4,3345,No,3,1,Yes
+27,R&D,5,4,3,3664,Yes,3,4,Yes
+39,Human Resources,12,2,3,8404,No,7,1,No
+26,R&D,25,4,2,12459,No,7,2,No
+46,R&D,29,4,1,7860,Yes,13,3,Yes
+23,Human Resources,28,1,2,2854,No,12,4,No
+31,R&D,11,5,3,4372,No,1,1,Yes
+51,Human Resources,25,3,2,4524,No,3,2,No
+26,R&D,1,4,4,5317,No,13,4,No
+54,Human Resources,11,5,1,6332,No,8,4,No
+22,Human Resources,19,3,2,14967,Yes,9,4,No
+39,R&D,9,4,4,10757,Yes,7,3,No
+53,Sales,27,3,3,14958,No,7,1,No
+32,R&D,2,5,2,14782,No,12,1,No
+42,Human Resources,12,2,3,13213,No,11,4,No
+47,Sales,4,5,4,5081,No,8,4,No
+46,R&D,4,1,3,12082,No,6,4,No
+43,R&D,18,3,4,11822,No,11,2,Yes
+48,R&D,15,2,4,4986,No,3,4,No
+34,Sales,19,3,4,11526,Yes,1,3,No
+54,Human Resources,13,3,2,10918,No,7,1,No
+55,R&D,19,4,3,14207,No,1,3,Yes
+56,R&D,17,1,3,4943,No,1,4,No
+22,R&D,6,3,1,11419,Yes,9,2,Yes
+42,R&D,16,5,1,14378,No,13,4,Yes
+27,R&D,24,5,1,14314,No,10,4,No
+49,Human Resources,12,4,1,3536,Yes,7,4,Yes
+38,Human Resources,19,1,3,12524,No,13,4,Yes
+26,R&D,5,1,4,13432,No,11,4,Yes
+52,Sales,17,5,4,11184,No,13,1,Yes
+26,Human Resources,26,2,2,9935,No,4,3,No
+59,Sales,23,4,4,4048,No,6,2,No
+24,Human Resources,26,4,3,11835,Yes,1,4,Yes
+44,R&D,29,5,3,7565,Yes,7,2,Yes
+58,Human Resources,1,5,3,8996,No,12,1,No
+58,R&D,28,2,2,8683,No,6,3,No
+31,Human Resources,27,2,1,6457,Yes,4,4,No
+31,R&D,25,1,4,5907,No,7,1,No
+40,R&D,24,4,3,3139,No,3,1,No
+38,R&D,23,4,3,2672,No,1,3,No
+42,R&D,10,5,1,8166,Yes,4,4,Yes
+35,Sales,15,1,3,6854,No,3,3,No
+30,R&D,23,4,4,6459,Yes,1,3,Yes
+22,Sales,21,1,2,11208,No,2,2,No
+34,Sales,21,1,3,11214,No,11,2,No
+25,R&D,11,5,4,12609,No,5,3,No
+22,Sales,13,1,3,5386,Yes,8,2,No
+53,Human Resources,5,2,1,4664,Yes,1,1,Yes
+55,R&D,1,2,3,12621,No,4,3,Yes
+49,Sales,24,3,3,6445,No,14,4,No
+52,R&D,12,5,2,7735,No,4,4,No
+29,R&D,11,3,1,12901,No,5,1,Yes
+47,R&D,17,2,1,10246,No,7,4,Yes
+55,Sales,4,3,2,14475,No,13,4,No
+24,Human Resources,15,5,3,5090,Yes,12,3,No
+33,Human Resources,25,5,4,10254,Yes,8,1,Yes
+22,Sales,9,1,1,7434,Yes,6,3,Yes
+26,R&D,21,4,1,6576,No,1,1,No
+51,Sales,20,1,3,7685,No,7,3,No
+51,Sales,19,5,3,3593,No,3,3,No
+38,Sales,19,2,1,6380,Yes,13,2,Yes
+44,R&D,12,2,3,13186,Yes,13,4,No
+36,Sales,5,1,4,9059,Yes,13,1,No
+58,R&D,10,5,1,13271,No,6,4,No
+42,Sales,17,2,4,13180,No,8,2,No
+35,Human Resources,5,5,4,5285,No,7,1,No
+23,Sales,22,2,3,8565,Yes,10,2,Yes
+32,Sales,16,5,4,9039,Yes,6,4,No
+59,Human Resources,7,3,3,13450,Yes,9,3,No
+55,R&D,28,5,2,4074,Yes,9,2,Yes
+59,R&D,9,5,3,8176,No,1,2,No
+55,Sales,3,1,4,13065,Yes,1,3,No
+39,Human Resources,15,3,2,10560,No,1,4,No
+51,R&D,16,4,3,6490,No,8,2,No
+36,Sales,18,1,4,7710,No,12,4,Yes
+48,Human Resources,14,4,1,7345,No,13,3,No
+55,R&D,3,2,1,11785,No,14,1,No
+59,R&D,12,4,3,3689,Yes,12,2,Yes
+54,Human Resources,9,5,3,5189,No,14,4,No
+45,Human Resources,28,4,1,6595,No,10,3,No
+36,Human Resources,7,1,4,4375,Yes,7,3,No
+51,Human Resources,9,1,4,10268,No,3,2,No
+38,Sales,13,4,4,5906,No,13,1,No
+26,Human Resources,18,1,3,12479,No,2,2,No
+50,R&D,5,1,2,6432,Yes,4,4,Yes
+25,R&D,13,4,2,12299,Yes,3,3,No
+31,Sales,4,3,2,14440,No,7,1,Yes
+38,R&D,2,3,2,10740,Yes,10,4,Yes
+31,R&D,16,2,2,7908,No,8,2,Yes
+38,Human Resources,9,1,3,6361,No,6,3,Yes
+41,R&D,9,4,3,9906,Yes,3,2,No
+45,Sales,6,1,2,12872,No,6,1,No
+26,Human Resources,11,5,3,13738,No,2,1,No
+55,Human Resources,22,1,3,5333,Yes,12,1,No
+27,Sales,24,1,2,7785,No,7,1,No
+23,Human Resources,22,3,4,12089,No,14,1,No
+34,Human Resources,1,4,3,10145,No,11,2,No
+32,Sales,4,1,4,14518,No,10,1,No
+44,Human Resources,13,3,3,11523,No,14,1,No
+37,Sales,23,2,3,13389,No,7,3,No
+52,Sales,13,3,2,7277,No,4,1,No
+32,R&D,13,3,3,5235,No,13,3,No
+37,R&D,2,3,1,10773,No,8,3,No
+29,Human Resources,9,1,1,10778,No,4,3,No
+25,Human Resources,24,1,2,8868,Yes,7,2,Yes
+25,Sales,8,2,4,12755,No,4,2,No
+46,Human Resources,7,5,4,3321,No,13,4,No
+24,Sales,4,5,4,10025,Yes,12,4,Yes
+53,Sales,18,5,1,2662,No,5,3,No
+24,Human Resources,3,2,4,10277,Yes,7,2,No
+48,Sales,28,5,4,14431,Yes,13,1,Yes
+50,R&D,6,5,2,13089,No,14,4,No
+53,Human Resources,12,3,4,4432,No,14,2,No
+40,R&D,12,1,1,13420,Yes,13,1,Yes
+42,Human Resources,21,1,1,6035,No,10,1,No
+26,Sales,28,3,1,8456,No,3,2,No
+39,Human Resources,8,3,2,5946,Yes,10,4,Yes
+49,R&D,22,3,2,5290,No,5,2,No
+43,Sales,22,1,3,5207,No,11,4,No
+42,Human Resources,1,5,4,10459,No,14,3,No
+27,Human Resources,4,3,2,6433,No,3,2,No
+22,Human Resources,21,2,1,5885,No,5,2,No
+26,R&D,28,3,1,9136,Yes,14,4,No
+33,R&D,11,4,2,3422,Yes,3,4,Yes
+47,Human Resources,3,3,2,10589,No,11,2,No
+55,Sales,13,1,2,12867,No,10,1,No
+35,Sales,25,3,3,12274,Yes,11,1,Yes
+47,R&D,17,4,1,3064,No,7,1,No
+48,Sales,22,2,3,5758,No,13,3,No
+30,R&D,22,5,3,13289,Yes,1,3,Yes
+47,Human Resources,10,3,4,5000,Yes,9,4,No
+43,R&D,21,4,1,7066,No,9,3,No
+51,R&D,12,4,1,11679,No,5,1,No
+38,Human Resources,15,2,2,9381,Yes,9,2,Yes
+47,Sales,21,1,2,6136,No,10,3,No
+57,R&D,10,3,4,8530,No,13,3,No
+22,R&D,14,4,3,2723,No,6,1,No
+29,Human Resources,13,2,2,8797,Yes,5,3,Yes
+56,Sales,5,5,2,2850,No,13,4,No
+36,R&D,6,4,1,9814,No,3,2,No
+43,Human Resources,24,2,1,4428,No,11,1,No
+35,R&D,2,1,2,10243,No,11,4,No
+47,Human Resources,22,1,1,11040,No,8,1,No
+49,Sales,17,4,4,14969,No,4,4,No
+44,Sales,4,4,2,7232,No,10,2,No
+35,Sales,14,3,1,3517,Yes,13,2,No
+45,Sales,10,2,4,4726,Yes,13,4,No
+23,R&D,3,4,1,9706,No,3,4,No
+47,R&D,25,3,1,9670,Yes,13,4,Yes
+35,Sales,3,3,1,8707,Yes,6,4,Yes
+28,Sales,15,4,2,14816,No,8,4,Yes
+24,Sales,6,1,3,4919,Yes,13,4,No
+44,R&D,17,2,1,8740,Yes,9,2,Yes
+39,Sales,12,2,4,4393,Yes,14,4,No
+59,Sales,22,1,2,7822,No,6,3,No
+56,Sales,20,4,2,13732,No,5,2,No
+36,Human Resources,24,2,4,12760,No,12,1,No
+46,Sales,29,4,1,10218,No,11,2,No
+58,Human Resources,11,4,3,9378,No,2,1,No
+49,Human Resources,25,3,1,3625,No,2,1,Yes
+31,Sales,4,1,4,5617,No,9,3,No
+38,Human Resources,26,4,2,6661,No,2,4,Yes
+43,Sales,28,5,3,6542,No,2,4,No
+47,R&D,26,1,2,6933,Yes,3,2,Yes
+46,R&D,6,2,4,12862,Yes,3,4,No
+38,R&D,1,3,1,11138,Yes,4,3,Yes
+34,R&D,20,2,3,5158,No,7,2,No
+41,Human Resources,23,2,2,14054,No,9,2,No
+46,Sales,28,1,2,13410,No,2,2,No
+25,Sales,16,2,2,5983,Yes,4,4,Yes
+31,Sales,15,4,1,5444,No,9,4,No
+24,R&D,17,2,3,9710,No,14,4,No
+39,R&D,8,3,1,10153,No,2,2,No
+57,Sales,28,3,1,11287,No,10,2,No
+43,R&D,26,5,1,4486,No,11,1,No
+55,Sales,12,3,4,13442,No,13,1,No
+29,Sales,27,2,4,3574,No,1,4,No
+40,Sales,22,3,4,14661,No,10,2,Yes
+58,Sales,21,1,3,6805,Yes,8,4,No
+27,Sales,10,3,1,14913,Yes,9,4,Yes
+47,Sales,27,4,1,14272,No,7,1,No
+55,Sales,15,1,4,5507,Yes,8,3,Yes
+27,R&D,9,5,1,3469,No,4,4,No
+58,Sales,2,4,1,11272,Yes,4,3,Yes
+54,Sales,5,2,2,5324,No,13,3,Yes
+43,R&D,6,2,1,14693,No,2,2,No
+42,R&D,7,2,2,3711,No,8,2,No
+27,R&D,21,4,1,2729,No,11,4,No
+27,Sales,25,4,3,6784,No,2,1,No
+25,Human Resources,1,4,4,5685,No,9,1,No
+51,Human Resources,23,1,2,3001,Yes,14,4,No
+32,R&D,26,1,4,12824,No,4,4,No
+51,Human Resources,7,2,2,2548,Yes,1,1,Yes
+52,R&D,20,3,2,6066,No,13,3,No
+45,Sales,25,2,2,5555,No,4,4,No
+30,Human Resources,12,5,3,11380,No,3,3,No
+24,Sales,16,1,1,2886,No,12,4,No
+52,Human Resources,16,4,2,3469,No,6,4,No
+58,Sales,11,1,3,14152,No,7,3,No
+57,Human Resources,21,4,2,11697,No,8,3,No
+45,Sales,4,5,1,8320,No,2,1,No
+52,Sales,13,5,2,5552,No,6,4,No
+27,Human Resources,7,1,3,14109,No,6,2,No
+23,Sales,4,4,1,9897,No,10,2,Yes
+41,Sales,15,5,3,4802,No,12,4,No
+49,Sales,19,2,1,4783,No,5,4,No
+32,Human Resources,9,2,1,12299,No,10,4,No
+25,Human Resources,11,4,4,6866,No,10,3,No
+36,Sales,8,1,4,2622,Yes,7,2,Yes
+27,Sales,1,5,4,9299,No,3,2,No
+51,Human Resources,23,1,1,11972,No,4,2,No
+59,Human Resources,25,2,2,6227,No,10,4,No
+23,Sales,24,5,3,10950,No,13,3,No
+36,Sales,8,1,3,11639,No,9,4,No
+32,Sales,13,3,3,7458,Yes,4,1,No
+29,R&D,22,4,4,3024,No,3,1,No
+47,Human Resources,27,4,1,11579,No,14,2,No
+26,R&D,4,3,4,10899,Yes,2,4,No
+27,Human Resources,8,2,2,14074,Yes,5,1,Yes
+47,Human Resources,3,5,1,13486,No,4,1,No
+25,Human Resources,29,4,3,2648,No,13,4,No
+40,Human Resources,9,3,4,10501,No,13,3,No
+41,Human Resources,29,3,4,2937,Yes,8,4,Yes
+54,Human Resources,2,2,2,12894,Yes,7,4,No
+41,Human Resources,2,2,2,6249,No,6,3,No
+33,R&D,28,1,4,13853,No,11,2,No
+22,Sales,13,4,2,14593,No,12,2,No
+47,Sales,15,1,3,10686,No,2,2,No
+35,R&D,28,3,2,6953,Yes,3,3,Yes
+59,R&D,23,5,2,13937,No,10,1,Yes
+58,R&D,12,5,4,7836,Yes,9,3,No
+32,R&D,26,2,4,7051,No,13,4,No
+57,Human Resources,4,5,1,5323,No,9,3,No
+34,Sales,26,5,1,8228,Yes,5,1,No
+24,Human Resources,8,5,4,13962,Yes,14,1,No
+54,Sales,9,3,2,11177,Yes,3,4,Yes
+27,Sales,23,5,2,10891,No,2,2,No
+31,R&D,5,5,1,4482,No,8,1,No
+26,Human Resources,24,5,1,9496,Yes,6,1,Yes
+44,R&D,20,1,1,12163,No,10,1,No
+31,Human Resources,18,3,3,4811,Yes,11,4,No
+23,Sales,11,2,3,9725,No,12,1,No
+34,R&D,15,1,1,14065,No,7,2,No
+23,R&D,28,4,2,12770,No,1,4,No
+41,Sales,22,3,1,12213,No,1,2,No
+22,Sales,9,3,3,3104,No,10,1,No
+58,Sales,17,4,2,10675,No,2,1,No
+30,R&D,27,4,3,14540,No,10,2,No
+38,Human Resources,26,4,2,14034,No,3,4,Yes
+30,R&D,12,2,3,8285,Yes,12,4,No
+32,Human Resources,7,5,2,12109,Yes,1,2,Yes
+36,R&D,10,3,2,7097,No,14,1,No
+45,R&D,25,5,2,10259,No,5,3,No
+59,Sales,26,5,2,14567,No,3,2,Yes
+56,Human Resources,25,4,4,10032,No,1,2,No
+51,R&D,10,2,3,13625,No,8,2,No
+52,R&D,27,1,3,11240,No,12,1,No
+26,Sales,13,2,4,3338,No,11,4,No
+35,Sales,19,5,2,6315,No,6,1,No
+32,Human Resources,11,2,2,3347,No,9,2,No
+30,R&D,13,4,3,7209,Yes,3,1,No
+55,Human Resources,21,1,4,7007,No,9,1,No
+33,R&D,8,4,2,9075,No,9,2,No
+56,Human Resources,8,1,2,7273,No,12,1,Yes
+56,Sales,4,5,2,14946,Yes,13,3,Yes
+22,R&D,15,1,1,6968,Yes,12,1,Yes
+43,Human Resources,28,1,4,12964,No,1,1,No
+50,Sales,11,1,2,7692,No,3,4,No
+29,Sales,11,2,1,5820,No,6,4,No
+32,Human Resources,1,2,4,13250,No,8,2,No
+58,R&D,17,5,2,7198,No,4,2,No
+35,R&D,15,1,3,6811,No,5,4,No
+51,Sales,20,3,1,12688,Yes,9,3,Yes
+56,R&D,6,5,1,6173,No,6,1,No
+42,R&D,24,1,2,4064,No,12,3,No
+58,R&D,22,1,2,14710,Yes,7,3,Yes
+26,Sales,28,2,1,4340,No,7,4,No
+40,Human Resources,25,5,3,8558,No,4,2,No
+35,R&D,15,1,3,9631,No,4,1,No
+47,Sales,9,1,4,13983,No,4,2,No
+25,Sales,14,5,2,13579,No,14,3,No
+46,Human Resources,18,3,3,3226,Yes,11,3,Yes
+46,R&D,26,5,4,11936,No,5,2,No
+39,R&D,17,5,3,14152,No,5,2,No
+29,Human Resources,18,3,2,9197,No,8,4,No
+35,Human Resources,5,5,4,14410,No,9,2,No
+53,Sales,20,1,4,11757,Yes,2,2,No
+59,Sales,20,5,4,2782,Yes,11,4,Yes
+54,Human Resources,9,3,3,3581,No,7,2,No
+44,R&D,11,4,2,6385,Yes,1,3,No
+36,Sales,24,5,4,5381,No,1,2,No
+54,Sales,22,2,1,13276,No,4,1,No
+46,R&D,1,1,2,5470,No,10,3,No
+38,Sales,18,1,1,11844,No,7,4,No
+54,R&D,6,2,1,9485,No,2,3,No
+23,R&D,27,2,4,14189,No,11,4,No
+35,R&D,2,5,4,3447,Yes,2,1,Yes
+27,Human Resources,15,2,3,7260,Yes,1,1,No
+27,Human Resources,29,4,3,12409,Yes,10,3,No
+24,Human Resources,26,3,3,2566,No,2,2,No
+28,R&D,21,2,2,11328,Yes,13,3,Yes
+29,R&D,14,2,3,11005,No,7,3,No
+36,Human Resources,5,4,1,14089,No,9,1,No
+50,Sales,6,1,3,3064,No,6,4,No
+54,R&D,6,1,4,12293,Yes,10,3,No
+51,Sales,22,5,3,11517,No,2,2,No
+48,Sales,18,4,2,6170,Yes,12,1,No
+57,R&D,14,3,2,11717,No,10,3,No
+50,R&D,10,3,1,4751,No,10,3,No
+59,Sales,14,4,2,3304,No,13,2,No
+54,Sales,13,3,3,13143,No,9,3,No
+58,Human Resources,3,1,4,7131,Yes,7,3,No
+48,Human Resources,6,3,2,12083,No,11,3,Yes
+54,R&D,29,3,1,3735,No,1,3,Yes
+25,Human Resources,8,4,3,9220,No,12,2,No
+43,Human Resources,12,4,1,14724,No,9,3,No
+23,Human Resources,13,3,2,13972,No,2,3,No
+31,Human Resources,11,2,2,9406,No,4,3,No
+26,Sales,12,4,1,8516,No,9,1,No
+31,R&D,1,5,3,6049,No,4,2,No
+54,Human Resources,17,5,2,14892,No,3,1,Yes
+59,Sales,16,1,4,10438,No,1,1,No
+34,Sales,11,3,2,6641,No,7,2,No
+52,Sales,13,2,3,9466,Yes,6,1,No
+57,Human Resources,18,1,2,12046,Yes,10,1,Yes
+45,Human Resources,11,3,1,7835,No,4,1,Yes
+36,R&D,28,4,2,7577,No,6,2,No
+50,Human Resources,12,5,2,8111,No,6,3,Yes
+29,Human Resources,6,2,3,12528,Yes,13,4,No
+26,Sales,9,5,1,10589,Yes,4,4,Yes
+50,R&D,16,4,3,5392,No,14,2,No
+25,Human Resources,4,3,2,13188,No,13,4,No
+33,Human Resources,3,4,4,13275,Yes,6,2,No
+23,Sales,28,4,2,13250,No,10,2,No
+48,Sales,16,5,3,8077,No,11,4,No
+52,Human Resources,24,2,4,6118,No,8,1,No
+57,R&D,27,4,3,4059,No,13,3,No
+57,R&D,26,5,3,9183,No,3,4,No
+47,Sales,25,2,1,4007,No,4,4,No
+48,Sales,12,3,4,14763,No,10,4,No
+26,Human Resources,11,3,2,4563,Yes,13,4,Yes
+41,Sales,5,1,3,6142,No,12,2,No
+32,Human Resources,25,5,2,4500,No,14,2,No
+31,R&D,18,2,1,3794,No,1,3,No
+59,R&D,19,4,1,6565,No,4,3,No
+27,Human Resources,23,3,4,13444,No,11,4,No
+29,Sales,23,2,1,10514,No,10,4,No
+44,R&D,6,5,1,12445,Yes,10,4,Yes
+47,Sales,22,1,2,14902,No,12,3,No
+33,R&D,18,3,1,4103,No,14,4,No
+47,Human Resources,26,2,1,3822,No,9,1,Yes
+34,Human Resources,6,2,3,8456,No,8,3,No
+39,Human Resources,4,2,1,4941,No,11,1,Yes
+46,R&D,12,5,3,3598,Yes,4,4,Yes
+54,Sales,19,5,1,7573,No,12,2,No
+33,Sales,29,5,1,12197,No,7,1,No
+57,Sales,27,4,4,11818,No,10,3,No
+25,R&D,29,2,4,10988,No,3,1,No
+26,R&D,2,3,3,13741,No,9,3,No
+58,R&D,17,5,1,12917,No,10,4,Yes
+29,R&D,11,5,2,6287,No,4,1,No
+49,R&D,11,2,4,4596,Yes,2,2,No
+52,Sales,21,5,2,14301,No,10,1,No
+30,R&D,16,4,4,4708,Yes,5,2,Yes
+50,R&D,2,4,4,8488,Yes,2,3,No
+35,Sales,2,5,1,2675,Yes,14,4,Yes
+43,R&D,23,2,4,9669,No,10,4,No
+32,Sales,8,2,2,8514,No,6,2,Yes
+44,Sales,13,2,4,13194,Yes,11,3,No
+22,Human Resources,10,1,3,14691,Yes,10,4,No
+58,Human Resources,8,5,1,4167,No,1,3,No
+42,Human Resources,4,2,1,13237,Yes,14,2,Yes
+47,Human Resources,15,4,3,11367,No,6,2,No
+57,R&D,1,3,3,4323,Yes,4,1,No
+44,Human Resources,11,3,3,7647,No,3,4,No
+22,Sales,7,2,4,3856,No,2,4,No
+36,R&D,17,3,1,5572,No,7,1,No
+42,Human Resources,27,3,3,5759,No,9,2,No
+30,Sales,20,1,4,8699,No,12,2,Yes
+30,R&D,24,4,3,3046,Yes,3,2,Yes
+31,R&D,18,4,2,7731,No,6,2,No
+47,Human Resources,22,1,2,10465,No,9,3,No
+56,R&D,29,1,1,4583,Yes,2,4,No
+46,Sales,22,3,4,4540,Yes,7,4,Yes
+47,R&D,12,5,2,7034,No,5,2,Yes
+32,Sales,9,3,2,4252,Yes,5,2,No
+59,R&D,5,1,4,12307,No,11,2,No
+23,Human Resources,10,4,3,4349,No,7,4,No
+28,Sales,4,3,4,5142,No,9,4,No
+39,R&D,5,5,3,4100,No,4,2,No
+48,R&D,28,3,2,14088,No,9,3,No
+55,R&D,28,2,2,6902,Yes,14,1,Yes
+48,Sales,10,3,2,14297,No,13,1,No
+38,Sales,11,1,1,6299,Yes,11,1,Yes
+45,Sales,21,4,1,3118,No,10,4,Yes
+46,Human Resources,24,4,1,3632,No,9,4,Yes
+28,Human Resources,10,1,4,7991,Yes,13,1,No
+27,Sales,28,2,2,8295,No,4,1,No
+45,R&D,8,1,2,12807,Yes,3,3,Yes
+54,Human Resources,2,3,4,13031,No,2,4,No
+50,Sales,23,1,1,13431,No,9,4,No
+43,R&D,8,1,4,14968,No,12,1,No
+47,Human Resources,16,2,1,10133,Yes,2,3,Yes
+49,R&D,27,3,2,3987,No,6,3,Yes
+42,R&D,22,5,3,10348,No,5,1,Yes
+28,R&D,5,5,1,7509,No,14,1,No
+38,R&D,27,4,2,12249,No,5,4,No
+41,Human Resources,25,1,2,4613,Yes,4,1,Yes
+41,Human Resources,29,4,3,3544,No,6,2,No
+43,Human Resources,3,2,2,4931,No,5,3,No
+49,Sales,12,5,2,10479,No,11,1,Yes
+28,Human Resources,13,1,1,4082,No,4,2,No
+22,R&D,13,2,1,3808,No,13,3,No
+53,Human Resources,10,2,3,7417,No,9,2,No
+34,R&D,4,1,3,11293,Yes,13,2,No
+51,Sales,9,2,2,4120,Yes,6,1,Yes
+44,R&D,22,1,1,10003,No,11,3,No
+40,R&D,24,1,3,7266,No,10,2,No
+53,R&D,23,3,3,7862,No,10,4,No
+51,Sales,27,4,4,7692,No,13,3,No
+50,Human Resources,2,2,3,9122,No,10,4,No
+50,Human Resources,19,2,2,8593,Yes,13,1,Yes
+51,Sales,1,3,1,9204,No,3,4,No
+37,R&D,25,3,3,2600,No,10,3,No
+40,Human Resources,29,3,4,9157,Yes,6,2,Yes
+39,Sales,7,5,1,8375,Yes,14,2,Yes
+22,Human Resources,17,5,3,6771,No,1,3,Yes
+35,Sales,3,5,4,2737,Yes,5,2,Yes
+23,R&D,20,1,3,9726,No,10,4,No
+49,Human Resources,20,2,1,10532,Yes,6,2,Yes
+51,Sales,21,4,1,7718,No,11,2,Yes
+59,Human Resources,3,1,1,6525,No,8,4,No
+25,Human Resources,3,2,2,13610,No,11,4,No
+22,Human Resources,17,2,3,8573,Yes,9,4,Yes
+29,Human Resources,7,3,2,5042,Yes,11,1,Yes
+50,Sales,27,3,1,12695,No,3,4,No
+24,R&D,26,1,4,4037,No,2,4,No
+53,Sales,14,3,3,3254,Yes,13,1,Yes
+31,Sales,17,2,2,14060,Yes,4,2,Yes
+31,Sales,18,3,3,12950,No,8,4,No
+40,R&D,13,5,4,9896,No,11,3,No
+55,Human Resources,20,3,2,14357,Yes,8,4,Yes
+54,Human Resources,29,2,1,10323,Yes,3,4,No
+44,Human Resources,20,1,2,8007,No,4,1,No
+49,R&D,21,4,3,6735,No,3,3,No
+53,Human Resources,27,3,3,3040,No,10,2,No
+28,R&D,18,2,3,8010,No,2,2,No
+50,Human Resources,4,4,3,10961,Yes,4,3,No
+29,Human Resources,1,4,1,10426,No,6,4,No
+22,Sales,18,5,2,7631,No,11,1,No
+24,R&D,1,4,1,14152,No,14,3,No
+45,Sales,26,2,1,14100,No,11,3,No
+44,Sales,26,2,1,11197,Yes,5,2,No
+29,Sales,13,3,3,3629,No,3,1,No
+58,R&D,20,3,3,12771,No,2,3,No
+24,R&D,20,3,3,5645,No,9,1,No
+54,Human Resources,23,4,2,13934,No,1,4,No
+49,Sales,10,4,4,11053,Yes,9,2,No
+29,Human Resources,27,5,3,6220,No,1,4,No
+55,Sales,11,3,2,12148,No,14,1,No
+56,R&D,9,1,3,6567,No,7,4,No
+53,R&D,9,5,3,6695,No,6,2,No
+45,R&D,5,1,1,12373,No,7,1,No
+35,Sales,26,4,1,11744,No,3,3,No
+53,R&D,1,5,1,9781,Yes,14,4,Yes
+37,Sales,17,5,2,5009,Yes,3,2,Yes
+25,Human Resources,22,2,4,7516,No,13,3,No
+58,Sales,2,4,4,9033,Yes,11,2,No
+42,Human Resources,24,4,2,7227,No,1,1,No
+35,Sales,13,5,3,3181,No,4,1,No
+52,Human Resources,9,4,2,6432,No,12,4,No
+39,R&D,29,5,3,12821,Yes,2,2,Yes
+28,Human Resources,4,2,2,8060,No,10,2,No
+31,R&D,5,5,2,6516,Yes,8,2,Yes
+28,R&D,11,4,2,9839,No,3,1,No
+54,Human Resources,24,4,4,13994,No,7,4,Yes
+44,Sales,19,5,1,3219,No,7,2,No
+42,Sales,21,5,2,2574,No,12,2,Yes
+40,Sales,3,5,4,11985,Yes,9,3,Yes
+40,Sales,12,3,1,12614,No,6,2,No
+57,Sales,26,4,1,6657,Yes,1,4,Yes
+50,R&D,19,4,2,11011,No,8,3,No
+39,Sales,19,3,3,4649,Yes,1,3,No
+23,R&D,13,5,3,12144,No,3,3,No
+22,R&D,28,2,3,12247,No,11,1,No
+26,R&D,7,5,2,9213,No,5,3,No
+41,Human Resources,15,5,3,6707,No,8,2,No
+32,Human Resources,23,3,4,13724,No,9,1,Yes
+23,R&D,7,4,4,9641,Yes,7,1,No
+24,Human Resources,26,5,4,11152,No,9,1,No
+44,Sales,8,4,4,11578,Yes,11,1,No
+33,Sales,5,1,1,14225,No,3,1,No
+41,R&D,21,4,4,6436,No,13,1,No
+26,Sales,14,2,3,11807,No,5,1,No
+58,R&D,4,2,2,3575,No,10,3,No
+59,R&D,23,5,3,6376,No,8,4,No
+51,Sales,10,4,4,7115,No,12,2,No
+30,Human Resources,20,5,1,9765,Yes,1,2,Yes
+55,Sales,15,3,4,8879,No,8,3,No
+56,Sales,18,2,2,12616,No,7,3,No
+43,R&D,20,5,3,11618,No,1,1,No
+45,R&D,13,3,2,7152,No,13,4,No
+38,R&D,29,5,2,9292,Yes,13,1,Yes
+31,R&D,8,4,2,12973,No,10,3,No
+51,Human Resources,9,4,3,11747,No,12,1,Yes
+44,Human Resources,16,4,4,9956,Yes,10,2,No
+53,Human Resources,19,4,2,7174,Yes,12,2,No
+38,R&D,16,1,3,3041,No,6,1,Yes
+38,R&D,7,3,1,4661,No,1,4,No
+35,R&D,14,3,3,4751,No,2,1,No
+30,Human Resources,28,4,1,11744,No,5,1,No
+23,R&D,14,1,3,7069,No,2,4,No
+46,Sales,25,4,4,5244,Yes,14,4,Yes
+30,Sales,27,1,2,14561,No,10,4,No
+43,R&D,4,4,4,8541,Yes,1,2,Yes
+25,Sales,26,2,3,14849,No,6,1,No
+47,Sales,15,2,2,7175,No,8,3,Yes
+50,Human Resources,3,5,1,4060,No,8,4,No
+55,R&D,5,4,3,14454,No,13,4,No
+44,R&D,1,3,2,3664,No,13,1,No
+58,Human Resources,3,5,1,7919,Yes,8,3,No
+32,Sales,15,2,1,5222,No,11,1,No
+27,Sales,24,4,4,13050,Yes,6,1,Yes
+39,R&D,27,5,3,2970,No,11,4,No
+42,Sales,8,4,1,12108,No,3,4,No
+57,Human Resources,29,2,2,3968,No,1,2,Yes
+59,Human Resources,4,5,1,10425,No,2,3,No
+55,R&D,2,2,1,3308,No,5,3,No
+38,Human Resources,29,1,4,10863,Yes,13,4,Yes
+58,Human Resources,24,2,4,9219,No,10,4,Yes
+46,R&D,24,4,2,14818,No,5,4,No
+59,Human Resources,10,3,4,14834,No,10,3,No
+33,Human Resources,4,2,1,14917,No,14,2,No
+44,Human Resources,3,3,1,13091,No,1,3,No
+43,Sales,2,1,4,7573,No,1,4,No
+42,R&D,25,5,1,10512,Yes,9,4,Yes
+48,R&D,17,5,1,4145,No,2,2,No
+52,R&D,23,3,2,10749,No,7,1,No
+27,Sales,21,5,4,3629,No,10,1,No
+48,Sales,24,2,1,3853,No,4,3,Yes
+55,R&D,20,3,4,3267,Yes,7,1,No
+33,Sales,23,4,2,6395,Yes,8,1,Yes
+28,R&D,13,2,4,11374,Yes,5,3,No
+31,Sales,5,2,1,5954,No,13,4,Yes
+38,Human Resources,21,2,4,12700,Yes,12,1,Yes
+47,Human Resources,9,4,1,9829,No,12,4,Yes
+42,R&D,25,1,1,13834,No,1,3,Yes
+49,Sales,29,5,1,4290,No,4,4,Yes
+23,Sales,25,3,2,12169,No,10,4,No
+22,Human Resources,28,1,4,3385,Yes,3,3,Yes
+57,Human Resources,22,3,2,10234,Yes,10,4,Yes
+47,Sales,6,5,4,6406,No,12,1,No
+50,Sales,5,4,2,6992,Yes,5,1,Yes
+42,Sales,25,2,3,12230,No,10,1,No
+32,Sales,10,2,1,4573,No,13,1,No
+32,Sales,8,4,1,2812,No,10,4,No
+57,Sales,7,1,2,8769,Yes,13,1,Yes
+56,R&D,7,1,3,7817,No,6,4,Yes
+55,Sales,6,3,1,3310,Yes,2,2,Yes
+45,Human Resources,21,4,4,12927,No,7,4,No
+43,R&D,29,1,2,9341,No,13,1,No
+26,Sales,20,4,1,13549,No,3,2,No
+54,Human Resources,3,5,1,13455,No,1,3,No
+57,R&D,19,2,2,4532,No,10,4,No
+41,Human Resources,22,2,2,12199,No,3,1,No
+40,Sales,15,2,4,13262,No,9,1,Yes
+56,Sales,4,4,4,12586,Yes,10,1,No
+38,Sales,28,4,1,9629,No,11,3,No
+55,Sales,12,3,1,5205,No,11,2,No
+30,R&D,6,2,2,11288,Yes,6,2,Yes
+47,R&D,19,3,1,4647,Yes,11,1,Yes
+23,Human Resources,4,2,1,3115,Yes,6,4,Yes
+30,Sales,15,3,2,3447,Yes,4,1,Yes
+30,Human Resources,9,3,1,8177,No,8,1,Yes
+38,R&D,5,5,1,7151,No,5,4,No
+22,Sales,13,3,3,14456,No,7,1,No
+46,Sales,23,4,4,10366,No,9,3,No
+46,R&D,26,3,2,4513,No,13,1,No
+56,R&D,18,2,3,6197,Yes,13,3,No
+24,R&D,5,3,4,2990,No,14,1,No
+58,R&D,25,1,4,6850,No,5,2,No
+51,R&D,16,2,4,4928,No,11,4,No
+59,Sales,27,1,3,7487,No,14,2,No
+55,R&D,19,2,3,11233,No,5,1,No
+33,Sales,14,4,4,11979,Yes,14,1,No
+40,Sales,25,4,1,12325,No,4,3,No
+58,R&D,16,4,1,7420,Yes,6,1,Yes
+38,R&D,27,1,3,5426,No,2,1,Yes
+31,Sales,15,5,3,12044,No,3,1,No
+33,R&D,22,2,3,9782,Yes,1,2,Yes
+37,R&D,4,4,4,6876,No,2,3,No
+45,R&D,7,2,1,11990,Yes,2,2,Yes
+40,Human Resources,16,1,3,7368,No,8,3,No
+29,Sales,24,5,3,9486,No,8,2,No
+52,Human Resources,22,1,2,9362,No,2,1,No
+42,R&D,21,2,4,14659,Yes,13,2,Yes
+38,Human Resources,22,5,2,6923,No,14,2,No
+44,R&D,21,5,1,12950,No,6,3,No
+58,Human Resources,8,1,2,9370,No,5,3,No
+37,R&D,17,4,2,10659,Yes,3,2,Yes
+27,Human Resources,16,2,2,4573,No,5,3,No
+29,Human Resources,27,3,4,8670,No,5,3,Yes
+46,Human Resources,23,3,1,3201,Yes,5,3,Yes
+39,Sales,10,1,2,12611,No,3,4,No
+46,Human Resources,10,2,4,10613,No,3,3,No
+33,Sales,27,2,1,9325,No,4,4,No
+36,R&D,2,1,3,13152,No,7,4,No
+47,Human Resources,9,2,2,14954,No,12,3,No
+47,R&D,17,4,1,10367,No,12,2,No
+53,R&D,11,1,2,6764,Yes,12,3,Yes
+31,Human Resources,10,4,3,10468,No,14,1,No
+37,Sales,22,2,1,10646,No,2,2,No
+28,Human Resources,25,1,4,10276,No,10,4,No
+38,R&D,17,2,1,11058,No,4,4,No
+44,R&D,4,1,4,11219,No,4,2,No
+47,Human Resources,16,2,1,7386,No,1,2,No
+42,Sales,20,4,4,14410,No,10,3,Yes
+43,Sales,15,4,3,14301,No,8,4,No
+28,R&D,25,2,3,6435,No,1,1,No
+35,R&D,27,1,3,7119,Yes,8,3,Yes
+36,Sales,21,3,1,7691,Yes,7,2,No
+28,Human Resources,5,4,3,12845,No,9,4,No
+30,R&D,6,4,2,9375,No,8,2,No
+29,Sales,17,3,3,12600,No,5,2,No
+44,R&D,1,2,4,13704,Yes,8,2,Yes
+50,Human Resources,25,1,4,10356,Yes,14,3,No
+39,Sales,19,2,4,7901,Yes,11,1,No
+52,R&D,4,5,1,14920,Yes,10,1,Yes
+51,Human Resources,17,4,2,5522,Yes,12,4,Yes
+56,R&D,9,5,3,14175,No,12,2,No
+39,Human Resources,24,4,2,13412,No,3,1,No
+38,Human Resources,2,4,2,8238,No,10,2,No
+35,Sales,8,5,4,8484,No,7,4,No
+52,Human Resources,15,5,4,4270,No,12,2,No
+45,R&D,7,2,4,14805,Yes,4,1,No
+56,Human Resources,27,5,1,12469,Yes,5,2,Yes
+55,Human Resources,6,2,2,14904,No,9,1,No
+24,Sales,1,2,2,11489,No,7,4,No
+58,Human Resources,15,2,1,5715,No,4,2,No
+47,Human Resources,23,4,1,14480,No,6,1,No
+44,R&D,26,4,1,9194,No,10,4,No
+36,Sales,7,5,2,5476,No,14,2,No
+25,Sales,29,4,2,6237,No,11,4,No
+50,Sales,25,5,4,12403,No,7,1,No
+43,Human Resources,17,4,4,3252,No,13,2,No
+46,Sales,2,1,2,13161,No,10,2,No
+34,Human Resources,27,1,4,14661,Yes,13,2,Yes
+39,Human Resources,9,5,1,3892,No,9,4,Yes
+54,R&D,29,4,3,9289,No,4,4,No
+37,R&D,9,4,4,13297,No,10,1,No
+23,R&D,13,2,2,3177,No,3,3,No
+56,R&D,6,3,4,2605,No,8,2,No
+55,R&D,6,5,4,13979,No,1,2,Yes
+51,Human Resources,20,3,4,7253,No,9,1,No
+34,Human Resources,20,3,3,4446,No,13,2,No
+34,Sales,21,5,1,8044,Yes,1,4,Yes
+39,Human Resources,3,4,2,3595,No,2,4,No
+53,Human Resources,17,5,3,9485,No,13,2,No
+53,R&D,17,3,2,4282,Yes,8,2,Yes
+56,Human Resources,12,4,2,7041,Yes,9,4,Yes
+50,R&D,16,1,2,5757,No,7,2,No
+50,Sales,15,5,3,8713,No,3,4,No
+37,Sales,13,5,1,12689,No,7,3,No
+31,Human Resources,23,4,2,7369,Yes,6,3,Yes
+51,Sales,1,1,1,4061,No,2,2,No
+46,Human Resources,17,1,1,6506,No,3,2,No
+41,Sales,3,4,4,12367,Yes,11,2,No
+26,R&D,26,2,3,11814,Yes,13,4,No
+22,R&D,15,5,3,6481,No,12,3,No
+51,R&D,4,5,4,11993,No,13,3,No
+24,R&D,4,3,4,8182,No,10,1,No
+35,Human Resources,18,4,1,8282,Yes,10,1,No
+51,Sales,17,3,2,3443,No,13,2,No
+25,Human Resources,19,3,3,7050,No,12,4,No
+39,R&D,11,1,2,11637,Yes,5,2,Yes
+58,Human Resources,20,5,2,3100,No,10,3,No
+46,Sales,3,3,4,13392,No,4,2,No
+22,Human Resources,8,1,2,8876,Yes,2,2,Yes
+36,Sales,14,4,1,12109,No,4,3,No
+30,Human Resources,26,3,4,4024,No,12,3,No
+36,Sales,1,5,2,6266,No,8,3,No
+45,Sales,14,3,4,2750,Yes,5,3,Yes
+25,R&D,2,4,1,12236,Yes,5,1,Yes
+33,Sales,29,3,1,2578,No,13,4,Yes
+58,R&D,23,5,2,5623,No,12,4,No
+58,R&D,4,1,4,11589,Yes,12,3,No
+27,R&D,24,5,2,9564,Yes,10,4,Yes
+45,Human Resources,27,1,2,10917,Yes,3,4,No
+32,Human Resources,29,2,4,3709,No,13,4,Yes
+34,Human Resources,19,5,2,7653,No,8,4,Yes
+55,Human Resources,6,5,1,7398,No,6,3,No
+46,Sales,25,4,4,4678,Yes,2,2,Yes
+28,Sales,1,3,4,13371,No,2,2,No
+25,Human Resources,17,1,4,10110,Yes,9,2,No
+29,Sales,8,1,4,13577,No,13,1,No
+41,Sales,19,4,2,13498,No,7,4,No
+50,R&D,21,4,2,11395,No,10,3,No
+31,R&D,1,3,1,5044,No,9,3,No
+55,R&D,5,3,3,8022,Yes,14,1,No
+47,R&D,27,5,3,4870,Yes,6,3,Yes
+24,Sales,16,2,1,5781,No,5,2,No
+27,Human Resources,6,3,3,7210,No,12,1,Yes
+26,Sales,8,4,1,2828,No,1,3,Yes
+26,Sales,13,3,2,8079,No,12,1,No
+44,Sales,16,1,4,6728,No,6,1,No
+30,R&D,3,2,4,9294,Yes,6,3,No
+56,R&D,19,5,2,2620,Yes,3,2,Yes
+41,R&D,12,1,4,9249,No,3,3,No
+56,Human Resources,16,1,4,3464,Yes,3,4,Yes
+39,Sales,27,2,3,6724,No,3,4,No
+38,Human Resources,11,5,2,6175,Yes,7,3,Yes
+45,R&D,10,4,3,8194,No,10,2,No
+24,Human Resources,25,5,3,4576,No,11,4,No
+53,Sales,20,3,4,9365,Yes,2,4,No
+56,Sales,4,1,4,8143,Yes,10,3,No
+59,R&D,12,3,2,11024,No,13,3,No
+34,R&D,23,4,4,14060,No,10,3,No
+46,Human Resources,2,3,4,7749,Yes,2,1,No
+30,R&D,24,5,2,3816,No,3,1,No
+25,R&D,22,3,4,3696,Yes,10,1,Yes
+35,Sales,19,4,3,5670,No,12,3,No
+58,R&D,25,4,2,12121,No,7,2,No
+55,R&D,5,4,4,2855,Yes,3,4,Yes
+32,Sales,8,5,1,14926,No,7,1,Yes
+24,Sales,7,4,2,12218,No,9,2,No
+49,Human Resources,14,1,2,14589,Yes,11,3,Yes
+50,R&D,24,4,1,2528,No,10,1,No
+30,Sales,23,3,4,3513,Yes,12,3,No
+24,Human Resources,3,3,4,13394,Yes,11,2,No
+46,Human Resources,18,3,2,11519,Yes,4,1,Yes
+55,R&D,16,5,2,4524,No,7,1,Yes
+33,R&D,23,3,4,10990,Yes,9,1,Yes
+30,Human Resources,19,5,4,8339,No,14,1,No
+36,Sales,19,5,3,12557,No,8,2,No
+46,Human Resources,18,4,2,14708,No,8,1,No
+26,R&D,20,1,2,8291,No,9,4,No
+32,Sales,16,4,1,12803,No,14,4,No
+55,Sales,8,4,3,3254,No,5,3,No
+45,Human Resources,28,5,4,11461,No,14,1,No
+36,R&D,1,5,3,6235,Yes,5,4,No
+59,Human Resources,17,3,4,3738,No,3,4,No
+29,Human Resources,12,3,4,12905,Yes,5,4,Yes
+26,Human Resources,21,4,3,4406,No,8,2,No
+47,Sales,11,2,2,9899,No,12,1,Yes
+39,Sales,5,2,4,10461,Yes,5,2,No
+27,R&D,27,3,3,12256,Yes,4,2,Yes
+58,R&D,12,2,1,11910,No,8,4,No
+34,Human Resources,17,3,3,7101,No,7,4,No
+49,Human Resources,6,5,1,12049,No,14,3,Yes
+26,Human Resources,1,4,4,14531,No,14,1,No
+34,R&D,5,1,3,3960,Yes,6,1,No
+38,Sales,25,4,3,10169,Yes,5,4,Yes
+53,Sales,28,3,1,14677,No,14,4,No
+50,Human Resources,14,3,3,3916,No,5,1,No
+24,Human Resources,5,4,3,13545,No,13,3,No
+55,Human Resources,22,3,4,10266,Yes,10,4,Yes
+48,Human Resources,24,2,3,3928,No,2,3,No
+34,R&D,27,2,2,6878,No,13,2,No
+54,Sales,1,3,1,10029,No,4,4,No
+27,Human Resources,18,3,3,6974,No,8,2,No
+45,R&D,16,2,1,14985,No,8,4,No
+40,Human Resources,9,3,1,13754,No,11,2,No
+37,Human Resources,19,3,1,5571,Yes,1,4,Yes
+49,Sales,22,4,3,3055,Yes,2,3,Yes
+54,Human Resources,5,1,3,11047,No,5,3,No
+34,Sales,27,2,1,4063,No,9,3,No
+46,Sales,2,4,2,14192,No,10,2,No
+57,Sales,15,1,1,3540,No,11,3,No
+48,R&D,7,3,2,5186,No,12,2,No
+59,R&D,4,3,1,5053,No,13,4,Yes
+28,Sales,1,4,4,4279,Yes,11,2,No
+26,Human Resources,13,3,1,2575,Yes,7,4,No
+52,Sales,20,5,1,6826,Yes,10,1,Yes
+44,Human Resources,22,4,3,8335,No,5,1,No
+31,Sales,7,1,2,7557,No,1,1,No
+53,Human Resources,15,4,4,14011,Yes,6,2,No
+51,R&D,23,2,2,4849,No,12,1,Yes
+52,Human Resources,14,4,4,5273,Yes,8,1,No
+39,Sales,23,3,1,4762,No,7,1,No
+57,R&D,19,3,3,5729,No,2,4,No
+23,Human Resources,22,5,3,12808,No,12,3,No
+35,Human Resources,29,5,2,2892,Yes,5,2,Yes
+34,Human Resources,24,5,3,3608,No,14,1,No
+50,Human Resources,20,1,2,6862,No,11,4,No
+33,Human Resources,29,5,2,7688,Yes,4,3,Yes
+23,R&D,24,1,4,11302,Yes,9,3,Yes
+53,R&D,18,5,2,7557,No,10,3,No
+34,R&D,10,1,4,13467,No,1,4,No
+48,R&D,9,4,3,6498,No,12,1,No
+38,Sales,25,4,2,11364,No,6,3,No
+52,R&D,8,3,2,9066,No,3,4,No
+55,Human Resources,26,1,1,6177,Yes,11,4,Yes
+45,Human Resources,29,2,2,8296,Yes,9,2,Yes
+56,R&D,10,3,2,8863,No,5,4,No
+27,Human Resources,17,4,1,10623,No,13,3,Yes
+40,R&D,2,1,1,10722,No,6,3,No
+51,Human Resources,6,5,3,10190,No,11,4,No
+28,Sales,26,2,2,3900,No,9,3,Yes
+31,Sales,5,4,3,6571,No,9,4,No
+53,R&D,28,3,3,11308,No,8,3,No
+55,R&D,9,1,1,5286,No,9,2,Yes
+49,R&D,5,2,4,9669,Yes,4,1,No
+36,Human Resources,18,1,3,3370,No,6,2,No
+51,R&D,26,5,4,6696,Yes,5,2,Yes
+58,Sales,20,3,2,14296,No,5,1,No
+50,Human Resources,9,1,1,12104,No,4,3,No
+43,R&D,17,4,2,5239,No,2,1,No
+25,Human Resources,27,3,2,3440,No,12,4,Yes
+41,Human Resources,17,4,1,2840,Yes,6,1,Yes
+53,R&D,12,1,2,13600,Yes,9,2,Yes
+57,Human Resources,7,3,1,9922,No,12,1,No
+25,Sales,27,4,4,6633,No,1,3,No
+48,Sales,3,5,2,3159,No,14,2,No
+38,Human Resources,10,5,1,12725,No,7,4,No
+33,R&D,2,1,3,12252,No,6,3,No
+43,Human Resources,25,3,2,5957,No,3,2,No
+38,Sales,3,2,4,12348,Yes,1,4,No
+31,Human Resources,16,3,1,5475,No,13,3,No
+22,Human Resources,2,5,2,11741,No,4,4,No
+43,Sales,28,4,2,2953,No,14,1,Yes
+47,Human Resources,24,2,2,12396,No,9,1,No
+39,Human Resources,10,1,4,10684,No,2,4,No
+35,R&D,6,2,1,7942,No,3,1,Yes
+50,R&D,22,1,3,13476,Yes,2,4,Yes
+33,Sales,26,2,3,3318,No,14,3,No
+57,Sales,11,1,3,7368,No,2,2,No
+56,Sales,23,1,1,2512,Yes,10,4,Yes
+33,R&D,7,2,3,14671,No,11,2,No
+28,Sales,27,2,4,10227,No,11,2,No
+50,Sales,29,1,1,3420,No,8,4,Yes
+32,Sales,15,5,2,7420,Yes,3,1,Yes
+54,R&D,6,2,4,4918,No,7,3,No
+27,Human Resources,20,3,2,12006,Yes,8,2,Yes
+36,Sales,27,4,3,8975,Yes,3,3,Yes
+53,Human Resources,9,1,4,14369,Yes,2,2,Yes
+32,Sales,22,1,1,4517,No,13,4,No
+44,Human Resources,20,4,4,10457,Yes,13,1,No
+47,R&D,12,5,2,11920,No,8,3,No
+55,R&D,19,4,1,7292,Yes,3,2,Yes
+55,Sales,20,2,4,9330,No,7,4,No
+50,Human Resources,3,4,4,4934,No,12,4,No
+25,R&D,15,1,4,5368,No,1,2,No
+38,Sales,2,4,4,13207,No,14,2,No
+56,Sales,21,3,1,3938,No,12,2,Yes
+34,R&D,2,2,2,14856,No,6,1,No
+36,R&D,22,4,4,6043,No,12,2,No
+50,Sales,3,1,1,13867,Yes,12,2,No
+50,Human Resources,6,2,2,4281,Yes,13,1,Yes
+32,Human Resources,15,1,4,8843,Yes,9,4,No
+53,Human Resources,27,5,2,4763,No,12,2,No
+23,Sales,10,3,2,12661,No,3,3,No
+35,R&D,9,5,1,2711,No,14,4,No
+41,Sales,1,3,2,11199,No,7,3,No
+43,R&D,16,4,1,8659,No,13,2,No
+32,Human Resources,6,2,4,9527,No,6,1,No
+48,Human Resources,9,4,2,2831,No,8,1,No
+24,R&D,27,3,2,9360,Yes,3,1,Yes
+38,R&D,4,3,3,10544,No,3,2,No
+49,Sales,27,3,4,10669,Yes,4,2,No
+50,Human Resources,28,1,4,11242,No,3,3,No
+42,Sales,2,2,3,8220,Yes,9,1,Yes
+37,Sales,29,4,3,11633,No,11,2,No
+58,Sales,4,4,1,3227,No,4,4,No
+41,Human Resources,1,5,1,7475,Yes,6,2,Yes
+27,Sales,19,3,2,13554,Yes,8,2,Yes
+40,Sales,26,3,2,5743,No,11,4,No
+26,Sales,25,3,2,3148,No,13,1,Yes
+24,Sales,10,4,2,7595,No,8,4,Yes
+22,Sales,21,5,1,9114,No,5,1,No
+59,Sales,15,1,4,13429,No,5,4,No
+36,Human Resources,27,2,2,13439,No,6,3,No
+55,Sales,22,1,4,9635,No,10,1,No
+56,R&D,19,4,2,3509,No,7,2,No
+46,Sales,16,3,3,4050,No,13,3,No
+45,Sales,21,2,2,11495,No,13,1,No
+33,Human Resources,27,4,2,14772,No,10,1,No
+39,Human Resources,24,4,2,9992,No,14,1,No
+36,R&D,22,4,1,14956,No,7,4,No
+37,R&D,4,2,3,5901,No,13,1,No
+48,Human Resources,2,2,2,9947,No,4,2,No
+29,Human Resources,25,5,2,7924,Yes,6,1,Yes
+46,Sales,13,5,4,6741,No,7,2,No
+38,Human Resources,28,1,3,5661,No,5,2,No
+50,R&D,1,2,2,6655,Yes,5,2,Yes
+29,Sales,17,2,4,9978,No,2,3,No
+36,R&D,13,2,4,11219,No,7,2,No
+48,Sales,4,5,1,13990,Yes,12,4,Yes
+28,Human Resources,7,4,4,11715,No,6,1,No
+24,R&D,17,3,2,9117,No,11,4,No
+50,Sales,9,5,1,8160,Yes,1,3,Yes
+45,Sales,4,2,1,14426,Yes,4,1,Yes
+24,Human Resources,19,5,2,11124,No,3,2,No
+41,Human Resources,1,1,3,3676,No,12,1,No
+36,Human Resources,10,2,4,10456,Yes,3,3,No
+46,R&D,4,1,1,11092,No,7,3,No
+51,Sales,9,2,3,12796,No,11,4,No
+35,Human Resources,13,5,2,13742,No,12,1,No
+28,R&D,14,4,4,4733,No,10,1,No
+38,R&D,10,3,4,13137,No,4,1,No
+41,R&D,6,1,1,7200,No,12,4,No
+57,Human Resources,16,5,4,13527,Yes,8,3,No
+30,Human Resources,6,4,4,8406,No,11,2,No
+59,Sales,17,5,4,10360,No,9,1,No
+43,Sales,10,1,4,10026,Yes,3,4,No
+23,Human Resources,18,3,2,8059,No,5,4,No
+45,R&D,27,5,3,9232,No,4,2,No
+29,R&D,22,2,2,5013,No,14,3,No
+32,R&D,18,4,2,10330,No,12,1,Yes
+34,Sales,3,5,1,12465,Yes,10,1,Yes
+38,R&D,20,4,4,9444,No,6,4,No
+29,Sales,27,2,2,10410,No,11,3,No
+42,Sales,21,3,4,8149,Yes,10,1,Yes
+39,R&D,25,3,2,3596,No,4,2,Yes
+51,R&D,28,2,2,11620,No,8,3,No
+39,Human Resources,15,4,1,4451,Yes,3,3,Yes
+52,Human Resources,15,5,3,12665,No,11,4,No
+59,R&D,4,2,3,12246,No,5,4,No
+53,Sales,29,1,2,13470,Yes,13,1,Yes
+32,Sales,27,4,1,11686,No,1,4,No
